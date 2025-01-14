@@ -1,0 +1,93 @@
+\documentclass[]{article}
+\usepackage{../macros}
+\head{Project Proposal}
+\begin{document}
+
+\begin{center}
+  The humble kazoo, an underappreciated instrument.
+\end{center}
+
+\section{Problem Description}
+% This section describes the real-life issue that will drive the creation of the software project.
+
+Over the last few years I've found an interest in Digital Signal Processing
+(DSP). Unfortunately, the field of DSP and information theory is an acronym
+and trigonometry riddled landscape that can be scary to learn - this results in a
+painful path towards developing the base intuition that is required to learn
+advanced topics. Thankfully, modern algorithms paired with modern processors
+have allowed for more flexibility with DSP teaching tools. \\
+
+This project is based on two assumptions:
+
+\begin{itemize}
+  \item[1.] DSP and information theory are inherently boring
+  \item[2.] kazoos are not boring
+\end{itemize}
+
+Generally, the more engaging a teaching tool is, the more value it can provide.
+
+
+\section{Proposed Solution}
+% This section describes the functionality that will be provided by the software project. It should tie the software features to the described problem. The features must be prioritized to allow for flexibility in the final deliverable.
+
+I propose the project \Bold{Kazoo -----}. Kazoo ------- is
+software system that uses kazoo sounds to encode, store, and decode
+data as a series of discrete kazoo signals. In order to encode and decode, to and from data, a set of unique symbols
+must be created which represent binary information. The system for converting between data and kazoo signals will be called the "Kazoo Translation Layer". \\
+
+
+Once data can be converted to and from kazoo sounds, there are a few applications of the communication channel that could be implemented. First, Kazoo Connect, a terminal based
+chat client which connects to another client via audio input and outputs. Second, Kazoo File System, another terminal based client, similar to tar, which packs files into kazoo signals
+stored in an audio file. \\
+
+
+All of this will be built on top of either wav files for storage, or Pulse Audio for live
+input/output audio data. \\
+
+\CenterImage{org_diagram}[0.5\textwidth]
+
+
+
+After some initial research, it's been shown that kazoos are one of the worst
+carriers for creating distinct audio signals. Below are output graphs from a
+Fast Fourier Transform (FFT) across two audibly distinct samples. It can be
+seen that the audio is very messy and some effort will need to be put into
+finding a reliable way to differentiate between distinct kazoo signals.
+
+\CenterImage{fft_1.png}[0.5\textwidth]
+
+\CenterImage{fft_2.png}[0.5\textwidth]
+
+Another mathematical reality is the fact that at least 0.005 seconds of audio
+data is required to get the full scope of each kazoo sound, which can be seen
+in the waveform below.
+
+\CenterImage{waveform_1.png}[0.8\textwidth]
+
+Due to this, the fundamental symbol rate limit of a kazoo based communication
+system is 200 symbols per second. With this symbol rate limitation, if there
+were only two distinct symbols, representing $1$ and $0$, the bit rate would be
+200 bps which is nearly unusable. Thankfully, kazoos are capable of generating
+all sorts of different noises, so we can create as many distinct symbols as we
+want. We are only limited by the ability to differentiate between distinct symbols - the more symbols we have, the higher the data rate, but the error rate will increase as well. \\
+
+\section{Technical Overview}
+% This section will outline the technical resources you plan to use for your project. You must declare whether you have experience with each technology. Breadth or depth of technical skill development is required.
+
+The majority of this project will be a custom implementation, targeting Linux hosts. Due
+to this, there are few tools used. This project will be created in C++17, utilizing a CMake build system. The audio integration will be done through WAV files or Pulse Audio. Signal analysis will primarily use the C++ library FFTW-3, or custom solutions when appropriate.
+
+Although I have some experience with C++ and some DSP, using kazoo signals creates
+a unique challenge which will test my abilities. The C++ FFT library in entirely
+new to me.
+
+Unit testing will prove to be very helpful for this project, I plan on using
+GTest and GMock as needed.
+
+\section{Milestone List}
+
+\section{Validation Plan}
+
+does it work? ur good
+
+\end{document}
