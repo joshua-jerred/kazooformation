@@ -1,0 +1,7 @@
+@startuml
+
+:data input;
+
+:signal output;
+
+@enduml
