@@ -1,0 +1,23 @@
+@startuml ktl_data_to_audio
+
+title Kazoo Translation Layer Data to Audio
+
+start
+
+:binary data input;
+
+:Populate BinaryStream;
+
+:Convert to Symbols;
+
+:Modulate Kazoo Signal;
+
+if (Output Mode) then (wav file)
+  :Save to Wav;
+else (Pulse)
+  :Play on pulse audio stream;
+endif
+
+stop
+
+@enduml
