@@ -3,9 +3,7 @@
 /// @file binary_stream.hpp
 /// @date 2025-01-21
 
-
-#include <kazoo_translation_layer/binary_stream.hpp>
-
+#include <ktl/binary_stream.hpp>
 
 std::ostream &operator<<(std::ostream &os,
                          const kazoo::BinaryStream &binary_stream) {
@@ -48,4 +46,3 @@ std::ostream &operator<<(std::ostream &os,
 
   return os;
 }
-

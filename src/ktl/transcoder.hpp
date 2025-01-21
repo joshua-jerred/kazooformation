@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <kazoo_translation_layer/symbol_stream.hpp>
+#include <ktl/symbol_stream.hpp>
 
 namespace kazoo {
 
@@ -15,6 +15,8 @@ class Transcoder {
   Transcoder(SymbolStream<Token_t>& binary_stream)
       : symbol_stream_{binary_stream} {}
 
+  /// @brief Pops symbols from the front of the symbol stream and encodes them
+  /// into the audio buffer.
   void encodeAvailableSymbols() {}
 
  private:

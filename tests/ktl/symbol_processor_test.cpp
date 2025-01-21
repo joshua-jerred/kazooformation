@@ -1,8 +1,8 @@
 #include <test_symbol_table.hpp>
 #include <testing.hpp>
 
-#include <kazoo_translation_layer/binary_stream.hpp>
-#include <kazoo_translation_layer/symbol_stream.hpp>
+#include <ktl/binary_stream.hpp>
+#include <ktl/symbol_stream.hpp>
 
 TEST(SymbolProcessor_test, addSymbols) {
   kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_TABLE);

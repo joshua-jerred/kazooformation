@@ -3,7 +3,7 @@
 
 #include <testing.hpp>
 
-#include <kazoo_translation_layer/binary_stream.hpp>
+#include <ktl/binary_stream.hpp>
 
 TEST(BinaryStream_test, addData) {
   kazoo::BinaryStream stream;

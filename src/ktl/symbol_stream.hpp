@@ -15,9 +15,9 @@
 #include <sstream>
 #include <vector>
 
-#include <kazoo_translation_layer/binary_stream.hpp>
-#include <kazoo_translation_layer/symbol.hpp>
-#include <kazoo_translation_layer/symbol_table.hpp>
+#include <ktl/binary_stream.hpp>
+#include <ktl/symbol.hpp>
+#include <ktl/symbol_table.hpp>
 
 namespace kazoo {
 

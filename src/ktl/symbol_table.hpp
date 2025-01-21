@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <map>
 
-#include <kazoo_translation_layer/symbol.hpp>
+#include <ktl/symbol.hpp>
 
 namespace kazoo {
 

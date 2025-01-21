@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <kazoo_translation_layer/symbol_table.hpp>
+#include <ktl/symbol_table.hpp>
 
 enum class TestToken : uint32_t {
   UNKNOWN = 0,
