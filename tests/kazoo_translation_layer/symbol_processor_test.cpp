@@ -1,26 +1,11 @@
+#include <test_symbol_table.hpp>
 #include <testing.hpp>
 
 #include <kazoo_translation_layer/binary_stream.hpp>
-#include <kazoo_translation_layer/symbol_processor.hpp>
-
-enum class TestToken : uint32_t {
-  UNKNOWN = 0,
-  SYMBOL_00,
-  SYMBOL_01,
-  SYMBOL_10,
-  SYMBOL_11,
-  _SYMBOL_COUNT
-};
-
-static const kazoo::SymbolTable<TestToken> symbol_table{
-    {{TestToken::SYMBOL_00, 0},
-     {TestToken::SYMBOL_01, 1},
-     {TestToken::SYMBOL_10, 2},
-     {TestToken::SYMBOL_11, 3}},
-    2};
+#include <kazoo_translation_layer/symbol_stream.hpp>
 
 TEST(SymbolProcessor_test, addSymbols) {
-  kazoo::SymbolStream<TestToken> processor(symbol_table);
+  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_TABLE);
 
   EXPECT_EQ(processor.getNumBits(), 0);
   EXPECT_EQ(processor.getNumBytes(), 0);
@@ -43,12 +28,34 @@ TEST(SymbolProcessor_test, addSymbols) {
 }
 
 TEST(SymbolProcessor_test, populateBinaryStream) {
-  kazoo::SymbolStream<TestToken> processor(symbol_table);
+  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_TABLE);
   processor.addSymbol(TestToken::SYMBOL_11);
+  processor.addSymbol(TestToken::SYMBOL_01);
+
   {
     kazoo::BinaryStream b_stream;
-    processor.populateBinaryStream(b_stream, 1, false);
 
-    // EXPECT_EQ(b_stream.getNumBits(), 2);
+    processor.populateBinaryStream(b_stream, 1, false);
+    EXPECT_EQ(b_stream.getNumBits(), 4);
+
+    auto deq = b_stream.getStreamDataConst();
+    EXPECT_EQ(deq.size(), 1);
+    EXPECT_EQ(deq.at(0), 0b0111);
+  }
+
+  processor.addSymbol(TestToken::SYMBOL_10);
+  processor.addSymbol(TestToken::SYMBOL_10);
+  processor.addSymbol(TestToken::SYMBOL_10);
+
+  {
+    kazoo::BinaryStream b_stream;
+
+    processor.populateBinaryStream(b_stream, 2, false);
+    EXPECT_EQ(b_stream.getNumBits(), 10);
+
+    auto deq = b_stream.getStreamDataConst();
+    EXPECT_EQ(deq.size(), 2);
+    EXPECT_EQ(deq.at(0), 0b10100111);
+    EXPECT_EQ(deq.at(1), 0b10);
   }
 }

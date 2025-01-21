@@ -1,6 +1,6 @@
 /// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
-/// @file symbol_processor.hpp
+/// @file symbol_stream.hpp
 /// @date 2025-01-21
 
 #pragma once
@@ -15,20 +15,29 @@
 #include <sstream>
 #include <vector>
 
-#include "binary_stream.hpp"
-
+#include <kazoo_translation_layer/binary_stream.hpp>
 #include <kazoo_translation_layer/symbol.hpp>
 #include <kazoo_translation_layer/symbol_table.hpp>
 
 namespace kazoo {
 
+/// @brief A simple Symbol Stream structure. Interfaces with the transcoder and
+/// binary stream.
+/// @tparam Token_t - The token enum type
 template <typename Token_t>
 class SymbolStream {
  public:
+  /// @brief Constructor
+  /// @param symbol_table - The symbol table
   SymbolStream(const ISymbolTable<Token_t> &symbol_table)
       : symbol_table_(symbol_table) {}
 
+  /// @brief Add a symbol to the end of the stream.
+  /// @param token - The symbol token to add.
   void addSymbol(Token_t token) { symbols_.push_back(token); }
+
+  /// @brief Get the number of symbols in the stream.
+  /// @return size_t The number of symbols
   size_t getNumSymbols() const { return symbols_.size(); }
 
   size_t getNumBits() const {

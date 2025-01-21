@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <map>
 
@@ -37,8 +38,7 @@ class SymbolTable : public ISymbolTable<Token_t> {
   size_t getSymbolBitWidth() const override { return symbol_bit_width_; }
 
   uint32_t getValue(Token_t token) const override {
-    (void)token;
-    return 0;
+    return token_values_.at(token);
   }
 
  private:

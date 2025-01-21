@@ -20,12 +20,12 @@ find_package(GTest REQUIRED)
 include(GoogleTest)
 
 # lazy globbing (not best practice /shrug)
-file(GLOB unit_test_sources "tests/*.cpp")
-add_executable(kazooformation_test ${unit_test_sources})
-target_link_libraries(kazooformation_test
+file(GLOB kazoo_translation_layer_test_sources "tests/kazoo_translation_layer/*.cpp")
+add_executable(kazoo_translation_layer_test ${kazoo_translation_layer_test_sources})
+target_link_libraries(kazoo_translation_layer_test
         GTest::GTest
         GTest::Main
         kazoo_translation_layer
 )
-gtest_discover_tests(kazooformation_test)
-target_include_directories(kazooformation_test PRIVATE tests)
+gtest_discover_tests(kazoo_translation_layer_test)
+target_include_directories(kazoo_translation_layer_test PRIVATE tests)
