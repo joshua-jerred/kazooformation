@@ -83,7 +83,7 @@ IfMacros:
   - KJ_IF_MAYBE
 IncludeBlocks:   Regroup
 IncludeCategories:
-  - Regex:           '^<(testing.hpp)|(test_symbol_table.hpp)>'
+  - Regex:           '^<(testing.hpp)|(test_symbol_model.hpp)>'
     Priority:        3
     SortPriority:    0
     CaseSensitive:   false

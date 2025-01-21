@@ -13,8 +13,8 @@ namespace kazoo {
 template <typename Token_t>
 class Transcoder {
  public:
-  Transcoder(const ISymbolModel<Token_t>& symbol_table)
-      : symbol_table_(symbol_table) {}
+  Transcoder(const ISymbolModel<Token_t>& symbol_model)
+      : symbol_model_(symbol_model) {}
 
   /// @brief Pops symbols from the front of the symbol stream and encodes them
   /// into the audio buffer.
@@ -33,9 +33,10 @@ class Transcoder {
  private:
   void encodeSymbol(Token_t token) {
     std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
+    audio_channel_.addSample(0x00);
   }
 
-  const ISymbolModel<Token_t>& symbol_table_;
+  const ISymbolModel<Token_t>& symbol_model_;
 
   AudioChannel audio_channel_;
 };

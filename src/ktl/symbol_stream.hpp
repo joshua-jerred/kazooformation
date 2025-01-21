@@ -17,7 +17,7 @@
 
 #include <ktl/binary_stream.hpp>
 #include <ktl/symbol.hpp>
-#include <ktl/symbol_table.hpp>
+#include <ktl/symbol_model.hpp>
 
 namespace kazoo {
 
@@ -28,9 +28,9 @@ template <typename Token_t>
 class SymbolStream {
  public:
   /// @brief Constructor
-  /// @param symbol_table - The symbol table
-  SymbolStream(const ISymbolModel<Token_t> &symbol_table)
-      : symbol_table_(symbol_table) {}
+  /// @param symbol_model - The symbol table
+  SymbolStream(const ISymbolModel<Token_t> &symbol_model)
+      : symbol_model_(symbol_model) {}
 
   /// @brief Add a symbol to the end of the stream.
   /// @param token - The symbol token to add.
@@ -41,7 +41,7 @@ class SymbolStream {
   size_t getNumSymbols() const { return symbols_.size(); }
 
   size_t getNumBits() const {
-    return symbols_.size() * symbol_table_.getSymbolBitWidth();
+    return symbols_.size() * symbol_model_.getSymbolBitWidth();
   }
 
   size_t getNumBytes() const { return std::ceil(getNumBits() / 8.0); }
@@ -53,12 +53,12 @@ class SymbolStream {
     }
 
     size_t num_symbols = std::clamp<size_t>(
-        std::ceil((num_bytes * 8.0) / symbol_table_.getSymbolBitWidth()), 0U,
+        std::ceil((num_bytes * 8.0) / symbol_model_.getSymbolBitWidth()), 0U,
         symbols_.size());
 
     for (size_t i = 0; i < num_symbols; ++i) {
-      binary_stream.addBits(symbol_table_.getValue(symbols_.at(i)),
-                            symbol_table_.getSymbolBitWidth());
+      binary_stream.addBits(symbol_model_.getValue(symbols_.at(i)),
+                            symbol_model_.getSymbolBitWidth());
 
       if (pop_bytes) {
         symbols_.pop_front();
@@ -78,7 +78,7 @@ class SymbolStream {
   }
 
  private:
-  const ISymbolModel<Token_t> &symbol_table_;
+  const ISymbolModel<Token_t> &symbol_model_;
   std::deque<Token_t> symbols_{};
 };
 

@@ -1,11 +1,11 @@
 /// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
-/// @file test_symbol_table.hpp
+/// @file test_symbol_model.hpp
 /// @date 2025-01-21
 
 #pragma once
 
-#include <ktl/symbol_table.hpp>
+#include <ktl/symbol_model.hpp>
 
 enum class TestToken : uint32_t {
   UNKNOWN = 0,
@@ -16,7 +16,7 @@ enum class TestToken : uint32_t {
   _SYMBOL_COUNT
 };
 
-static const kazoo::SymbolTable<TestToken> TEST_SYMBOL_TABLE{
+static const kazoo::SymbolModel<TestToken> TEST_SYMBOL_MODEL{
     {{TestToken::SYMBOL_00, 0},
      {TestToken::SYMBOL_01, 1},
      {TestToken::SYMBOL_10, 2},

@@ -29,11 +29,11 @@ class ISymbolModel {
 };
 
 template <typename Token_t>
-class SymbolTable : public ISymbolModel<Token_t> {
+class SymbolModel : public ISymbolModel<Token_t> {
  public:
   using TokenValueMap = std::map<Token_t, uint32_t>;
 
-  SymbolTable(const TokenValueMap token_values, uint32_t symbol_bit_width)
+  SymbolModel(const TokenValueMap token_values, uint32_t symbol_bit_width)
       : token_values_{token_values}, symbol_bit_width_{symbol_bit_width} {}
 
   size_t getSymbolBitWidth() const override { return symbol_bit_width_; }

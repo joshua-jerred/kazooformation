@@ -1,11 +1,11 @@
-#include <test_symbol_table.hpp>
+#include <test_symbol_model.hpp>
 #include <testing.hpp>
 
 #include <ktl/binary_stream.hpp>
 #include <ktl/symbol_stream.hpp>
 
 TEST(SymbolProcessor_test, addSymbols) {
-  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_TABLE);
+  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_MODEL);
 
   EXPECT_EQ(processor.getNumBits(), 0);
   EXPECT_EQ(processor.getNumBytes(), 0);
@@ -28,7 +28,7 @@ TEST(SymbolProcessor_test, addSymbols) {
 }
 
 TEST(SymbolProcessor_test, populateBinaryStream) {
-  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_TABLE);
+  kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_MODEL);
   processor.addSymbol(TestToken::SYMBOL_11);
   processor.addSymbol(TestToken::SYMBOL_01);
 
