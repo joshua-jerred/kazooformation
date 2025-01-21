@@ -6,12 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(kazoo_translation_layer INTERFACE)
 target_sources(kazoo_translation_layer INTERFACE
-  # src/translation_layer.cpp
+        src/kazoo_translation_layer/binary_stream.cpp
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 
 add_executable(kazoo_connect
-  src/main.cpp
+        src/main.cpp
 )
 
 # ==== Unit tests ====
@@ -22,10 +22,10 @@ include(GoogleTest)
 # lazy globbing (not best practice /shrug)
 file(GLOB unit_test_sources "tests/*.cpp")
 add_executable(kazooformation_test ${unit_test_sources})
-target_link_libraries(kazooformation_test 
-  GTest::GTest
-  GTest::Main
-  kazoo_translation_layer
+target_link_libraries(kazooformation_test
+        GTest::GTest
+        GTest::Main
+        kazoo_translation_layer
 )
 gtest_discover_tests(kazooformation_test)
 target_include_directories(kazooformation_test PRIVATE tests)

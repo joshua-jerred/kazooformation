@@ -3,7 +3,7 @@
 
 #include <testing.hpp>
 
-#include <binary_stream.hpp>
+#include <kazoo_translation_layer/binary_stream.hpp>
 
 TEST(BinaryStream_test, addData) {
   kazoo::BinaryStream stream;
@@ -13,14 +13,12 @@ TEST(BinaryStream_test, addData) {
   EXPECT_TRUE(stream.isByteAligned());
 
   stream.addBits(0b1, 1);
-
   EXPECT_EQ(stream.getNumBytes(), 1);
   EXPECT_EQ(stream.getNumBits(), 1);
   EXPECT_EQ(stream.getNumUpspecifiedBits(), 7);
   EXPECT_FALSE(stream.isByteAligned());
 
   stream.addBits(0b1010, 4);
-
   EXPECT_EQ(stream.getNumBytes(), 1);
   EXPECT_EQ(stream.getNumBits(), 5);
   EXPECT_EQ(stream.getNumUpspecifiedBits(), 3);
@@ -28,24 +26,19 @@ TEST(BinaryStream_test, addData) {
   // std::cout << stream << std::endl;
 
   stream.addBits(0b11, 2);
-
   EXPECT_EQ(stream.getNumBytes(), 1);
   EXPECT_EQ(stream.getNumBits(), 7);
   EXPECT_EQ(stream.getNumUpspecifiedBits(), 1);
   EXPECT_FALSE(stream.isByteAligned());
   // std::cout << stream << std::endl;
 
-  stream.addBits(0b1, 1);
-
+  stream.addBits(0b1, 1);  // We should now be byte aligned
   EXPECT_EQ(stream.getNumBytes(), 1);
   EXPECT_EQ(stream.getNumBits(), 8);
   EXPECT_EQ(stream.getNumUpspecifiedBits(), 0);
   EXPECT_TRUE(stream.isByteAligned());
 
-  // We should now be byte aligned
-
   stream.addBits(0b1, 1);
-
   EXPECT_EQ(stream.getNumBytes(), 2);
   EXPECT_EQ(stream.getNumBits(), 9);
   EXPECT_EQ(stream.getNumUpspecifiedBits(), 7);
