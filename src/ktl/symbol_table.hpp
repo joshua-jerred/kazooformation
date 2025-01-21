@@ -9,14 +9,15 @@
 #include <cstdint>
 #include <map>
 
+#include <ktl/audio_channel.hpp>
 #include <ktl/symbol.hpp>
 
 namespace kazoo {
 
 template <typename Token_t>
-class ISymbolTable {
+class ISymbolModel {
  public:
-  virtual ~ISymbolTable() = default;
+  virtual ~ISymbolModel() = default;
 
   virtual size_t getSymbolBitWidth() const = 0;
 
@@ -28,7 +29,7 @@ class ISymbolTable {
 };
 
 template <typename Token_t>
-class SymbolTable : public ISymbolTable<Token_t> {
+class SymbolTable : public ISymbolModel<Token_t> {
  public:
   using TokenValueMap = std::map<Token_t, uint32_t>;
 

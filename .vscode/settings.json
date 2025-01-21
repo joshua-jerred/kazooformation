@@ -13,5 +13,12 @@
     "@copyright Copyright (c) {year}",
     "@file {file}",
     "@date {date}",
-  ]
+  ],
+  "files.associations": {
+    "*.sqlbook": "sql",
+    "*.ndjson": "jsonl",
+    "*.dbclient-js": "javascript",
+    "version": "plaintext",
+    "compare": "cpp"
+  }
 }

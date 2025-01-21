@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <ktl/audio_channel.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo {
@@ -12,15 +13,31 @@ namespace kazoo {
 template <typename Token_t>
 class Transcoder {
  public:
-  Transcoder(SymbolStream<Token_t>& binary_stream)
-      : symbol_stream_{binary_stream} {}
+  Transcoder(const ISymbolModel<Token_t>& symbol_table)
+      : symbol_table_(symbol_table) {}
 
   /// @brief Pops symbols from the front of the symbol stream and encodes them
   /// into the audio buffer.
-  void encodeAvailableSymbols() {}
+  /// @param symbol_stream - The symbol stream to pop symbols off of.
+  /// @return The number of symbols that were added.
+  size_t encodeAvailableSymbols(SymbolStream<Token_t>& symbol_stream) {
+    size_t num_symbols_added = 0;
+    Token_t symbol_token;
+    while (symbol_stream.popSymbol(symbol_token)) {
+      encodeSymbol(symbol_token);
+      ++num_symbols_added;
+    }
+    return num_symbols_added;
+  }
 
  private:
-  SymbolStream<Token_t>& symbol_stream_;
+  void encodeSymbol(Token_t token) {
+    std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
+  }
+
+  const ISymbolModel<Token_t>& symbol_table_;
+
+  AudioChannel audio_channel_;
 };
 
 }  // namespace kazoo

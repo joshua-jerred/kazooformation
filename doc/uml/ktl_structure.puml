@@ -7,19 +7,29 @@ input_binary_data : Binary File
 input_binary_data : C Array
 input_binary_data : String
 
-class BinaryStream {}
-class SymbolStream {}
-class SymbolTable {}
-class KazooTranscoder {}
-
 object pulse_audio_io
 object wav_file
 
-input_binary_data <--> BinaryStream
-SymbolStream <--> BinaryStream
-SymbolStream <--> KazooTranscoder
-SymbolStream <--> SymbolTable
-KazooTranscoder <--> pulse_audio_io
-KazooTranscoder <--> wav_file
+package ktl {
+  class BinaryStream {}
+  class SymbolStream {}
+  class SymbolTable {}
+  class KazooTranscoder {}
+
+  ' interface SymbolModel {
+  '   +getSymbolValue(token) const
+  '   +getSymbolToken(value) const
+
+  '   -const map<token, value>
+  '   -const map<value, token>
+  ' }
+
+  input_binary_data <--> BinaryStream
+  SymbolStream <--> BinaryStream
+  SymbolStream <--> KazooTranscoder
+  SymbolStream <--> SymbolTable
+  KazooTranscoder <--> pulse_audio_io
+  KazooTranscoder <--> wav_file
+}
 
 @enduml

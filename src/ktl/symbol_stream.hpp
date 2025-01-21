@@ -29,7 +29,7 @@ class SymbolStream {
  public:
   /// @brief Constructor
   /// @param symbol_table - The symbol table
-  SymbolStream(const ISymbolTable<Token_t> &symbol_table)
+  SymbolStream(const ISymbolModel<Token_t> &symbol_table)
       : symbol_table_(symbol_table) {}
 
   /// @brief Add a symbol to the end of the stream.
@@ -68,8 +68,17 @@ class SymbolStream {
     return true;
   }
 
+  bool popSymbol(Token_t &token) {
+    if (symbols_.empty()) {
+      return false;
+    }
+    token = symbols_.front();
+    symbols_.pop_front();
+    return true;
+  }
+
  private:
-  const ISymbolTable<Token_t> &symbol_table_;
+  const ISymbolModel<Token_t> &symbol_table_;
   std::deque<Token_t> symbols_{};
 };
 
