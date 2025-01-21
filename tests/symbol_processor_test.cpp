@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
+#include <testing.hpp>
 
-#include "symbol_processor.hpp"
+#include <symbol_processor.hpp>
 
 TEST(SymbolProcessor_test, addSymbols) {
   kazoo::SymbolStream processor;
@@ -53,7 +53,7 @@ TEST(SymbolProcessor_test, addSymbols) {
   EXPECT_EQ(bytes.at(0), 0b11000010);
   EXPECT_EQ(bytes.at(1), 0b10100000);
 
-  std::cout << processor << std::endl;
+  // std::cout << processor << std::endl;
 
   // re-byte align
   // std::cout << processor << std::endl;

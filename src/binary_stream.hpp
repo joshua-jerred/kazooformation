@@ -31,6 +31,13 @@ class BinaryStream {
  public:
   BinaryStream() = default;
 
+  /// @brief Add individual bits to the stream.
+  /// @details Right aligned, so the first bits added will be the least
+  /// significant bits.
+  /// ex: addBits(0b1010, 4) -> 0bxxxx1010, addBits(0b111, 3) -> 0bx1111010
+  /// @param input_bits - The bits to be added to the stream, right aligned.
+  /// @param num_bits - The number of bits to add to the stream, must be between
+  /// 1 and 8 inclusive.
   void addBits(uint8_t input_bits, size_t num_bits) {
     if (num_bits > 8 || num_bits == 0) {
       throw std::invalid_argument("num_bits must be <= 8 and > 0");
@@ -74,34 +81,44 @@ class BinaryStream {
     }
   }
 
+  /// @brief Get the number of bits in the stream.
+  /// @return The number of bits in the stream.
   size_t getNumBits() const {
     return stream_data_.size() * 8 - getNumUpspecifiedBits();
   }
 
+  /// @brief Get the number of bytes in the stream. If the stream has spare
+  /// bits that do not align to a byte, the number of bytes will be rounded up
+  /// to the nearest byte.
+  /// @return The number of bytes in the stream.
   size_t getNumBytes() const { return stream_data_.size(); }
 
+  /// @brief Get the byte alignment status of the stream.
+  /// @return \c true if the stream is byte aligned, \c false otherwise.
   bool isByteAligned() const { return num_bits_in_buffer_ == 0; }
 
+  /// @brief If adding bits, this will return the number of bits that can be
+  /// added to the stream before the stream is byte aligned.
+  /// @return The number of missing bits to align the stream to a byte.
   size_t getNumUpspecifiedBits() const {
     if (isByteAligned()) {
       return 0;
     }
-
     return 8 - num_bits_in_buffer_;
   }
 
+  /// @brief Get the next num_bytes bytes from the stream. Does not remove the
+  /// bytes from the stream.
+  /// @param num_bytes - The number of bytes to get
+  /// @return A vector copy of the next num_bytes bytes from the stream.
   std::vector<uint8_t> getBytes(size_t num_bytes) {
     return std::vector<uint8_t>(stream_data_.begin(),
                                 stream_data_.begin() + num_bytes);
   }
 
-  const std::deque<uint8_t> &getStreamDataConst() const {
-    // if (!isByteAligned()) {
-    //   throw std::runtime_error("Stream is not byte aligned");
-    // }
-
-    return stream_data_;
-  }
+  /// @brief Get a const reference to the underlying stream data.
+  /// @return A const reference to the underlying stream data.
+  const std::deque<uint8_t> &getStreamDataConst() const { return stream_data_; }
 
  private:
   std::deque<uint8_t> stream_data_{};

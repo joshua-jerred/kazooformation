@@ -1,3 +1,17 @@
 {
-  "cmake.sourceDirectory": "/home/joshua/repos/kazoo-file-system"
+  "cmake.sourceDirectory": "${workspaceFolder}",
+  "clang-format.style": "file",
+  "[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.formatOnSave": true
+  },
+  "doxdocgen.file.fileOrder": [
+    "custom",
+  ],
+  "doxdocgen.file.customTag": [
+    "@author Joshua Jerred",
+    "@copyright Copyright (c) {year}",
+    "@file {file}",
+    "@date {date}",
+  ]
 }

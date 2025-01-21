@@ -40,7 +40,7 @@ static const std::map<Token, Symbol> SYMBOLS = {
      {Token::SYMBOL_11, {Token::SYMBOL_11, 3}}}};
 
 class SymbolStream {
-public:
+ public:
   SymbolStream() = default;
 
   void addSymbol(Token token) {
@@ -94,9 +94,9 @@ public:
     if (hanging_bits > 7) {
       throw std::runtime_error("hanging bits failed");
     }
-    std::cout << "hanging bits: " << static_cast<int>(hanging_bits)
-              << ", hanging_symbols: " << static_cast<int>(hanging_symbols)
-              << std::endl;
+    // std::cout << "hanging bits: " << static_cast<int>(hanging_bits)
+    // << ", hanging_symbols: " << static_cast<int>(hanging_symbols)
+    // << std::endl;
 
     // std::cout << "num symbols: " << num_symbols << std::endl;
     uint8_t byte_buffer = 0;
@@ -130,15 +130,14 @@ public:
     return true;
   }
 
-private:
+ private:
   std::deque<Token> symbols_;
 };
 
-} // namespace kazoo
+}  // namespace kazoo
 
 std::ostream &operator<<(std::ostream &os,
                          const kazoo::SymbolStream &symbol_processor) {
-
   static constexpr bool HEX_MODE = false;
   static constexpr size_t DISPLAY_BYTE_WIDTH = 4;
   static constexpr size_t MAX_BYTES = 64;
