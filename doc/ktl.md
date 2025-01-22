@@ -10,28 +10,50 @@ project.
 title: KTL Data to Audio
 ---
 
-%%flowchart LR
-flowchart TD
+flowchart LR
+%%flowchart TD
     Start((" \n ")) -->|" addData(span[uint8_t]) "| AddData
     subgraph AddData
         AddData_Start((" \n ")) --> B
         B(Populate BinaryStream)
-        C("Convert binary input data into symbols\n(process BinaryStream into SymbolStream)")
+        C("Convert binary input data into symbols\n(BinaryStream to SymbolStream)")
         B --> C
     end
 
     AddData -->|" encode(output_strategy) "| EncodeData
     subgraph EncodeData
-        Modulate("Process Symbols &\nEncode symbol into PCM")
-        Filter(Audio Filtering)
+        Modulate("Modulate Symbols &\nEncode symbol into PCM &\nAudio Filtering")
         LoadAudioSampleBuffer(Load into audio\nsample buffer)
-        Modulate --> Filter --> LoadAudioSampleBuffer --> OutputStrategy
-        OutputStrategy{output_strategy selection}
-        OutputStrategy -->|" Wav File "| EncodeToWavFile
-        OutputStrategy -->|" Pulse Audio "| EncodeToPulseAudio
-    end
+        Modulate --> LoadAudioSampleBuffer --> OutputStrategy
+        OutputStrategy{output\nstrategy}
+        OutputStrategy -->|" wav "| EncodeToWavFile
+        OutputStrategy -->|" pulse "| EncodeToPulseAudio
 
-    EncodeToWavFile(Encode WAV PCM) --> SaveFile(Save to Wav File) --> stop
+    end
+    stop((("\n")))
+    EncodeToWavFile("Save to Wav File") --> stop
     EncodeToPulseAudio("Blocking pulse audio API\n(play audio)") --> stop
 
+```
+
+```puml
+@startuml ktl_audio_to_data
+
+title Kazoo Translation Layer Audio to Data
+
+start
+
+if (Input Mode) then (wav file)
+  :Load From .wav;
+else (Pulse)
+  :PulseAudio input stream;
+endif
+
+:Demodulate Symbols;
+
+:Convert Symbols to BinaryStream;
+
+stop
+
+@enduml
 ```
