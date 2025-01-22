@@ -9,13 +9,18 @@
 #include <fstream>
 #include <string>
 
+#include <ktl/assert.hpp>
+#include <ktl/audio_channel.hpp>
+
 namespace kazoo {
 
 /// @brief A class for reading and writing WAV files.
 /// @cite https://github.com/joshua-jerred/WavGen
-class WavFile {
+class WavFile : public IAudioChannel {
  public:
   WavFile() {}
+
+  void addSample(int16_t sample) override { samples_.push_back(sample); }
 
   void read(const std::string& file_path) {
     std::ifstream file(file_path, std::ios::binary);
@@ -43,7 +48,6 @@ class WavFile {
       file.read(input_buffer.data(), 4);
       const uint32_t file_size =
           *reinterpret_cast<uint32_t*>(input_buffer.data());
-      std::cout << "File size: " << file_size << std::endl;
 
       // Read the WAVE header
       file.read(input_buffer.data(), WavHeader::WAVE.size());
@@ -52,66 +56,52 @@ class WavFile {
           throw std::runtime_error("Invalid RIFF header");
         }
       }
-      std::cout << "WAVE header" << std::endl;
 
       // Read the fmt header
-      file.read(input_buffer.data(), WavHeader::FMT.size());
-      for (size_t i = 0; i < WavHeader::FMT.size(); ++i) {
-        if (input_buffer[i] != WavHeader::FMT[i]) {
+      file.read(input_buffer.data(), FormatChunk::FMT.size());
+      for (size_t i = 0; i < FormatChunk::FMT.size(); ++i) {
+        if (input_buffer[i] != FormatChunk::FMT.at(i)) {
           throw std::runtime_error("Invalid fmt header");
         }
       }
-      std::cout << "fmt header" << std::endl;
 
       // Read the format chunk size
       file.read(input_buffer.data(), 4);
       wav_header_.format_chunk.format_chunk_size =
           *reinterpret_cast<uint32_t*>(input_buffer.data());
-      std::cout << "Format chunk size: "
-                << wav_header_.format_chunk.format_chunk_size << std::endl;
 
       // Read the format code
       file.read(input_buffer.data(), 2);
       wav_header_.format_chunk.format_code =
           *reinterpret_cast<uint16_t*>(input_buffer.data());
-      std::cout << "Format code: " << wav_header_.format_chunk.format_code
-                << std::endl;
 
       // Read the number of channels
       file.read(input_buffer.data(), 2);
       wav_header_.format_chunk.num_channels =
           *reinterpret_cast<uint16_t*>(input_buffer.data());
-      std::cout << "Number of channels: "
-                << wav_header_.format_chunk.num_channels << std::endl;
 
       // Read the sample rate
       file.read(input_buffer.data(), 4);
       wav_header_.format_chunk.sample_rate =
           *reinterpret_cast<uint32_t*>(input_buffer.data());
-      std::cout << "Sample rate: " << wav_header_.format_chunk.sample_rate
-                << std::endl;
 
       // Read the byte rate
       file.read(input_buffer.data(), 4);
       wav_header_.format_chunk.byte_rate =
           *reinterpret_cast<uint32_t*>(input_buffer.data());
-      std::cout << "Byte rate: " << wav_header_.format_chunk.byte_rate
-                << std::endl;
 
       // Read the block align
       file.read(input_buffer.data(), 2);
       wav_header_.format_chunk.block_align =
           *reinterpret_cast<uint16_t*>(input_buffer.data());
-      std::cout << "Block align: " << wav_header_.format_chunk.block_align
-                << std::endl;
 
       // Read the bits per sample
       file.read(input_buffer.data(), 2);
       wav_header_.format_chunk.bits_per_sample =
           *reinterpret_cast<uint16_t*>(input_buffer.data());
-      std::cout << "Bits per sample: "
-                << wav_header_.format_chunk.bits_per_sample << std::endl;
+    }
 
+    {
       // Read the data header
       file.read(input_buffer.data(), WavHeader::DATA.size());
       for (size_t i = 0; i < WavHeader::DATA.size(); ++i) {
@@ -124,13 +114,19 @@ class WavFile {
       file.read(input_buffer.data(), 4);
       wav_header_.data_chunk.data_size =
           *reinterpret_cast<uint32_t*>(input_buffer.data());
-      std::cout << "Data size: " << wav_header_.data_chunk.data_size
-                << std::endl;
 
       // Save the data start position
       wav_header_.data_chunk.data_start_position = file.tellg();
-      std::cout << "Data start position: "
-                << wav_header_.data_chunk.data_start_position << std::endl;
+
+      // Not sure if this is worth expanding on yet. Leaving this here as
+      // a not-implemented warning.
+      KTL_ASSERT(wav_header_.data_chunk.data_start_position == 44);
+
+      // Read the audio data
+      samples_.clear();
+      samples_.resize(wav_header_.data_chunk.data_size / 2);
+      file.read(reinterpret_cast<char*>(samples_.data()),
+                wav_header_.data_chunk.data_size);
     }
   }
 
@@ -145,8 +141,10 @@ class WavFile {
     file << "RIFF";
   }
 
- private:
   struct FormatChunk {
+    // 12-15: "fmt "
+    static constexpr std::array<char, 4> FMT = {'f', 'm', 't', ' '};
+
     uint16_t bits_per_sample = 0;
 
     // 16-19: Format Chunk Size | 16 for PCM
@@ -184,8 +182,6 @@ class WavFile {
     uint32_t file_size = 0;
     // 8-11: "WAVE"
     static constexpr std::array<char, 4> WAVE = {'W', 'A', 'V', 'E'};
-    // 12-15: "fmt "
-    static constexpr std::array<char, 4> FMT = {'f', 'm', 't', ' '};
 
     FormatChunk format_chunk{};
 
@@ -203,8 +199,6 @@ class WavFile {
 
     // n-n+3: "data"
     static constexpr std::array<char, 4> DATA = {'d', 'a', 't', 'a'};
-    // n+4-n+7: Data size
-    uint32_t data_size = 0;
 
     void print() const {
       std::cout << "File size: " << file_size << std::endl;
@@ -218,17 +212,24 @@ class WavFile {
       std::cout << "Block align: " << format_chunk.block_align << std::endl;
       std::cout << "Bits per sample: " << format_chunk.bits_per_sample
                 << std::endl;
-      std::cout << "Data size: " << data_size << std::endl;
+      std::cout << "Data size: " << data_chunk.data_size << std::endl;
       std::cout << "Audio data start position: "
                 << data_chunk.data_start_position << std::endl;
 
       std::cout << "- Calculated Audio Length: "
-                << static_cast<double>(data_size) / format_chunk.byte_rate
+                << static_cast<double>(data_chunk.data_size) /
+                       format_chunk.byte_rate
                 << " seconds" << std::endl;
     }
   };
 
+  /// @brief Get a reference to the header object.
+  const WavHeader& getHeader() const { return wav_header_; }
+
+ private:
   WavHeader wav_header_{};
+
+  std::vector<int16_t> samples_{};
 };
 
 }  // namespace kazoo
