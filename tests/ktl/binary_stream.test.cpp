@@ -57,3 +57,24 @@ TEST(BinaryStream_test, addData) {
 
   // std::cout << stream << std::endl;
 }
+
+/// @test Test the linear flow of the binary stream. If 3 bits are sent in, then
+/// those same 3 bits should be able to be popped out. To avoid edge cases, only
+/// front or back alignment may be off at any given time.
+TEST(BinaryStream_test, linearFlow) {
+  kazoo::BinaryStream stream;
+  constexpr size_t bit_width = 3;
+  stream.addBits(0b010, bit_width);
+  stream.addBits(0b111, bit_width);
+  stream.addBits(0b101, bit_width);
+  stream.addBits(0b101, bit_width);
+  stream.addBits(0b101, bit_width);
+  stream.addBits(0b111, bit_width);
+  ASSERT_EQ(stream.getNumBits(), 18);
+  stream.pad();
+  EXPECT_TRUE(stream.isByteAligned());
+
+  uint8_t output{0};
+  EXPECT_TRUE(stream.popBits(output, bit_width));
+  EXPECT_EQ(output, 0b010) << "The first 3 bits should be 010";
+}

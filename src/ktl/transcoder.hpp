@@ -32,8 +32,9 @@ class Encoder {
   }
 
  private:
+  /// @todo
   void encodeSymbol(Token_t token, IAudioChannel& audio_channel) {
-    std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
+    // std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
     audio_channel.addSample(0x00);
   }
 
