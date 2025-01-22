@@ -2,6 +2,7 @@
 #include <test_symbol_model.hpp>
 #include <testing.hpp>
 
+#include <ktl/audio_channel.hpp>
 #include <ktl/transcoder.hpp>
 
 TEST(Transcoder_test, encodeAvailableSymbols) {
@@ -17,7 +18,8 @@ TEST(Transcoder_test, encodeAvailableSymbols) {
 
   // Encode the symbols into the audio buffer
   kazoo::Transcoder<TestToken> transcoder{TEST_SYMBOL_MODEL};
-  EXPECT_EQ(transcoder.encodeAvailableSymbols(s_stream), 5);
+  kazoo::AudioChannel audio_channel;
+  EXPECT_EQ(transcoder.encodeAvailableSymbols(s_stream, audio_channel), 5);
 
   // Ensure the symbols were popped from the stream
   EXPECT_EQ(s_stream.getNumSymbols(), 0);

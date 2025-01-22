@@ -20,25 +20,24 @@ class Transcoder {
   /// into the audio buffer.
   /// @param symbol_stream - The symbol stream to pop symbols off of.
   /// @return The number of symbols that were added.
-  size_t encodeAvailableSymbols(SymbolStream<Token_t>& symbol_stream) {
+  size_t encodeAvailableSymbols(SymbolStream<Token_t>& symbol_stream,
+                                IAudioChannel& audio_channel) {
     size_t num_symbols_added = 0;
     Token_t symbol_token;
     while (symbol_stream.popSymbol(symbol_token)) {
-      encodeSymbol(symbol_token);
+      encodeSymbol(symbol_token, audio_channel);
       ++num_symbols_added;
     }
     return num_symbols_added;
   }
 
  private:
-  void encodeSymbol(Token_t token) {
+  void encodeSymbol(Token_t token, IAudioChannel& audio_channel) {
     std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
-    audio_channel_.addSample(0x00);
+    audio_channel.addSample(0x00);
   }
 
   const ISymbolModel<Token_t>& symbol_model_;
-
-  AudioChannel audio_channel_;
 };
 
 }  // namespace kazoo

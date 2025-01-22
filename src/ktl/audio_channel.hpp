@@ -12,13 +12,20 @@
 
 namespace kazoo {
 
-class AudioChannel {
+class IAudioChannel {
+ public:
+  virtual ~IAudioChannel() = default;
+
+  virtual void addSample(int16_t sample) = 0;
+};
+
+class AudioChannel : public IAudioChannel {
  public:
   using Sample = int16_t;
 
   AudioChannel() = default;
 
-  void addSample(Sample sample) { samples_.push_back(sample); }
+  void addSample(Sample sample) override { samples_.push_back(sample); }
 
   void addSamples(std::span<const Sample> samples) {
     for (const auto sample : samples) {

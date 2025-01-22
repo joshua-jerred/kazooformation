@@ -5,6 +5,36 @@ project.
 
 It is implemented as a C++ library, via CMake as an interface library, with the target name `kazoo_translation_layer`.
 
+## Public Interface: `ktl::TranslationLayer`
+
+The entire translation layer is intended to be used through an instance of the class, `ktl::TranslationLayer`, which
+can be found in `ktl/translation_layer.hpp`.
+
+```c++
+#include <ktl/translation_layer.hpp>
+
+int main() {
+    ktl::TranslationLayer tl{ktl::KazooModel::BINARY};
+    
+    std::array<uint8_t> input_data = {0x01, 0x02, 0x03, 0x04, 0x05};
+    
+    
+    // Add the data to the data/symbol streams.
+    // This is accumulated until encode() is called,
+    // at which point the data is encoded into an,
+    // audio stream and the data/symbol streams are 
+    // cleared.
+    tl.addData(input_data); 
+    
+    
+    tl.encode(); 
+    // Encode the symbols into an audio stream
+    
+    tl.saveWav("output.wav"); // Save the audio to a wav file
+    tl.playPulseAudio();      // Block and play the audio through pulse audio
+}
+```
+
 ## Structure / Design
 
 ```puml
@@ -42,6 +72,7 @@ package ktl {
      -const map<value, token>
    }
   SymbolStream <--> SymbolModel
+  Transcoder <--> SymbolModel
 
   class Transcoder {}
   
