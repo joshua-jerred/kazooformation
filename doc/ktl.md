@@ -3,7 +3,47 @@
 The KTL is responsible for translating between raw data and Kazoo audio. This is the real meat and potatoes of the
 project.
 
-![KTL Structure](uml/ktl_structure.png)
+It is implemented as a C++ library, via CMake as an interface library, with the target name `kazoo_translation_layer`.
+
+## Structure / Design
+
+```puml
+@startuml ktl_structure
+
+title Kazoo Translation Layer Structure
+
+object input_binary_data
+input_binary_data : Binary File
+input_binary_data : C Array
+input_binary_data : String
+
+object pulse_audio_io
+object wav_file
+
+package ktl {
+  class BinaryStream {}
+  class SymbolStream {}
+  class SymbolTable {}
+  class KazooTranscoder {}
+
+  ' interface SymbolModel {
+  '   +getSymbolValue(token) const
+  '   +getSymbolToken(value) const
+
+  '   -const map<token, value>
+  '   -const map<value, token>
+  ' }
+
+  input_binary_data <--> BinaryStream
+  SymbolStream <--> BinaryStream
+  SymbolStream <--> KazooTranscoder
+  SymbolStream <--> SymbolTable
+  KazooTranscoder <--> pulse_audio_io
+  KazooTranscoder <--> wav_file
+}
+
+@enduml
+```
 
 ```mermaid
 ---
