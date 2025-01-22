@@ -24,7 +24,7 @@ class TranslationLayer {
     BINARY
   };
 
-  TranslationLayer(const ModelType model = ModelType::BINARY)
+  TranslationLayer(const ModelType model)
       : model_type_(model) {}
 
   /// @brief Takes input data and processes it through the symbol stream.
@@ -32,12 +32,14 @@ class TranslationLayer {
   void addData(std::span<const uint8_t> data) {
     binary_stream_.addBytes(data);
     symbol_stream_.processBinaryStream(binary_stream_);
-    stats_.num_bytes += symbol_stream_.getNumBytes();
+    KTL_ASSERT(binary_stream_.getNumBits() <= 8);
+    stats_.num_bytes = symbol_stream_.getNumBytes();
   }
 
   void encode() {
     stats_.symbols_last_encoded =
         transcoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
+    stats_.num_bytes = symbol_stream_.getNumBytes();
   }
 
   struct Stats {

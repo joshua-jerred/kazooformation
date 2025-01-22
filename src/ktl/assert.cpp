@@ -8,8 +8,8 @@
 
 #include <ktl/assert.hpp>
 
-void ktl_assert_internal_(bool eval, const char *file, int line,
-                          const char *func, const char *eval_str) {
+void ktlast_(bool eval, const char *file, int line, const char *func,
+             const char *eval_str) {
   if (eval) {
     return;
   }

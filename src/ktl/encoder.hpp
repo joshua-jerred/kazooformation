@@ -1,6 +1,6 @@
 /// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
-/// @file transcoder.hpp
+/// @file encoder.hpp
 /// @date 2025-01-21
 
 #pragma once

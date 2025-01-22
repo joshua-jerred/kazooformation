@@ -5,9 +5,9 @@
 
 #pragma once
 
+#include <ktl/encoder.hpp>
 #include <ktl/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
-#include <ktl/transcoder.hpp>
 
 namespace kazoo::model {
 

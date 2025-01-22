@@ -3,7 +3,7 @@
 #include <testing.hpp>
 
 #include <ktl/audio_channel.hpp>
-#include <ktl/transcoder.hpp>
+#include <ktl/encoder.hpp>
 
 TEST(Transcoder_test, encodeAvailableSymbols) {
   // Throw a few symbols in the stream
