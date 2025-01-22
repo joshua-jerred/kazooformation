@@ -40,11 +40,13 @@ class TranslationLayer {
     stats_.symbols_last_encoded =
         transcoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
     stats_.num_bytes = symbol_stream_.getNumBytes();
+    stats_.audio_samples = audio_channel_.getNumSamples();
   }
 
   struct Stats {
     size_t num_bytes{0};
     size_t symbols_last_encoded{0};
+    size_t audio_samples{0};
   };
   Stats getStats() const { return stats_; }
 
