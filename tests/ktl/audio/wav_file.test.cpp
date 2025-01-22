@@ -10,4 +10,6 @@ TEST(WavFile_test, loadWav) {
 
   kazoo::WavFile wav_file;
   wav_file.read(TEST_WAV_PATH);
+
+  wav_file.getHeader().print();
 }
