@@ -31,9 +31,7 @@ class TranslationLayer {
   /// @param data - The input data to be processed.
   void addData(std::span<const uint8_t> data) {
     binary_stream_.addBytes(data);
-
-    constexpr bool POP_FROM_INPUT_STREAM = true;
-    symbol_stream_.processBinaryStream(binary_stream_, POP_FROM_INPUT_STREAM);
+    symbol_stream_.processBinaryStream(binary_stream_);
     stats_.num_bytes += symbol_stream_.getNumBytes();
   }
 

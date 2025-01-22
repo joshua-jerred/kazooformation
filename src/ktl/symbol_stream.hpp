@@ -91,29 +91,19 @@ class SymbolStream {
   /// @param binary_stream - The binary stream to process
   /// @param pop_bytes - Whether to pop bytes from the input stream
   /// @return std::pair<number of bytes processed, number of symbols processed>
-  std::pair<size_t, size_t> processBinaryStream(BinaryStream &binary_stream,
-                                                bool pop_bytes = true) {
-    const auto bytes = binary_stream.getStreamDataConst();
-    size_t num_bytes_processed = 0;
-
-    const size_t symbol_bit_width = symbol_model_.getSymbolBitWidth();
-    const size_t num_symbols = bytes.size() * 8 / symbol_bit_width;
-    for (size_t i = 0; i < num_symbols; ++i) {
-      uint32_t symbol_value = 0;
-      for (size_t j = 0; j < symbol_bit_width; ++j) {
-        const size_t byte_index = (i * symbol_bit_width + j) / 8;
-        const size_t bit_index = (i * symbol_bit_width + j) % 8;
-        const uint8_t byte = bytes.at(byte_index);
-        const uint8_t bit = (byte >> (7 - bit_index)) & 0x1;
-        symbol_value |= bit << (symbol_bit_width - 1 - j);
-      }
-
+  std::pair<size_t, size_t> processBinaryStream(BinaryStream &binary_stream) {
+    KTL_ASSERT(binary_stream.isByteAligned());
+    size_t num_bytes = binary_stream.getNumBytes();
+    uint8_t symbol_value_buffer{0};
+    size_t num_symbols_processed{0};
+    while (binary_stream.popBits(symbol_value_buffer,
+                                 symbol_model_.getSymbolBitWidth())) {
       symbols_.push_back(
-          static_cast<Token_t>(symbol_model_.getSymbolId(symbol_value)));
-      ++num_bytes_processed;
+          static_cast<Token_t>(symbol_model_.getSymbolId(symbol_value_buffer)));
+      ++num_symbols_processed;
     }
 
-    return {num_bytes_processed, num_symbols};
+    return {(num_bytes - binary_stream.getNumBytes()), num_symbols_processed};
   }
 
  private:

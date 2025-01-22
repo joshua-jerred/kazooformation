@@ -73,7 +73,7 @@ TEST(BinaryStream_test, linearFlow) {
   stream.addBits(0b101, bit_width);
   stream.addBits(0b101, bit_width);
   stream.addBits(0b111, bit_width);
-  std::cout << "stream: " << stream << std::endl;
+  // std::cout << "stream: " << stream << std::endl;
   ASSERT_EQ(stream.getNumBits(), 18);
   stream.pad();
   ASSERT_EQ(stream.getNumBits(), 24);

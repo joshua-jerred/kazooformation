@@ -58,29 +58,72 @@ TEST(SymbolStream_test, populateBinaryStream) {
   }
 }
 
-/// @todo
 TEST(SymbolStream_test, processBinaryStream) {
-  GTEST_SKIP() << "Not implemented";
+  kazoo::BinaryStream in_stream;
+  in_stream.addBits(0b11, 2);
+  in_stream.addBits(0b10, 2);
+  in_stream.addBits(0b01, 2);
+  in_stream.addBits(0b00, 2);
 
-  kazoo::BinaryStream expected_stream;
-  {
-    kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_MODEL);
-    processor.addSymbol(TestToken::SYMBOL_11);
-    processor.addSymbol(TestToken::SYMBOL_01);
-    processor.addSymbol(TestToken::SYMBOL_10);
-    processor.addSymbol(TestToken::SYMBOL_10);
-    processor.addSymbol(TestToken::SYMBOL_10);
-    processor.populateBinaryStream(expected_stream, 2, false);
-    ASSERT_EQ(expected_stream.getNumBits(), 10);
-    const auto in_bytes = expected_stream.getStreamDataConst();
-    ASSERT_EQ(in_bytes.size(), 2);
-    ASSERT_EQ(in_bytes.at(0), 0b10100111);
-    ASSERT_EQ(in_bytes.at(1), 0b10);
-  }
+  in_stream.addBits(0b0000, 4);
+  in_stream.addBits(0b1111, 4);
+
+  ASSERT_EQ(in_stream.getNumBytes(), 2);
 
   kazoo::SymbolStream<TestToken> processor(TEST_SYMBOL_MODEL);
-  auto res_pare = processor.processBinaryStream(expected_stream);
-  EXPECT_EQ(res_pare.first, 2) << "Bytes processed should be 2";
-  EXPECT_EQ(res_pare.second, 5) << "Symbols processed should be 5";
-  // kazoo::BinaryStream processor_stream;
+  auto res_pare = processor.processBinaryStream(in_stream);
+  EXPECT_EQ(res_pare.first, 2) << "Bytes processed";
+  EXPECT_EQ(res_pare.second, 8) << "Symbols processed";
+
+  TestToken token;
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_11);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_10);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_01);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_00);
+
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_00);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_00);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_11);
+  EXPECT_TRUE(processor.popSymbol(token));
+  EXPECT_EQ(token, TestToken::SYMBOL_11);
+}
+
+/// @test Validate that an array can be converted to and from symbols.
+TEST(SymbolStream_test, arrayValidation) {
+  const std::array<uint8_t, 10U> INPUT_DATA = {0x00, 0x01, 0x02, 0x03, 0x04,
+                                               0x05, 0x06, 0x07, 0x08, 0x09};
+  kazoo::BinaryStream in_stream;
+  in_stream.addBytes(INPUT_DATA);
+
+  kazoo::SymbolStream<TestToken> input_processor(TEST_SYMBOL_MODEL);
+  input_processor.processBinaryStream(in_stream);
+  EXPECT_EQ(input_processor.getNumBytes(), 10);
+  EXPECT_EQ(input_processor.getNumSymbols(), 40);
+
+  kazoo::SymbolStream<TestToken> output_processor(TEST_SYMBOL_MODEL);
+  TestToken token;
+  while (input_processor.popSymbol(token)) {
+    output_processor.addSymbol(token);
+  }
+
+  EXPECT_EQ(output_processor.getNumBytes(), 10);
+  EXPECT_EQ(output_processor.getNumSymbols(), 40);
+  EXPECT_EQ(output_processor.getNumBits(), 80);
+
+  kazoo::BinaryStream out_stream;
+  output_processor.populateBinaryStream(out_stream, 10, false);
+  EXPECT_EQ(out_stream.getNumBytes(), 10);
+
+  auto out_data = out_stream.getStreamDataConst();
+  EXPECT_EQ(INPUT_DATA.size(), out_data.size());
+  for (size_t i = 0; i < INPUT_DATA.size(); i++) {
+    EXPECT_EQ(INPUT_DATA.at(i), out_data.at(i));
+  }
 }

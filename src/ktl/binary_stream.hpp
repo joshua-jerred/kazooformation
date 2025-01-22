@@ -47,8 +47,7 @@ class BinaryStream {
   }
 
   void addBit(bool bit_value) {
-    ktl_assert(num_bits_used_in_output_buffer_ == 0,
-               "Output buffer is not empty");
+    KTL_ASSERT(num_bits_used_in_output_buffer_ == 0);
 
     if (num_bits_in_input_buffer_ == 0) {
       stream_data_.push_back(0);
@@ -65,7 +64,7 @@ class BinaryStream {
   }
 
   std::optional<bool> popBit() {
-    ktl_assert(num_bits_in_input_buffer_ == 0, "Input buffer is not empty");
+    KTL_ASSERT(num_bits_in_input_buffer_ == 0);
 
     if (stream_data_.empty()) {
       return std::nullopt;
@@ -75,11 +74,11 @@ class BinaryStream {
     stream_data_.front() >>= 1;               // Shift the byte to the right
     num_bits_used_in_output_buffer_++;  // Increment the number of bits used
 
-    std::cout << "our bit: " << static_cast<int>(output)
-              << ", num_bits_used_in_output_buffer_: "
-              << num_bits_used_in_output_buffer_
-              << ", front: " << std::bitset<8>(stream_data_.front())
-              << std::endl;
+    // std::cout << "our bit: " << static_cast<int>(output)
+    //           << ", num_bits_used_in_output_buffer_: "
+    //           << num_bits_used_in_output_buffer_
+    //           << ", front: " << std::bitset<8>(stream_data_.front())
+    //           << std::endl;
 
     // If we've used all the bits in the byte, pop it off the front.
     if (num_bits_used_in_output_buffer_ == 8) {
@@ -99,7 +98,7 @@ class BinaryStream {
   /// @exception You cannot pop bits off the front if input bit buffer is in
   /// use.
   bool popBits(uint8_t &output, size_t num_bits) {
-    ktl_assert(num_bits_in_input_buffer_ == 0, "Input buffer is not empty");
+    KTL_ASSERT(num_bits_in_input_buffer_ == 0);
     if (num_bits > 8 || num_bits == 0) {
       throw std::invalid_argument("num_bits must be <= 8 and > 0");
     }
@@ -191,8 +190,7 @@ class BinaryStream {
   /// the remaining bits until the stream is byte aligned.
   /// @details artifically
   void pad() {
-    ktl_assert(num_bits_used_in_output_buffer_ == 0,
-               "This is only for the input buffer");
+    KTL_ASSERT(num_bits_used_in_output_buffer_ == 0);
     while (!isByteAligned()) {
       addBit(0);
     }
