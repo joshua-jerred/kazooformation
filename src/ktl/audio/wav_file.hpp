@@ -301,6 +301,7 @@ class WavFile : public IAudioChannel {
       int16_t sample = static_cast<int16_t>((amplitude * sin(wave_angle_)) *
                                             MAX_SAMPLE_AMPLITUDE);
       addSample(sample);
+      // std::cout << "sample: " << sample << std::endl;
 
       if (wave_angle_ > M_PI) {
         wave_angle_ -= M_PI;

@@ -6,8 +6,13 @@
 #pragma once
 
 #include <cmath>
+#include <complex>
 #include <fftw3.h>
 #include <span>
+
+#include "audio_channel.hpp"
+
+#include <ktl/assert.hpp>
 
 namespace kazoo {
 
@@ -16,30 +21,67 @@ class Fft {
  public:
   Fft() = default;
 
-  static void compute() {
-    const int N = 64;
-    std::array<fftw_complex, N> in;
-    std::array<fftw_complex, N> out;
+  // static void compute() {
+  //   const int N = 64;
+  //   std::array<fftw_complex, N> in;
+  //   std::array<fftw_complex, N> out;
+  //
+  //   int i;
+  //   prepareCosWave(in);
+  //   performFft(in, out);
+  //   for (i = 0; i < N; i++)
+  //     printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+  // }
 
-    int i;
-    prepareCosWave(in);
-    performFft(in, out);
-    for (i = 0; i < N; i++)
-      printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
-  }
+  //  static void performFft(std::span<fftw_complex> in,
+  //                         std::span<fftw_complex> out) {
+  //    const int N = in.size();
+  //    if (in.size() != out.size()) {
+  //      throw std::runtime_error("Input and output arrays must be the same
+  //      size");
+  //    }
+  //
+  //    fftw_plan p;
+  //    p = fftw_plan_dft_1d(N, in.data(), out.data(), FFTW_FORWARD,
+  //    FFTW_ESTIMATE); fftw_execute(p); fftw_destroy_plan(p); fftw_cleanup();
+  //
+  //    for (int i = 0; i < N; i++)
+  //      printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+  //  }
 
-  static void performFft(std::span<fftw_complex> in,
-                         std::span<fftw_complex> out) {
-    const int N = in.size();
-    if (in.size() != out.size()) {
-      throw std::runtime_error("Input and output arrays must be the same size");
+  // frequency:amplitude
+  using FftResults = std::vector<std::pair<double, double>>;
+
+  static void performFftFrequency(IAudioChannel& input, FftResults& results) {
+    // https://cplusplus.com/forum/beginner/251061/
+
+    const uint32_t num_samples = input.getSamplesRef().size();
+    const uint32_t fft_bins = num_samples;
+    const uint32_t sample_rate = 44100;
+    const double delta_f = static_cast<double>(sample_rate) / fft_bins;
+
+    std::vector<double> in;  // your data in time domein (note, real)
+
+    // Load in and normalize the data
+    for (int16_t a : input.getSamplesRef()) {
+      in.push_back(static_cast<double>(a) / 32768.0);
+      // in.push_back(static_cast<double>(a));
     }
 
-    fftw_plan p;
-    p = fftw_plan_dft_1d(N, in.data(), out.data(), FFTW_FORWARD, FFTW_ESTIMATE);
+    std::vector<std::complex<double>> out(in.size() / 2 + 1);
+
+    fftw_plan p = fftw_plan_dft_r2c_1d(
+        in.size(), in.data(), reinterpret_cast<fftw_complex*>(out.data()),
+        FFTW_ESTIMATE);
+
     fftw_execute(p);
-    fftw_destroy_plan(p);
-    fftw_cleanup();
+
+    std::cout << "in/out size: " << in.size() << " " << out.size() << '\n';
+    for (int K = 1; K < out.size(); ++K) {
+      results.push_back({K * delta_f, 2 * std::abs(out[K]) / in.size()});
+    }
+
+    fftw_destroy_plan(p);  // destructor
   }
 
   static void prepareCosWave(std::span<fftw_complex> in) {
