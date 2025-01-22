@@ -15,6 +15,9 @@ target_sources(kazoo_translation_layer INTERFACE
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 
+add_subdirectory(lib/fftw-3.3.10 EXCLUDE_FROM_ALL)
+target_link_libraries(kazoo_translation_layer INTERFACE fftw3 fftw3f)
+
 ### Executables
 add_executable(kazoo_connect
         src/main.cpp
@@ -39,5 +42,4 @@ target_include_directories(kazoo_translation_layer_test
         tests
         tests/ktl
 )
-
 configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)

@@ -35,11 +35,11 @@ TEST(WavFile_test, saveAndLoadWav) {
   wav_file.addSample(0xFFFF);
   EXPECT_EQ(wav_file.getNumSamples(), 4);
   wav_file.write(TEST_WAV_PATH);
-  wav_file.getHeader().print();
+  // wav_file.getHeader().print();
   EXPECT_TRUE(std::filesystem::exists(TEST_WAV_PATH));
 
   kazoo::WavFile new_wav_file;
   new_wav_file.read(TEST_WAV_PATH);
-  new_wav_file.getHeader().print();
+  // new_wav_file.getHeader().print();
   EXPECT_EQ(new_wav_file.getNumSamples(), 4);
 }
