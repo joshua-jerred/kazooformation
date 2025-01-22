@@ -25,7 +25,7 @@ std::ostream &operator<<(std::ostream &os,
 
       for (int i = 7; i >= 0; i--) {
         if (is_last_byte &&
-            (8 - static_cast<int>(binary_stream.getNumUpspecifiedBits())) <=
+            (8 - static_cast<int>(binary_stream.getInputBitBufferSpace())) <=
                 i) {
           os << "x";
         } else {

@@ -10,7 +10,9 @@
 #include <cmath>
 #include <cstdint>
 #include <deque>
+#include <iostream>
 #include <map>
+#include <optional>
 #include <span>
 #include <sstream>
 #include <vector>
@@ -34,52 +36,87 @@ class BinaryStream {
   BinaryStream() = default;
 
   /// @brief Add individual bits to the stream.
-  /// @details Right aligned, so the first bits added will be the least
-  /// significant bits.
-  /// ex: addBits(0b1010, 4) -> 0bxxxx1010, addBits(0b111, 3) -> 0bx1111010
+  /// @details Lest significant bit is added first.
   /// @param input_bits - The bits to be added to the stream, right aligned.
   /// @param num_bits - The number of bits to add to the stream, must be between
   /// 1 and 8 inclusive.
   void addBits(uint8_t input_bits, size_t num_bits) {
-    ktl_assert(num_bits_in_output_buffer_ == 0, "Output buffer is not empty");
-    if (num_bits > 8 || num_bits == 0) {
-      throw std::invalid_argument("num_bits must be <= 8 and > 0");
+    for (size_t i = 0; i < num_bits; i++) {
+      addBit((input_bits >> i) & 1);
     }
+  }
 
-    // if the stream is byte aligned, we need to add a byte to the stream
+  void addBit(bool bit_value) {
+    ktl_assert(num_bits_used_in_output_buffer_ == 0,
+               "Output buffer is not empty");
+
     if (num_bits_in_input_buffer_ == 0) {
       stream_data_.push_back(0);
     }
 
-    uint8_t &input_bit_buffer = stream_data_.back();
+    stream_data_.back() |= static_cast<uint32_t>(bit_value ? 1U : 0U)
+                           << num_bits_in_input_buffer_;
+    num_bits_in_input_buffer_++;
 
-    if (num_bits + num_bits_in_input_buffer_ >= 8) {
-      const size_t bits_to_add = 8 - num_bits_in_input_buffer_;
-      const uint8_t mask = (1 << bits_to_add) - 1;
-      const uint8_t bits_to_add_masked = input_bits & mask;
-      input_bit_buffer |= bits_to_add_masked << num_bits_in_input_buffer_;
+    // The back byte is full, we're aligned and happy.
+    if (num_bits_in_input_buffer_ == 8) {
       num_bits_in_input_buffer_ = 0;
-
-      const size_t remaining_bits = num_bits - bits_to_add;
-      if (remaining_bits > 0) {
-        addBits(input_bits >> bits_to_add, remaining_bits);
-      }
-    } else {
-      input_bit_buffer |= input_bits << num_bits_in_input_buffer_;
-      num_bits_in_input_buffer_ += num_bits;
     }
+  }
+
+  std::optional<bool> popBit() {
+    ktl_assert(num_bits_in_input_buffer_ == 0, "Input buffer is not empty");
+
+    if (stream_data_.empty()) {
+      return std::nullopt;
+    }
+
+    bool output = stream_data_.front() & 1U;  // Check the LSB
+    stream_data_.front() >>= 1;               // Shift the byte to the right
+    num_bits_used_in_output_buffer_++;  // Increment the number of bits used
+
+    std::cout << "our bit: " << static_cast<int>(output)
+              << ", num_bits_used_in_output_buffer_: "
+              << num_bits_used_in_output_buffer_
+              << ", front: " << std::bitset<8>(stream_data_.front())
+              << std::endl;
+
+    // If we've used all the bits in the byte, pop it off the front.
+    if (num_bits_used_in_output_buffer_ == 8) {
+      stream_data_.pop_front();
+      num_bits_used_in_output_buffer_ = 0;
+    }
+
+    return output;
   }
 
   /// @brief Pop bits off the front, effectively the inverse of addBits.
   /// @param output - The output buffer to store the bits in. This becomes
   /// zeroed along with the number of bits being added.
   /// @param num_bits - The number of bits to pop off the front of the stream.
-  /// @return \c true if there were enought bits to complete the operation,
+  /// @return \c true if there were enough bits to complete the operation,
   /// \c false otherwise.
   /// @exception You cannot pop bits off the front if input bit buffer is in
   /// use.
   bool popBits(uint8_t &output, size_t num_bits) {
+    ktl_assert(num_bits_in_input_buffer_ == 0, "Input buffer is not empty");
+    if (num_bits > 8 || num_bits == 0) {
+      throw std::invalid_argument("num_bits must be <= 8 and > 0");
+    }
+    if (stream_data_.empty() || getNumBits() < num_bits) {
+      return false;
+    }
 
+    output = 0;
+    for (size_t i = 0; i < num_bits; i++) {
+      auto bit = popBit();
+      if (!bit.has_value()) {
+        return false;
+      }
+      output |= static_cast<uint8_t>(bit.value()) << i;
+    }
+
+    return true;
   }
 
   /// @brief Add bytes to the stream. If the stream is not byte aligned when
@@ -98,7 +135,13 @@ class BinaryStream {
   /// @brief Get the number of bits in the stream.
   /// @return The number of bits in the stream.
   size_t getNumBits() const {
-    return stream_data_.size() * 8 - getNumUpspecifiedBits();
+    // std::cout << "stream_data_.size(): " << stream_data_.size()
+    //           << ", getInputBitBufferSpace(): " << getInputBitBufferSpace()
+    //           << ", getOutputBitBufferUsedBits(): "
+    //           << getOutputBitBufferUsedBits() << std::endl;
+
+    return (stream_data_.size() * 8) - getInputBitBufferSpace() -
+           getOutputBitBufferUsedBits();
   }
 
   /// @brief Get the number of bytes in the stream. If the stream has spare
@@ -109,16 +152,26 @@ class BinaryStream {
 
   /// @brief Get the byte alignment status of the stream.
   /// @return \c true if the stream is byte aligned, \c false otherwise.
-  bool isByteAligned() const { return num_bits_in_input_buffer_ == 0; }
+  bool isByteAligned() const {
+    return num_bits_in_input_buffer_ == 0 &&
+           num_bits_used_in_output_buffer_ == 0;
+  }
 
   /// @brief If adding bits, this will return the number of bits that can be
   /// added to the stream before the stream is byte aligned.
   /// @return The number of missing bits to align the stream to a byte.
-  size_t getNumUpspecifiedBits() const {
-    if (isByteAligned()) {
+  size_t getInputBitBufferSpace() const {
+    if (num_bits_in_input_buffer_ == 0) {
       return 0;
     }
     return 8 - num_bits_in_input_buffer_;
+  }
+
+  size_t getOutputBitBufferUsedBits() const {
+    if (isByteAligned()) {
+      return 0;
+    }
+    return num_bits_used_in_output_buffer_;
   }
 
   /// @brief Get the next num_bytes bytes from the stream. Does not remove the
@@ -138,9 +191,10 @@ class BinaryStream {
   /// the remaining bits until the stream is byte aligned.
   /// @details artifically
   void pad() {
-    if (num_bits_in_input_buffer_ != 0) {
-      stream_data_.push_back(0);
-      num_bits_in_input_buffer_ = 0;
+    ktl_assert(num_bits_used_in_output_buffer_ == 0,
+               "This is only for the input buffer");
+    while (!isByteAligned()) {
+      addBit(0);
     }
   }
 
@@ -157,7 +211,7 @@ class BinaryStream {
   /// @details Same deal as above, but for the output buffer. This can only
   /// be allowed to be non-zero if the input buffer is zero. This is to
   /// be used for the getBits() method.
-  size_t num_bits_in_output_buffer_{0};
+  size_t num_bits_used_in_output_buffer_{0};
 };
 
 }  // namespace kazoo
