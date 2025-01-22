@@ -28,14 +28,6 @@ class Fft {
       printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
   }
 
-  static void prepareCosWave(std::span<fftw_complex> in) {
-    const int N = in.size();
-    for (int i = 0; i < N; i++) {
-      in[i][0] = cos(4 * 2 * M_PI * i / N);
-      in[i][1] = 0;  // no imaginary part
-    }
-  }
-
   static void performFft(std::span<fftw_complex> in,
                          std::span<fftw_complex> out) {
     const int N = in.size();
@@ -50,7 +42,13 @@ class Fft {
     fftw_cleanup();
   }
 
-  void prepareSinWave() {}
+  static void prepareCosWave(std::span<fftw_complex> in) {
+    const int N = in.size();
+    for (int i = 0; i < N; i++) {
+      in[i][0] = cos(4 * 2 * M_PI * i / N);
+      in[i][1] = 0;  // no imaginary part
+    }
+  }
 };
 
 }  // namespace kazoo

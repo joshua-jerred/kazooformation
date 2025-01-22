@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -207,6 +208,15 @@ class WavFile : public IAudioChannel {
     // 34-35: Bits Per Sample | 8, 16, 24, 32
     // static constexpr uint16_t bits_per_sample = 16;
   };
+  static constexpr FormatChunk DEFAULT_FORMAT_CHUNK = {
+      .bits_per_sample = 16,
+      .format_chunk_size = 16,
+      .format_code = 1,                 // 1 = PCM
+      .num_channels = 1,                // 1 = Mono, 2 = Stereo
+      .sample_rate = 44100,             // 44100 Hz
+      .byte_rate = 44100 * 1 * 16 / 8,  // 44100 * 1 * 16 / 8
+      .block_align = 4                  // 1 * 16 / 8
+  };
 
   struct DataChunk {
     // 0-3: "data"
@@ -228,19 +238,9 @@ class WavFile : public IAudioChannel {
     // 8-11: "WAVE"
     static constexpr std::array<char, 4> WAVE = {'W', 'A', 'V', 'E'};
 
-    FormatChunk format_chunk{};
+    FormatChunk format_chunk{DEFAULT_FORMAT_CHUNK};
 
     DataChunk data_chunk{};
-
-    static constexpr FormatChunk DEFAULT_FORMAT_CHUNK = {
-        .bits_per_sample = 16,
-        .format_chunk_size = 16,
-        .format_code = 1,                 // 1 = PCM
-        .num_channels = 1,                // 1 = Mono, 2 = Stereo
-        .sample_rate = 44100,             // 44100 Hz
-        .byte_rate = 44100 * 1 * 16 / 8,  // 44100 * 1 * 16 / 8
-        .block_align = 4                  // 1 * 16 / 8
-    };
 
     void resterToDefault() {
       format_chunk = DEFAULT_FORMAT_CHUNK;
@@ -289,10 +289,35 @@ class WavFile : public IAudioChannel {
     return static_cast<uint32_t>(getDurationSeconds() * 1000);
   }
 
+  void addSineWaveSamples(uint16_t frequency, double amplitude,
+                          uint32_t samples) {
+    constexpr double MAX_SAMPLE_AMPLITUDE = 32767.0;  // 2^15 - 1 (16-bit PCM)
+
+    const float offset =
+        M_PI * frequency / wav_header_.format_chunk.sample_rate;
+
+    for (uint32_t i = 0; i < samples; i++) {  // For each sample
+      wave_angle_ += offset;
+      int16_t sample = static_cast<int16_t>((amplitude * sin(wave_angle_)) *
+                                            MAX_SAMPLE_AMPLITUDE);
+      addSample(sample);
+
+      if (wave_angle_ > M_PI) {
+        wave_angle_ -= M_PI;
+      }
+    }
+  }
+
+  const std::span<const int16_t> getSamplesRef() const override {
+    return {samples_.data(), samples_.size()};
+  }
+
  private:
   WavHeader wav_header_{};
 
   std::vector<int16_t> samples_{};
+
+  double wave_angle_ = 0.0;
 };
 
 }  // namespace kazoo
