@@ -21,25 +21,39 @@ object pulse_audio_io
 object wav_file
 
 package ktl {
+  class kazoo::TranslationLayer {
+    +TranslationLayer(output_strategy)
+    +addData(span<uint8_t> data)
+    +encode()
+  }
+'  kazoo::TranslationLayer <--> input_binary_data
+  input_binary_data  <--> kazoo::TranslationLayer
+  kazoo::TranslationLayer <--> SymbolStream
+  kazoo::TranslationLayer <--> BinaryStream
+
   class BinaryStream {}
+  
   class SymbolStream {}
-  class SymbolTable {}
-  class KazooTranscoder {}
+  abstract SymbolModel {
+     +getSymbolValue(token) const
+     +getSymbolToken(value) const
 
-  ' interface SymbolModel {
-  '   +getSymbolValue(token) const
-  '   +getSymbolToken(value) const
+     -const map<token, value>
+     -const map<value, token>
+   }
+  SymbolStream <--> SymbolModel
 
-  '   -const map<token, value>
-  '   -const map<value, token>
-  ' }
+  class Transcoder {}
+  
+  
+  
+  kazoo::TranslationLayer <--> Transcoder
+  
+'  BinaryStream <--> SymbolStream
+'  SymbolStream <--> Transcoder
 
-  input_binary_data <--> BinaryStream
-  SymbolStream <--> BinaryStream
-  SymbolStream <--> KazooTranscoder
-  SymbolStream <--> SymbolTable
-  KazooTranscoder <--> pulse_audio_io
-  KazooTranscoder <--> wav_file
+  Transcoder <--> pulse_audio_io
+  Transcoder <--> wav_file
 }
 
 @enduml
