@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <map>
 
-#include <ktl/audio_channel.hpp>
+#include <ktl/audio/audio_channel.hpp>
 #include <ktl/symbol.hpp>
 
 namespace kazoo {

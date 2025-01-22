@@ -10,7 +10,7 @@
 #include <string>
 
 #include <ktl/assert.hpp>
-#include <ktl/audio_channel.hpp>
+#include <ktl/audio/audio_channel.hpp>
 
 namespace kazoo {
 

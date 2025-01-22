@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <ktl/audio_channel.hpp>
+#include <ktl/audio/audio_channel.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo {

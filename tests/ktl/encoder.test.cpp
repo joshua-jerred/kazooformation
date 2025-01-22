@@ -2,7 +2,7 @@
 #include <test_symbol_model.hpp>
 #include <testing.hpp>
 
-#include <ktl/audio_channel.hpp>
+#include <ktl/audio/audio_channel.hpp>
 #include <ktl/encoder.hpp>
 
 TEST(Transcoder_test, encodeAvailableSymbols) {
