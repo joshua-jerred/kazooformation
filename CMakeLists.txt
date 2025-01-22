@@ -10,6 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(kazoo_translation_layer INTERFACE)
 target_sources(kazoo_translation_layer INTERFACE
         src/ktl/binary_stream.cpp
+        src/ktl/translation_layer.cpp
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 

@@ -11,9 +11,9 @@
 namespace kazoo {
 
 template <typename Token_t>
-class Transcoder {
+class Encoder {
  public:
-  Transcoder(const ISymbolModel<Token_t>& symbol_model)
+  Encoder(const ISymbolModel& symbol_model)
       : symbol_model_(symbol_model) {}
 
   /// @brief Pops symbols from the front of the symbol stream and encodes them
@@ -37,7 +37,7 @@ class Transcoder {
     audio_channel.addSample(0x00);
   }
 
-  const ISymbolModel<Token_t>& symbol_model_;
+  const ISymbolModel& symbol_model_;
 };
 
 }  // namespace kazoo

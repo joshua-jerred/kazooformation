@@ -71,7 +71,7 @@ class BinaryStream {
   /// this function is called, an exception will be thrown.
   /// @param input_bits - The bits to be added to the stream,
   /// @param auto_pad
-  void addBytes(std::span<uint8_t> input_bytes) {
+  void addBytes(std::span<const uint8_t> input_bytes) {
     if (!isByteAligned()) {
       throw std::runtime_error("Stream is not byte aligned");
     }

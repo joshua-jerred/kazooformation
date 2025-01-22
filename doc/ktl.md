@@ -11,27 +11,38 @@ The entire translation layer is intended to be used through an instance of the c
 can be found in `ktl/translation_layer.hpp`.
 
 ```c++
+#include <array>
+
 #include <ktl/translation_layer.hpp>
 
 int main() {
+    
+
+
+    // Select the audio/symbol encoding model
     ktl::TranslationLayer tl{ktl::KazooModel::BINARY};
     
+    // array, vector, or span of uint8_t
     std::array<uint8_t> input_data = {0x01, 0x02, 0x03, 0x04, 0x05};
     
-    
-    // Add the data to the data/symbol streams.
-    // This is accumulated until encode() is called,
-    // at which point the data is encoded into an,
-    // audio stream and the data/symbol streams are 
-    // cleared.
+    // Add the data to the data/symbol streams. This is accumulated until
+    // encode() is called, at which point the data is encoded into an,
+    // audio stream and the data/symbol streams are cleared.
     tl.addData(input_data); 
     
-    
+    // Encode the symbols into an audio stream. This will clear the data/symbol
+    // streams and encode the data into an audio stream/buffer. This does not
+    // clear the audio stream, it appends to it. It also does not play or export
+    // the audio, it just encodes it into a buffer.
     tl.encode(); 
-    // Encode the symbols into an audio stream
     
-    tl.saveWav("output.wav"); // Save the audio to a wav file
-    tl.playPulseAudio();      // Block and play the audio through pulse audio
+    // Save the audio to a wav file at the specified path. Does not clear the audio stream.
+    tl.saveWav("output.wav");
+    
+    // Play the audio using pulse audio. This is a blocking call.
+    tl.playPulseAudio();
+    
+    return 0;
 }
 ```
 

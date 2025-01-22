@@ -10,8 +10,12 @@
 #include <ktl/translation_layer.hpp>
 
 TEST(TranslationLayer_test, encodeToWav) {
-  kazoo::TranslationLayer tl{kazoo::TranslationLayer::KazooModel::BINARY};
+  kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::TESTING};
 
   std::array<uint8_t, 4> data = {0, 1, 2, 3};
-  // tl.addData(data);
+  tl.addData(data);
+  tl.encode();
+
+  auto stats = tl.getStats();
+  EXPECT_EQ(stats.num_bytes, 4);
 }

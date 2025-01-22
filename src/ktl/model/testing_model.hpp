@@ -11,7 +11,7 @@
 
 namespace kazoo::model {
 
-class Binary {
+class Testing {
  public:
   enum class Token : uint32_t {
     UNKNOWN = 0,
@@ -28,10 +28,6 @@ class Binary {
 
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;
-
-  static SymbolStream<Token> makeStream(const ISymbolModel &model) {
-    return SymbolStream<Token>{model};
-  }
 };
 
 }  // namespace kazoo::model

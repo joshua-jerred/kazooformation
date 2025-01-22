@@ -17,7 +17,7 @@ TEST(Transcoder_test, encodeAvailableSymbols) {
   EXPECT_EQ(s_stream.getNumSymbols(), 5);
 
   // Encode the symbols into the audio buffer
-  kazoo::Transcoder<TestToken> transcoder{TEST_SYMBOL_MODEL};
+  kazoo::Encoder<TestToken> transcoder{TEST_SYMBOL_MODEL};
   kazoo::AudioChannel audio_channel;
   EXPECT_EQ(transcoder.encodeAvailableSymbols(s_stream, audio_channel), 5);
 

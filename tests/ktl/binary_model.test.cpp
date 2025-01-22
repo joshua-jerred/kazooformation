@@ -9,10 +9,10 @@
 #include <ktl/symbol_stream.hpp>
 
 TEST(BinaryModel_test, SymbolStreamIntegration) {
-  using Token = kazoo::model::BinaryModel::Token;
+  using Token = kazoo::model::Binary::Token;
 
-  kazoo::model::BinaryModel BINARY_MODEL;
-  kazoo::SymbolStream<kazoo::model::BinaryModel::Token> processor(BINARY_MODEL);
+  kazoo::model::Binary::Model BINARY_MODEL;
+  kazoo::SymbolStream<kazoo::model::Binary::Token> processor(BINARY_MODEL);
 
   // Test the initial state
   EXPECT_EQ(processor.getNumBits(), 0);
