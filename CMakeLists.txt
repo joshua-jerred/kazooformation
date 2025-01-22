@@ -26,7 +26,7 @@ find_package(GTest REQUIRED)
 include(GoogleTest)
 
 # lazy globbing (not best practice /shrug)
-file(GLOB kazoo_translation_layer_test_sources "tests/ktl/*.test.cpp")
+file(GLOB_RECURSE kazoo_translation_layer_test_sources "tests/ktl/*.test.cpp")
 add_executable(kazoo_translation_layer_test ${kazoo_translation_layer_test_sources})
 target_link_libraries(kazoo_translation_layer_test
         GTest::GTest
@@ -39,3 +39,5 @@ target_include_directories(kazoo_translation_layer_test
         tests
         tests/ktl
 )
+
+configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)
