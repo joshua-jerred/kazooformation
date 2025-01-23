@@ -29,7 +29,7 @@ class Binary {
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;
 
-  static SymbolStream<Token> makeStream(const ISymbolModel &model) {
+  static SymbolStream<Token> makeStream(const ISymbolModel& model) {
     return SymbolStream<Token>{model};
   }
 };

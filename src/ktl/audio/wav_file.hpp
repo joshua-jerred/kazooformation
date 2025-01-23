@@ -21,6 +21,12 @@ class WavFile : public IAudioChannel {
  public:
   WavFile() {}
 
+  void loadFromAudioChannel(IAudioChannel& audio_channel) {
+    auto ac_ref = audio_channel.getSamplesRef();
+
+    samples_ = std::vector<int16_t>(ac_ref.begin(), ac_ref.end());
+  }
+
   void addSample(int16_t sample) override { samples_.push_back(sample); }
 
   /// @brief Read a WAV file from disk. Clears the current audio sample buffer.

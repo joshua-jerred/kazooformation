@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <iostream>
 #include <map>
 
 #include <ktl/audio/audio_channel.hpp>
@@ -57,7 +58,7 @@ class SymbolModel : public ISymbolModel {
   uint32_t getValue(Token_t token) const { return token_values_.at(token); }
 
   Token_t getToken(uint32_t value) const {
-    for (const auto &[token, token_value] : token_values_) {
+    for (const auto& [token, token_value] : token_values_) {
       if (token_value == value) {
         return token;
       }

@@ -9,9 +9,11 @@
 #include <memory>
 #include <span>
 
+#include "audio/wav_file.hpp"
+
 #include <ktl/binary_stream.hpp>
-#include <ktl/model/binary_model.hpp>
-#include <ktl/model/testing_model.hpp>
+#include <ktl/models/binary_model.hpp>
+#include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
 namespace kazoo {
@@ -41,6 +43,12 @@ class TranslationLayer {
         transcoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
     stats_.num_bytes = symbol_stream_.getNumBytes();
     stats_.audio_samples = audio_channel_.getNumSamples();
+  }
+
+  void saveWav(const std::string& filename) {
+    WavFile wav_file;
+    wav_file.loadFromAudioChannel(audio_channel_);
+    wav_file.write(filename);
   }
 
   struct Stats {

@@ -10,8 +10,8 @@
 #include <span>
 
 #include <ktl/binary_stream.hpp>
-#include <ktl/model/binary_model.hpp>
-#include <ktl/model/testing_model.hpp>
+#include <ktl/models/binary_model.hpp>
+#include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
 namespace kazoo {

@@ -32,10 +32,16 @@ class Encoder {
   }
 
  private:
+  struct Context {
+    Token_t previous_symbol;
+    double wave_angle = 0;
+  };
+
+  Context context_;
+
   /// @todo
   void encodeSymbol(Token_t token, IAudioChannel& audio_channel) {
-    // std::cout << "encoding symbol: " << static_cast<int>(token) << std::endl;
-    audio_channel.addSample(0x00);
+    // symbol_model_.get
   }
 
   const ISymbolModel& symbol_model_;

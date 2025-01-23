@@ -5,7 +5,7 @@
 #include <ktl/audio/audio_channel.hpp>
 #include <ktl/encoder.hpp>
 
-TEST(Transcoder_test, encodeAvailableSymbols) {
+TEST(Encoder_test, encodeAvailableSymbols) {
   // Throw a few symbols in the stream
   kazoo::SymbolStream<TestToken> s_stream{TEST_SYMBOL_MODEL};
   s_stream.addSymbol(TestToken::SYMBOL_00);

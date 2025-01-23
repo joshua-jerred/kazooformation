@@ -5,7 +5,7 @@
 
 #include <testing.hpp>
 
-#include <ktl/model/binary_model.hpp>
+#include <ktl/models/binary_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
 TEST(BinaryModel_test, SymbolStreamIntegration) {
