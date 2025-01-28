@@ -16,11 +16,11 @@
 
 namespace kazoo {
 
-static const model::Testing::Model TEST_MODEL;
-static const model::Binary::Model BIN_MODEL;
+static const model::Testing::Model TEST_MODEL{};
+static const model::Binary::Model BIN_MODEL{};
 
 const ISymbolModel& TranslationLayer::getStaticSymbolModel(
-    ModelType model_type) {
+    const ModelType model_type) {
   switch (model_type) {
     case ModelType::TESTING:
       return TEST_MODEL;

@@ -46,6 +46,14 @@ int main() {
 }
 ```
 
+## Models
+
+- Testing Model & Binary Model
+    - Models created for testing purposes. The Testing Model is aligned FSK.
+- K1 Model
+    - The first kazoo model. Two symbol/binary model @ 1 bit per symbol. 50 symbols per second. Has basic signal
+      alignment abilities.
+
 ## Structure / Design
 
 ```puml
