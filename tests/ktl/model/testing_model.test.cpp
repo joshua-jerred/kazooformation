@@ -1,3 +1,4 @@
+#include <filesystem>
 
 #include <testing.hpp>
 
@@ -9,6 +10,13 @@
 TEST(TestingModel_test, encodeAndDecode) {
   const auto model = kazoo::model::Testing::Model{};
   static constexpr size_t SYM_COUNT = 5;
+  const std::string TEST_WAV_FILE = "TestingModel_test.encodeAndDecode.wav";
+
+  // Delete the test file if it exists
+  if (std::filesystem::exists(TEST_WAV_FILE)) {
+    std::filesystem::remove(TEST_WAV_FILE);
+  }
+  ASSERT_FALSE(std::filesystem::exists(TEST_WAV_FILE));
 
   // First, encode the file
   {
@@ -28,21 +36,22 @@ TEST(TestingModel_test, encodeAndDecode) {
               SYM_COUNT);
     EXPECT_EQ(s_stream.getNumSymbols(),
               0);  // Ensure the symbols were popped from the stream
-
     EXPECT_EQ(audio_channel.getNumSamples(),
               kazoo::model::Testing::SAMPLES_PER_SYMBOL * SYM_COUNT);
 
     kazoo::WavFile wav_file;
     wav_file.loadFromAudioChannel(audio_channel);
-    wav_file.write("encoder_test_1.wav");
+    wav_file.write(TEST_WAV_FILE);
   }
+
+  // Check for file existence
+  ASSERT_TRUE(std::filesystem::exists(TEST_WAV_FILE));
 
   // Then attempt to decode the file
   {
     // Load the audio file
-    const std::string INPUT_FILE = "decoder_1.test.wav";
     kazoo::WavFile wav_file;
-    wav_file.read(INPUT_FILE);
+    wav_file.read(TEST_WAV_FILE);
     ASSERT_EQ(wav_file.getNumSamples(),
               kazoo::model::Testing::SAMPLES_PER_SYMBOL * SYM_COUNT);
 

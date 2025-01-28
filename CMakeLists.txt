@@ -49,4 +49,3 @@ target_include_directories(kazoo_translation_layer_test
         tests/ktl
 )
 configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)
-configure_file(tests/ktl/decoder_1.test.wav ${CMAKE_CURRENT_BINARY_DIR}/decoder_1.test.wav COPYONLY)
