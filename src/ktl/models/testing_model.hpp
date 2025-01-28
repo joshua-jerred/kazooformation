@@ -34,17 +34,19 @@ class Testing {
           context.wave_angle = WaveTools::generateSinWaveSamples(
               audio_channel, 1500, 200, 0.5, context.wave_angle);
           break;
+
         case Token::SYMBOL_1:
           context.wave_angle = WaveTools::generateSinWaveSamples(
               audio_channel, 3000, 200, 0.5, context.wave_angle);
           break;
+
         default:
           KTL_ASSERT(false);
       };
     }
   };
 
-  void decodeSymbols(const IAudioChannel& audio_channel,
+  static constexpr void decodeSymbols(const IAudioChannel& audio_channel,
                      SymbolStream<Token>& symbol_stream) {
     // This is a test model, so we don't need to decode anything.
   }

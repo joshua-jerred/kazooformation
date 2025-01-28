@@ -1,0 +1,59 @@
+
+#include <testing.hpp>
+
+#include <ktl/audio/audio_channel.hpp>
+#include <ktl/audio/wav_file.hpp>
+#include <ktl/encoder.hpp>
+#include <ktl/models/testing_model.hpp>
+
+TEST(TestingModel_test, encodeAndDecode) {
+  const auto model = kazoo::model::Testing::Model{};
+  static constexpr size_t SYM_COUNT = 5;
+
+  // First, encode the file
+  {
+    // Throw a few symbols in the stream
+    kazoo::SymbolStream<kazoo::model::Testing::Token> s_stream{model};
+    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
+    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
+    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_1);
+    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
+    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_1);
+    EXPECT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
+
+    // Encode the symbols into the audio buffer
+    kazoo::Encoder<kazoo::model::Testing::Token> encoder{model};
+    kazoo::AudioChannel audio_channel;
+    EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel),
+              SYM_COUNT);
+    EXPECT_EQ(s_stream.getNumSymbols(),
+              0);  // Ensure the symbols were popped from the stream
+
+    EXPECT_EQ(audio_channel.getNumSamples(),
+              kazoo::model::Testing::SAMPLES_PER_SYMBOL * SYM_COUNT);
+
+    kazoo::WavFile wav_file;
+    wav_file.loadFromAudioChannel(audio_channel);
+    wav_file.write("encoder_test_1.wav");
+  }
+
+  // Then attempt to decode the file
+  {
+    // Load the audio file
+    const std::string INPUT_FILE = "decoder_1.test.wav";
+    kazoo::WavFile wav_file;
+    wav_file.read(INPUT_FILE);
+    ASSERT_EQ(wav_file.getNumSamples(),
+              kazoo::model::Testing::SAMPLES_PER_SYMBOL * SYM_COUNT);
+
+    // Decode the audio file using the testing model
+    kazoo::SymbolStream<kazoo::model::Testing::Token> s_stream{model};
+    kazoo::model::Testing::decodeSymbols(wav_file, s_stream);
+    ASSERT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
+
+    // Make sure the symbols are correct
+    kazoo::model::Testing::Token token;
+    ASSERT_TRUE(s_stream.popSymbol(token));
+    ASSERT_EQ(token, kazoo::model::Testing::Token::SYMBOL_0);
+  }
+}

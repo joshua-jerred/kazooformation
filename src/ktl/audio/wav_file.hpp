@@ -9,6 +9,8 @@
 #include <filesystem>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <iostream>
 
 #include <common/assert.hpp>
 #include <ktl/audio/audio_channel.hpp>
@@ -20,7 +22,7 @@ namespace kazoo {
 /// @cite https://github.com/joshua-jerred/WavGen
 class WavFile : public IAudioChannel {
  public:
-  WavFile() {}
+  WavFile() = default;
 
   void loadFromAudioChannel(IAudioChannel& audio_channel) {
     auto ac_ref = audio_channel.getSamplesRef();
