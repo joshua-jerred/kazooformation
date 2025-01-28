@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <common/assert.hpp>
+#include <ktl/audio/wave_tools.hpp>
 #include <ktl/encoder.hpp>
 #include <ktl/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
@@ -27,14 +29,30 @@ class Testing {
 
     void encodeSymbol(EncoderContext& context, uint32_t token_id,
                       IAudioChannel& audio_channel) const override {
-      (void)context;
-      (void)token_id;
-      (void)audio_channel;
+      switch (static_cast<Token>(token_id)) {
+        case Token::SYMBOL_0:
+          context.wave_angle = WaveTools::generateSinWaveSamples(
+              audio_channel, 1500, 200, 0.5, context.wave_angle);
+          break;
+        case Token::SYMBOL_1:
+          context.wave_angle = WaveTools::generateSinWaveSamples(
+              audio_channel, 3000, 200, 0.5, context.wave_angle);
+          break;
+        default:
+          KTL_ASSERT(false);
+      };
     }
   };
 
+  void decodeSymbols(const IAudioChannel& audio_channel,
+                     SymbolStream<Token>& symbol_stream) {
+    // This is a test model, so we don't need to decode anything.
+  }
+
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;
+
+  static constexpr size_t SAMPLES_PER_SYMBOL = 200U;
 };
 
 }  // namespace kazoo::model

@@ -2,6 +2,7 @@
 #include <testing.hpp>
 
 #include <ktl/audio/audio_channel.hpp>
+#include <ktl/audio/wav_file.hpp>
 #include <ktl/encoder.hpp>
 #include <ktl/models/testing_model.hpp>
 
@@ -21,7 +22,13 @@ TEST(Encoder_test, encodeAvailableSymbols) {
   kazoo::Encoder<kazoo::model::Testing::Token> encoder{model};
   kazoo::AudioChannel audio_channel;
   EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel), 5);
+  EXPECT_EQ(s_stream.getNumSymbols(),
+            0);  // Ensure the symbols were popped from the stream
 
-  // Ensure the symbols were popped from the stream
-  EXPECT_EQ(s_stream.getNumSymbols(), 0);
+  EXPECT_EQ(audio_channel.getNumSamples(),
+            kazoo::model::Testing::SAMPLES_PER_SYMBOL * 5);
+
+  kazoo::WavFile wav_file;
+  wav_file.loadFromAudioChannel(audio_channel);
+  wav_file.write("encoder_test_1.wav");
 }

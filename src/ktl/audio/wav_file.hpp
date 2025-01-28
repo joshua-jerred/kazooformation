@@ -12,6 +12,7 @@
 
 #include <common/assert.hpp>
 #include <ktl/audio/audio_channel.hpp>
+#include <ktl/audio/audio_constants.hpp>
 
 namespace kazoo {
 
@@ -297,8 +298,6 @@ class WavFile : public IAudioChannel {
 
   void addSineWaveSamples(uint16_t frequency, double amplitude,
                           uint32_t samples) {
-    constexpr double MAX_SAMPLE_AMPLITUDE = 32767.0;  // 2^15 - 1 (16-bit PCM)
-
     const float offset =
         M_PI * frequency / wav_header_.format_chunk.sample_rate;
 

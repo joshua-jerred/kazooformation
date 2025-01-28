@@ -9,6 +9,9 @@
 
 namespace kazoo {
 
-constexpr uint32_t AUDIO_SAMPLE_RATE = 44100;
+static constexpr uint32_t AUDIO_SAMPLE_RATE = 44100;
 
-}
+// 2^15 - 1 (16-bit PCM)
+static constexpr double MAX_SAMPLE_AMPLITUDE = 32767.0;
+
+}  // namespace kazoo

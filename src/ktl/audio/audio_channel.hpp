@@ -28,7 +28,7 @@ class AudioChannel : public IAudioChannel {
  public:
   AudioChannel() = default;
 
-  void addSample(Sample sample) override { samples_.push_back(sample); }
+  void addSample(const Sample sample) override { samples_.push_back(sample); }
 
   void addSamples(std::span<const Sample> samples) {
     for (const auto sample : samples) {
