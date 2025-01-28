@@ -6,6 +6,7 @@
 #pragma once
 
 #include <common/assert.hpp>
+#include <ktl/audio/fft.hpp>
 #include <ktl/audio/wave_tools.hpp>
 #include <ktl/encoder.hpp>
 #include <ktl/symbol_model.hpp>
@@ -46,15 +47,37 @@ class Testing {
     }
   };
 
-  static constexpr void decodeSymbols(const IAudioChannel& audio_channel,
-                     SymbolStream<Token>& symbol_stream) {
-    // This is a test model, so we don't need to decode anything.
+  static constexpr void decodeAudioToSymbols(
+      const IAudioChannel& audio_channel, SymbolStream<Token>& symbol_stream) {
+    const auto samples = audio_channel.getSamplesRef();
+    const size_t num_samples = samples.size();
+
+    Fft::FftResults results;
+    for (size_t i = 0; i < num_samples; i += SAMPLES_PER_SYMBOL) {
+      std::span<const int16_t> symbol_width_samples{samples.data() + i,
+                                                    SAMPLES_PER_SYMBOL};
+      Fft::performFftFrequency(symbol_width_samples, results);
+
+      double peak_freq = results.max_amplitude.first;
+      if (std::abs(peak_freq - SYM_0_FREQ) < MAX_SYM_FREQ_DEVIATION) {
+        symbol_stream.addSymbol(Token::SYMBOL_0);
+      } else if (std::abs(peak_freq - SYM_1_FREQ) < MAX_SYM_FREQ_DEVIATION) {
+        symbol_stream.addSymbol(Token::SYMBOL_1);
+      } else {
+        symbol_stream.addSymbol(Token::UNKNOWN);
+      }
+    }
   }
 
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;
 
   static constexpr size_t SAMPLES_PER_SYMBOL = 200U;
+
+ private:
+  static constexpr double SYM_0_FREQ = 1500.0;
+  static constexpr double SYM_1_FREQ = 3000.0;
+  static constexpr double MAX_SYM_FREQ_DEVIATION = 800.0;
 };
 
 }  // namespace kazoo::model

@@ -51,20 +51,42 @@ class Fft {
   //  }
 
   // frequency:amplitude
-  using FftResults = std::vector<std::pair<double, double>>;
+  struct FftResults {
+    /// @brief Frequency/amplitude pair.
+    using FreqAmp = std::pair<double, double>;
 
-  static void performFftFrequency(IAudioChannel& input, FftResults& results) {
+    /// @brief Vector of frequency/amplitude pairs.
+    std::vector<FreqAmp> frequency_amplitude;
+
+    /// @brief Maximum amplitude found in the frequency domain.
+    FreqAmp max_amplitude{0.0, 0.0};
+    size_t max_amplitude_index = 0;
+
+    void reset() {
+      frequency_amplitude.clear();
+      max_amplitude = {0.0, 0.0};
+      max_amplitude_index = 0;
+    }
+  };
+
+  /// @todo FFT without floating point?
+  /// @param input - A span in PCM format. (16-bit signed integers,
+  /// AUDIO_SAMPLE_RATE)
+  static void performFftFrequency(const std::span<const int16_t> input,
+                                  FftResults& results,
+                                  uint32_t fixed_fft_bins = 0) {
     // https://cplusplus.com/forum/beginner/251061/
 
-    const uint32_t num_samples = input.getSamplesRef().size();
-    const uint32_t fft_bins = num_samples;
+    const uint32_t num_samples = input.size();
+    const uint32_t fft_bins =
+        fixed_fft_bins == 0 ? num_samples : fixed_fft_bins;
+    // The frequency resolution of the FFT (bin width)
     const double delta_f = static_cast<double>(AUDIO_SAMPLE_RATE) / fft_bins;
 
-    std::vector<double> in;  // Data in the time domain
-
     // Load in and normalize the data
-    for (int16_t a : input.getSamplesRef()) {
-      in.push_back(static_cast<double>(a) / 32768.0);
+    std::vector<double> in;  // Data in the time domain
+    for (const auto sample : input) {
+      in.push_back(static_cast<double>(sample) / 32768.0);
       // in.push_back(static_cast<double>(a));
     }
 
@@ -76,10 +98,24 @@ class Fft {
 
     fftw_execute(p);
 
-    std::cout << "in/out size: " << in.size() << " " << out.size() << '\n';
+    // std::cout << "in/out size: " << in.size() << " " << out.size() << '\n';
+    double max_amplitude = 0.0;
+    double freq_at_max_amplitude = 0.0;
+    size_t max_amplitude_index = 0;
     for (int K = 1; K < out.size(); ++K) {
-      results.push_back({K * delta_f, 2 * std::abs(out[K]) / in.size()});
+      const double frequency = K * delta_f;
+      const double amplitude = 2 * std::abs(out.at(K)) / in.size();
+
+      if (amplitude > max_amplitude) {
+        max_amplitude = amplitude;
+        freq_at_max_amplitude = frequency;
+        max_amplitude_index = K;
+      }
+
+      results.frequency_amplitude.push_back({frequency, amplitude});
     }
+    results.max_amplitude = {freq_at_max_amplitude, max_amplitude};
+    results.max_amplitude_index = max_amplitude_index;
 
     fftw_destroy_plan(p);  // destructor
   }

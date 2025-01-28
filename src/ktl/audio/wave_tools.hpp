@@ -26,7 +26,7 @@ class WaveTools {
       const double amplitude = 1.0, const double starting_angle_radians = 0.0) {
     // The amount to increment the wave angle by for each sample
     const double wave_angle_delta =
-        M_PI * frequency / static_cast<double>(AUDIO_SAMPLE_RATE);
+        2.0 * M_PI * frequency / static_cast<double>(AUDIO_SAMPLE_RATE);
 
     // The current angle of the wave
     double wave_angle = starting_angle_radians;

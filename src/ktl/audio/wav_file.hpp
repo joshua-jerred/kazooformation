@@ -8,9 +8,9 @@
 #include <cmath>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
 
 #include <common/assert.hpp>
 #include <ktl/audio/audio_channel.hpp>
@@ -298,23 +298,24 @@ class WavFile : public IAudioChannel {
     return static_cast<uint32_t>(getDurationSeconds() * 1000);
   }
 
-  void addSineWaveSamples(uint16_t frequency, double amplitude,
-                          uint32_t samples) {
-    const float offset =
-        M_PI * frequency / wav_header_.format_chunk.sample_rate;
-
-    for (uint32_t i = 0; i < samples; i++) {  // For each sample
-      wave_angle_ += offset;
-      int16_t sample = static_cast<int16_t>((amplitude * sin(wave_angle_)) *
-                                            MAX_SAMPLE_AMPLITUDE);
-      addSample(sample);
-      // std::cout << "sample: " << sample << std::endl;
-
-      if (wave_angle_ > M_PI) {
-        wave_angle_ -= M_PI;
-      }
-    }
-  }
+  /// @deprecated WaveTools
+  // void addSineWaveSamples(uint16_t frequency, double amplitude,
+  //                         uint32_t samples) {
+  //   const float offset =
+  //       M_PI * frequency / wav_header_.format_chunk.sample_rate;
+  //
+  //   for (uint32_t i = 0; i < samples; i++) {  // For each sample
+  //     wave_angle_ += offset;
+  //     int16_t sample = static_cast<int16_t>((amplitude * sin(wave_angle_)) *
+  //                                           MAX_SAMPLE_AMPLITUDE);
+  //     addSample(sample);
+  //     // std::cout << "sample: " << sample << std::endl;
+  //
+  //     if (wave_angle_ > M_PI) {
+  //       wave_angle_ -= M_PI;
+  //     }
+  //   }
+  // }
 
   const std::span<const int16_t> getSamplesRef() const override {
     return {samples_.data(), samples_.size()};
