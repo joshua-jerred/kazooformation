@@ -5,18 +5,24 @@ project(kazooformation)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+### Kazoo Common Library
+add_library(kazoo_common INTERFACE)
+target_sources(kazoo_common INTERFACE
+        src/common/assert.cpp
+)
 
 ### KTL Library
 add_library(kazoo_translation_layer INTERFACE)
 target_sources(kazoo_translation_layer INTERFACE
         src/ktl/binary_stream.cpp
         src/ktl/translation_layer.cpp
-        src/ktl/assert.cpp
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 
 add_subdirectory(lib/fftw-3.3.10 EXCLUDE_FROM_ALL)
-target_link_libraries(kazoo_translation_layer INTERFACE fftw3 fftw3f)
+target_link_libraries(kazoo_translation_layer INTERFACE kazoo_common fftw3 fftw3f)
 
 ### Executables
 add_executable(kazoo_connect

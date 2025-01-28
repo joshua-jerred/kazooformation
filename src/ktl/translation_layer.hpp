@@ -40,7 +40,7 @@ class TranslationLayer {
 
   void encode() {
     stats_.symbols_last_encoded =
-        transcoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
+        encoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
     stats_.num_bytes = symbol_stream_.getNumBytes();
     stats_.audio_samples = audio_channel_.getNumSamples();
   }
@@ -65,7 +65,7 @@ class TranslationLayer {
   std::reference_wrapper<const ISymbolModel> model_ref_{
       getStaticSymbolModel(model_type_)};
   model::Testing::Stream symbol_stream_{model_ref_};
-  model::Testing::Transcoder transcoder_{model_ref_};
+  model::Testing::Transcoder encoder_{model_ref_};
 
   BinaryStream binary_stream_;
   AudioChannel audio_channel_;

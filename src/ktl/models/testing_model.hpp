@@ -24,6 +24,13 @@ class Testing {
    public:
     Model()
         : SymbolModel<Token>{{{Token::SYMBOL_0, 0}, {Token::SYMBOL_1, 1}}, 1} {}
+
+    void encodeSymbol(EncoderContext& context, uint32_t token_id,
+                      IAudioChannel& audio_channel) const override {
+      (void)context;
+      (void)token_id;
+      (void)audio_channel;
+    }
   };
 
   using Stream = SymbolStream<Token>;

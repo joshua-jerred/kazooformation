@@ -6,6 +6,7 @@
 #pragma once
 
 #include <ktl/audio/audio_channel.hpp>
+#include <ktl/encoder_context.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo {
@@ -25,24 +26,15 @@ class Encoder {
     size_t num_symbols_added = 0;
     Token_t symbol_token;
     while (symbol_stream.popSymbol(symbol_token)) {
-      encodeSymbol(symbol_token, audio_channel);
+      symbol_model_.encodeSymbol(context_, static_cast<uint32_t>(symbol_token),
+                                 audio_channel);
       ++num_symbols_added;
     }
     return num_symbols_added;
   }
 
  private:
-  struct Context {
-    Token_t previous_symbol;
-    double wave_angle = 0;
-  };
-
-  Context context_;
-
-  /// @todo
-  void encodeSymbol(Token_t token, IAudioChannel& audio_channel) {
-    // symbol_model_.get
-  }
+  EncoderContext context_;
 
   const ISymbolModel& symbol_model_;
 };

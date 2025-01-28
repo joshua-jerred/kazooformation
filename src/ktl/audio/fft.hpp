@@ -11,8 +11,9 @@
 #include <span>
 
 #include "audio_channel.hpp"
+#include "audio_constants.hpp"
 
-#include <ktl/assert.hpp>
+#include <common/assert.hpp>
 
 namespace kazoo {
 
@@ -57,10 +58,9 @@ class Fft {
 
     const uint32_t num_samples = input.getSamplesRef().size();
     const uint32_t fft_bins = num_samples;
-    const uint32_t sample_rate = 44100;
-    const double delta_f = static_cast<double>(sample_rate) / fft_bins;
+    const double delta_f = static_cast<double>(AUDIO_SAMPLE_RATE) / fft_bins;
 
-    std::vector<double> in;  // your data in time domein (note, real)
+    std::vector<double> in;  // Data in the time domain
 
     // Load in and normalize the data
     for (int16_t a : input.getSamplesRef()) {
@@ -85,8 +85,8 @@ class Fft {
   }
 
   static void prepareCosWave(std::span<fftw_complex> in) {
-    const int N = in.size();
-    for (int i = 0; i < N; i++) {
+    const size_t N = in.size();
+    for (size_t i = 0; i < N; i++) {
       in[i][0] = cos(4 * 2 * M_PI * i / N);
       in[i][1] = 0;  // no imaginary part
     }

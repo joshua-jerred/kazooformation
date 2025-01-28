@@ -19,6 +19,7 @@
     "*.ndjson": "jsonl",
     "*.dbclient-js": "javascript",
     "version": "plaintext",
-    "compare": "cpp"
+    "compare": "cpp",
+    "filesystem": "cpp"
   }
 }

@@ -9,8 +9,8 @@
 TEST(Fft_test, basicTest) {
   kazoo::WavFile wav_file;
 
-  size_t NUM_SAMPLES = 300;
-  size_t SINE_FREQ_HZ = 500;
+  size_t NUM_SAMPLES = 200;
+  size_t SINE_FREQ_HZ = 1000;
 
   wav_file.addSineWaveSamples(SINE_FREQ_HZ, 0.9, NUM_SAMPLES);
   EXPECT_EQ(wav_file.getNumSamples(), NUM_SAMPLES);
@@ -28,12 +28,14 @@ TEST(Fft_test, basicTest) {
       max_amplitude = result.second;
       freq_at_max_amplitude = result.first;
     }
-    if (std::abs(result.second) > threshold) {
-      std::cout << "Frequency " << result.first << " Amplitude "
-                << result.second << '\n';
-    }
+    // if (std::abs(result.second) > threshold) {
+    //   std::cout << "-Frequency " << result.first << " Amplitude "
+    //             << result.second << '\n';
+    // }
   }
 
-  std::cout << "Max Amplitude: " << max_amplitude << " at frequency "
+  std::cout << "-Max Amplitude: " << max_amplitude << " at frequency "
             << freq_at_max_amplitude << '\n';
+
+  // EXPECT_NEAR(freq_at_max_amplitude, SINE_FREQ_HZ, 10.0);
 }

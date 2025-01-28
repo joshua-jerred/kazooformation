@@ -10,7 +10,9 @@
 #include <iostream>
 #include <map>
 
+#include <common/assert.hpp>
 #include <ktl/audio/audio_channel.hpp>
+#include <ktl/encoder_context.hpp>
 #include <ktl/symbol.hpp>
 
 namespace kazoo {
@@ -37,6 +39,9 @@ class ISymbolModel {
   /// @param value - The binary value to convert to a token id.
   /// @return uint32_t - The token id corresponding to the value.
   virtual uint32_t getSymbolId(uint32_t value) const = 0;
+
+  virtual void encodeSymbol(EncoderContext& context, uint32_t token_id,
+                            IAudioChannel& audio_channel) const = 0;
 };
 
 template <typename Token_t>
@@ -55,7 +60,7 @@ class SymbolModel : public ISymbolModel {
     return token_values_.at(static_cast<Token_t>(token_id));
   }
 
-  uint32_t getValue(Token_t token) const { return token_values_.at(token); }
+  // uint32_t getValue(Token_t token) const { return token_values_.at(token); }
 
   Token_t getToken(uint32_t value) const {
     for (const auto& [token, token_value] : token_values_) {
@@ -63,12 +68,20 @@ class SymbolModel : public ISymbolModel {
         return token;
       }
     }
-
+    KTL_ASSERT(false);
     return static_cast<Token_t>(0);
   }
 
   uint32_t getSymbolId(uint32_t value) const override {
     return static_cast<uint32_t>(getToken(value));
+  }
+
+  void encodeSymbol(EncoderContext& context, uint32_t token_id,
+                    IAudioChannel& audio_channel) const override {
+    (void)context;
+    (void)token_id;
+    (void)audio_channel;
+    KTL_ASSERT(false);  // This should be implemented by the derived class.
   }
 
  private:

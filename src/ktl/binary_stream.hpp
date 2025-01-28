@@ -17,7 +17,7 @@
 #include <sstream>
 #include <vector>
 
-#include <ktl/assert.hpp>
+#include <common/assert.hpp>
 
 namespace kazoo {
 
