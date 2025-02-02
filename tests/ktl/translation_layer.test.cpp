@@ -85,11 +85,21 @@ TEST(TranslationLayer_test, kazoo_hello_world) {
   ASSERT_FALSE(std::filesystem::exists(TEST_FILE_PATH));
 
   kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
-  const std::array<uint8_t, 12> data = {'H', 'e', 'l', 'l', 'o', ' ',
-                                        'W', 'o', 'r', 'l', 'd', '!'};
+  const std::array<uint8_t, 12> INPUT_DATA = {'H', 'e', 'l', 'l', 'o', ' ',
+                                              'W', 'o', 'r', 'l', 'd', '!'};
 
-  tl.addData(data);
+  tl.addData(INPUT_DATA);
   tl.encode();
   tl.saveWav(TEST_FILE_PATH);
   EXPECT_TRUE(std::filesystem::exists(TEST_FILE_PATH));
+
+  kazoo::TranslationLayer tl2{kazoo::TranslationLayer::ModelType::K1_MODEL};
+  std::vector<uint8_t> decoded_data{};
+  tl2.loadAndDecodeWav(TEST_FILE_PATH, decoded_data);
+  std::string decoded_str{};
+  for (const auto& byte : decoded_data) {
+    decoded_str.push_back(byte);
+  }
+
+  EXPECT_EQ(decoded_str, "Hello World!");
 }
