@@ -12,10 +12,10 @@
 #include <ktl/encoder.hpp>
 #include <ktl/models/k1_model.hpp>
 
-TEST(K1Model_test, encodeAndDecode) {
+TEST(K1Model_test, encode_and_decode) {
   const auto model = kazoo::model::K1Model::Model{};
-  static constexpr size_t SYM_COUNT = 5;
   const std::string TEST_WAV_FILE = "K1Model_test.encode_and_decode.wav";
+  static constexpr size_t SYM_COUNT = 18;
 
   // Delete the test file if it exists
   if (std::filesystem::exists(TEST_WAV_FILE)) {
@@ -23,15 +23,22 @@ TEST(K1Model_test, encodeAndDecode) {
   }
   ASSERT_FALSE(std::filesystem::exists(TEST_WAV_FILE));
 
+  using Token = kazoo::model::K1Model::Token;
+  const std::array<Token, SYM_COUNT> symbols = {
+      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_0,
+      Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0,
+      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1,
+      Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0,
+      Token::SYMBOL_1, Token::SYMBOL_1};
+
   // First, encode the file
   {
     // Throw a few symbols in the stream
-    kazoo::SymbolStream<kazoo::model::K1Model::Token> s_stream{model};
-    s_stream.addSymbol(kazoo::model::K1Model::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::K1Model::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::K1Model::Token::SYMBOL_1);
-    s_stream.addSymbol(kazoo::model::K1Model::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::K1Model::Token::SYMBOL_1);
+    kazoo::SymbolStream<Token> s_stream{model};
+    for (const auto& symbol : symbols) {
+      s_stream.addSymbol(symbol);
+    }
+
     EXPECT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
 
     // Encode the symbols into the audio buffer
@@ -68,7 +75,9 @@ TEST(K1Model_test, encodeAndDecode) {
 
     // Make sure the symbols are correct
     kazoo::model::K1Model::Token token;
-    ASSERT_TRUE(s_stream.popSymbol(token));
-    ASSERT_EQ(token, kazoo::model::K1Model::Token::SYMBOL_0);
+    for (size_t i = 0; i < SYM_COUNT; i++) {
+      ASSERT_TRUE(s_stream.popSymbol(token));
+      EXPECT_EQ(token, symbols.at(i));
+    }
   }
 }

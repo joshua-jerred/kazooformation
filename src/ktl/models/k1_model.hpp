@@ -64,12 +64,10 @@ class K1Model {
         Fft::performFftFrequency(symbol_width_samples, results);
 
         double peak_freq = results.max_amplitude.first;
-        if (std::abs(peak_freq - SYM_0_FREQ) < MAX_SYM_FREQ_DEVIATION) {
+        if (peak_freq < CENTER_FREQ) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
-        } else if (std::abs(peak_freq - SYM_1_FREQ) < MAX_SYM_FREQ_DEVIATION) {
-          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
         } else {
-          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::UNKNOWN));
+          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
         }
       }
     }
@@ -84,9 +82,7 @@ class K1Model {
   static const std::array<int16_t, SAMPLES_PER_SYMBOL> SYMBOL_0_SAMPLES;
   static const std::array<int16_t, SAMPLES_PER_SYMBOL> SYMBOL_1_SAMPLES;
 
-  static constexpr double SYM_0_FREQ = 1500.0;
-  static constexpr double SYM_1_FREQ = 3000.0;
-  static constexpr double MAX_SYM_FREQ_DEVIATION = 800.0;
+  static constexpr double CENTER_FREQ = 2000.0;
 };
 
 }  // namespace kazoo::model

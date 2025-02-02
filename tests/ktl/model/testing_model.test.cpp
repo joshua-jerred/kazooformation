@@ -9,8 +9,8 @@
 
 TEST(TestingModel_test, encode_and_decode) {
   const auto model = kazoo::model::Testing::Model{};
-  static constexpr size_t SYM_COUNT = 18;
   const std::string TEST_WAV_FILE = "TestingModel_test.encodeAndDecode.wav";
+  static constexpr size_t SYM_COUNT = 18;
 
   // Delete the test file if it exists
   if (std::filesystem::exists(TEST_WAV_FILE)) {
