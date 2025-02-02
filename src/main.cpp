@@ -9,9 +9,12 @@ int main() {
   //  'W', 'o', 'r', 'l', 'd', '!'};
 
   std::string user_input;
-  while (user_input != "q") {
+  while (true) {
     std::cout << "Enter a string to be spoken by kazoo or 'q' to quit: ";
     std::getline(std::cin, user_input);
+    if (user_input == "q") {
+      break;
+    }
 
     kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
     std::span<const uint8_t> user_input_span{
