@@ -1,3 +1,8 @@
+/// @author Joshua Jerred
+/// @copyright Copyright (c) 2025
+/// @file k1_model.test.cpp
+/// @date 2025-02-02
+
 #include <filesystem>
 
 #include <testing.hpp>
@@ -10,7 +15,7 @@
 TEST(K1Model_test, encodeAndDecode) {
   const auto model = kazoo::model::K1Model::Model{};
   static constexpr size_t SYM_COUNT = 5;
-  const std::string TEST_WAV_FILE = "K1Model_test.encodeAndDecode.wav";
+  const std::string TEST_WAV_FILE = "K1Model_test.encode_and_decode.wav";
 
   // Delete the test file if it exists
   if (std::filesystem::exists(TEST_WAV_FILE)) {

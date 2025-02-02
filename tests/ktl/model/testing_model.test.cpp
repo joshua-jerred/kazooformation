@@ -7,9 +7,9 @@
 #include <ktl/encoder.hpp>
 #include <ktl/models/testing_model.hpp>
 
-TEST(TestingModel_test, encodeAndDecode) {
+TEST(TestingModel_test, encode_and_decode) {
   const auto model = kazoo::model::Testing::Model{};
-  static constexpr size_t SYM_COUNT = 5;
+  static constexpr size_t SYM_COUNT = 18;
   const std::string TEST_WAV_FILE = "TestingModel_test.encodeAndDecode.wav";
 
   // Delete the test file if it exists
@@ -18,15 +18,22 @@ TEST(TestingModel_test, encodeAndDecode) {
   }
   ASSERT_FALSE(std::filesystem::exists(TEST_WAV_FILE));
 
+  using Token = kazoo::model::Testing::Token;
+  const std::array<Token, SYM_COUNT> symbols = {
+      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_0,
+      Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0,
+      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1,
+      Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0,
+      Token::SYMBOL_1, Token::SYMBOL_1};
+
   // First, encode the file
   {
     // Throw a few symbols in the stream
     kazoo::SymbolStream<kazoo::model::Testing::Token> s_stream{model};
-    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_1);
-    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_0);
-    s_stream.addSymbol(kazoo::model::Testing::Token::SYMBOL_1);
+    for (const auto& symbol : symbols) {
+      s_stream.addSymbol(symbol);
+    }
+
     EXPECT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
 
     // Encode the symbols into the audio buffer
@@ -63,7 +70,9 @@ TEST(TestingModel_test, encodeAndDecode) {
 
     // Make sure the symbols are correct
     kazoo::model::Testing::Token token;
-    ASSERT_TRUE(s_stream.popSymbol(token));
-    ASSERT_EQ(token, kazoo::model::Testing::Token::SYMBOL_0);
+    for (size_t i = 0; i < SYM_COUNT; i++) {
+      ASSERT_TRUE(s_stream.popSymbol(token));
+      EXPECT_EQ(token, symbols.at(i));
+    }
   }
 }

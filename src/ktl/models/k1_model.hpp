@@ -1,7 +1,7 @@
-/// =*= kazooformation =*=
-/// @author joshua
-/// @date 1/21/25
+/// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
+/// @file k1_model.hpp
+/// @date 2025-02-02
 
 #pragma once
 
@@ -30,15 +30,21 @@ class K1Model {
 
     void encodeSymbol(EncoderContext& context, uint32_t token_id,
                       IAudioChannel& audio_channel) const override {
+      auto addSamples =
+          [&audio_channel](
+              const std::array<int16_t, SAMPLES_PER_SYMBOL>& samples) {
+            for (auto sample : samples) {
+              audio_channel.addSample(sample);
+            }
+          };
+
       switch (static_cast<Token>(token_id)) {
         case Token::SYMBOL_0:
-          context.wave_angle = WaveTools::generateSinWaveSamples(
-              audio_channel, 1500, 200, 0.5, context.wave_angle);
+          addSamples(SYMBOL_0_SAMPLES);
           break;
 
         case Token::SYMBOL_1:
-          context.wave_angle = WaveTools::generateSinWaveSamples(
-              audio_channel, 3000, 200, 0.5, context.wave_angle);
+          addSamples(SYMBOL_1_SAMPLES);
           break;
 
         default:
@@ -72,9 +78,12 @@ class K1Model {
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;
 
-  static constexpr size_t SAMPLES_PER_SYMBOL = 200U;
+  static constexpr size_t SAMPLES_PER_SYMBOL = 4410U;
 
  private:
+  static const std::array<int16_t, SAMPLES_PER_SYMBOL> SYMBOL_0_SAMPLES;
+  static const std::array<int16_t, SAMPLES_PER_SYMBOL> SYMBOL_1_SAMPLES;
+
   static constexpr double SYM_0_FREQ = 1500.0;
   static constexpr double SYM_1_FREQ = 3000.0;
   static constexpr double MAX_SYM_FREQ_DEVIATION = 800.0;

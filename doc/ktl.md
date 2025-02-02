@@ -54,6 +54,17 @@ int main() {
     - The first kazoo model. Two symbol/binary model @ 1 bit per symbol. 50 symbols per second. Has basic signal
       alignment abilities.
 
+### Model Scores
+
+- Noise Tolerance
+  - The ability to recover symbols from a noisy signal.
+- Signal Alignment
+  - The ability to align the signal to the symbol boundaries.
+- Symbol Rate
+  - The number of symbols per second.
+- Data Rate
+  - The number of bits per second.
+
 ## Structure / Design
 
 ```puml
