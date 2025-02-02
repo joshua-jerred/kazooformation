@@ -25,10 +25,22 @@ target_include_directories(kazoo_translation_layer INTERFACE src)
 add_subdirectory(lib/fftw-3.3.10 EXCLUDE_FROM_ALL)
 target_link_libraries(kazoo_translation_layer INTERFACE kazoo_common fftw3 fftw3f)
 
+### Pulse Audio
+find_path(PULSEAUDIO_INCLUDE_DIR
+NAMES pulse/pulseaudio.h
+)
+find_library(PULSEAUDIO_LIBRARY
+NAMES pulse
+)
+include_directories(${PULSEAUDIO_INCLUDE_DIRS})
+# target_link_libraries(SignalEasel PRIVATE pulse-simple pulse)
+# target_compile_definitions(SignalEasel PRIVATE PULSE_AUDIO_ENABLED)
+
 ### Executables
 add_executable(kazoo_connect
         src/main.cpp
 )
+target_link_libraries(kazoo_connect kazoo_translation_layer kazoo_common pulse-simple pulse)
 
 # ==== Unit tests ====
 enable_testing()

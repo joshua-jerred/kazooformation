@@ -9,6 +9,7 @@
 #include <memory>
 #include <span>
 
+#include "audio/pulse_audio.hpp"
 #include "audio/wav_file.hpp"
 
 #include <ktl/binary_stream.hpp>
@@ -50,6 +51,13 @@ class TranslationLayer {
     WavFile wav_file;
     wav_file.loadFromAudioChannel(audio_channel_);
     wav_file.write(filename);
+  }
+
+  void playAudioBlocking(bool clear_audio_channel = true) {
+    PulseAudio::play(audio_channel_);
+    if (clear_audio_channel) {
+      audio_channel_.clear();
+    }
   }
 
   void loadAndDecodeWav(const std::string& filename,

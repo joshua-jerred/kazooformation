@@ -327,6 +327,8 @@ class WavFile : public IAudioChannel {
     return {samples_.data(), samples_.size()};
   }
 
+  void clear() override { samples_.clear(); }
+
  private:
   WavHeader wav_header_{};
 

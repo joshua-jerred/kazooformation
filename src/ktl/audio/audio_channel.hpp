@@ -22,6 +22,8 @@ class IAudioChannel {
   virtual void addSample(int16_t sample) = 0;
 
   virtual const std::span<const Sample> getSamplesRef() const = 0;
+
+  virtual void clear() = 0;
 };
 
 class AudioChannel : public IAudioChannel {
@@ -51,6 +53,8 @@ class AudioChannel : public IAudioChannel {
   const std::span<const Sample> getSamplesRef() const override {
     return {samples_.data(), samples_.size()};
   }
+
+  void clear() override { samples_.clear(); }
 
  protected:
   std::vector<Sample> samples_{};
