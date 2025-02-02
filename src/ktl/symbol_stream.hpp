@@ -75,7 +75,7 @@ class SymbolStream : public ISymbolStream {
       return false;
     }
 
-    const size_t num_symbols = std::clamp<size_t>(
+    size_t num_symbols = std::clamp<size_t>(
         std::ceil((num_bytes * 8.0) / symbol_model_.getSymbolBitWidth()), 0U,
         symbols_.size());
 
@@ -86,6 +86,8 @@ class SymbolStream : public ISymbolStream {
 
       if (pop_symbols) {
         symbols_.pop_front();
+        num_symbols--;
+        i--;
       }
     }
 
