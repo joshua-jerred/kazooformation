@@ -196,6 +196,13 @@ class BinaryStream {
     }
   }
 
+  /// @brief Clear the stream data.
+  void clear() {
+    stream_data_.clear();
+    num_bits_in_input_buffer_ = 0;
+    num_bits_used_in_output_buffer_ = 0;
+  }
+
  private:
   std::deque<uint8_t> stream_data_{};
 

@@ -52,18 +52,34 @@ class TranslationLayer {
     wav_file.write(filename);
   }
 
-  void loadAndDecodeWav(const std::string& filename) {
+  void loadAndDecodeWav(const std::string& filename,
+                        std::vector<uint8_t>& data) {
     WavFile wav_file;
     wav_file.read(filename);
     wav_file.populateAudioChannel(audio_channel_);
-    // encoder_.decodeAudioChannel(audio_channel_, symbol_stream_);
-    // stats_.num_bytes = symbol_stream_.getNumBytes();
+    getStaticSymbolModel(model_type_)
+        .decodeAudioToSymbols(audio_channel_, symbol_stream_);
+
+    constexpr bool POP_SYMBOLS = true;
+    KTL_ASSERT(symbol_stream_.populateBinaryStream(
+        binary_stream_, symbol_stream_.getNumBytes(), POP_SYMBOLS));
+
+    if (!binary_stream_.isByteAligned()) {
+      stats_.decoded_was_byte_aligned = false;
+      binary_stream_.pad();
+    } else {
+      stats_.decoded_was_byte_aligned = true;
+    }
+
+    data = binary_stream_.getBytes(binary_stream_.getNumBytes());
   }
 
   struct Stats {
     size_t num_bytes{0};
     size_t symbols_last_encoded{0};
     size_t audio_samples{0};
+
+    bool decoded_was_byte_aligned{false};
   };
   Stats getStats() const { return stats_; }
 

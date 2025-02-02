@@ -70,7 +70,7 @@ class SymbolStream : public ISymbolStream {
   }
 
   bool populateBinaryStream(BinaryStream &binary_stream, size_t num_bytes,
-                            bool pop_bytes = true) {
+                            bool pop_symbols = true) {
     if (num_bytes > getNumBytes()) {
       return false;
     }
@@ -84,7 +84,7 @@ class SymbolStream : public ISymbolStream {
           symbol_model_.getValue(static_cast<uint32_t>(symbols_.at(i))),
           symbol_model_.getSymbolBitWidth());
 
-      if (pop_bytes) {
+      if (pop_symbols) {
         symbols_.pop_front();
       }
     }
