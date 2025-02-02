@@ -16,8 +16,9 @@
 #include <vector>
 
 #include <ktl/binary_stream.hpp>
+#include <ktl/i_symbol_stream.hpp>
+#include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol.hpp>
-#include <ktl/symbol_model.hpp>
 
 namespace kazoo {
 
@@ -25,7 +26,7 @@ namespace kazoo {
 /// binary stream.
 /// @tparam Token_t - The token enum type
 template <typename Token_t>
-class SymbolStream {
+class SymbolStream : public ISymbolStream {
  public:
   /// @brief Constructor
   /// @param symbol_model - The symbol table
@@ -35,6 +36,10 @@ class SymbolStream {
   /// @brief Add a symbol to the end of the stream.
   /// @param token - The symbol token to add.
   void addSymbol(Token_t token) { symbols_.push_back(token); }
+
+  void addSymbolId(uint32_t token_id) override {
+    symbols_.push_back(static_cast<Token_t>(token_id));
+  }
 
   /// @brief Get the number of symbols in the stream.
   /// @return size_t The number of symbols

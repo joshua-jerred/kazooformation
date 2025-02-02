@@ -9,7 +9,7 @@
 #include <ktl/audio/fft.hpp>
 #include <ktl/audio/wave_tools.hpp>
 #include <ktl/encoder.hpp>
-#include <ktl/symbol_model.hpp>
+#include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo::model {
@@ -20,10 +20,10 @@ class K1Model {
     UNKNOWN = 0,
     SYMBOL_0,
     SYMBOL_1,
-    _SYMBOL_COUNT
+    K1_SYMBOL_COUNT
   };
 
-  class Model : public SymbolModel<Token> {
+  class Model final : public SymbolModel<Token> {
    public:
     Model()
         : SymbolModel<Token>{{{Token::SYMBOL_0, 0}, {Token::SYMBOL_1, 1}}, 1} {}

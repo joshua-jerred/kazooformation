@@ -1,8 +1,24 @@
-#include <test_symbol_model.hpp>
 #include <testing.hpp>
 
 #include <ktl/binary_stream.hpp>
+#include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
+
+enum class TestToken : uint32_t {
+  UNKNOWN = 0,
+  SYMBOL_00,
+  SYMBOL_01,
+  SYMBOL_10,
+  SYMBOL_11,
+  _SYMBOL_COUNT
+};
+
+static const kazoo::SymbolModel<TestToken> TEST_SYMBOL_MODEL{
+    {{TestToken::SYMBOL_00, 0},
+     {TestToken::SYMBOL_01, 1},
+     {TestToken::SYMBOL_10, 2},
+     {TestToken::SYMBOL_11, 3}},
+    2};
 
 TEST(SymbolStream_test, addSymbols) {
   kazoo::SymbolStream<TestToken> stream(TEST_SYMBOL_MODEL);

@@ -13,7 +13,7 @@
 #include <common/assert.hpp>
 #include <ktl/audio/audio_channel.hpp>
 #include <ktl/encoder_context.hpp>
-#include <ktl/symbol.hpp>
+#include <ktl/i_symbol_stream.hpp>
 
 namespace kazoo {
 
@@ -33,7 +33,7 @@ class ISymbolModel {
   virtual uint32_t getValue(uint32_t token_id) const = 0;
 
   /// From a binary value, get the corresponding symbol/token id.
-  /// @todo Need to remove 'token' verbage, use 'symbol.id' and 'symbol.value'
+  /// @todo Need to remove 'token' verbiage, use 'symbol.id' and 'symbol.value'
   /// instead. This is for the sake of getting rid of templated interfaces which
   /// was a mistake from 5 hours of effort ago.
   /// @param value - The binary value to convert to a token id.
@@ -42,6 +42,9 @@ class ISymbolModel {
 
   virtual void encodeSymbol(EncoderContext& context, uint32_t token_id,
                             IAudioChannel& audio_channel) const = 0;
+
+  virtual void decodeAudioToSymbols(const IAudioChannel& audio_channel,
+                                    ISymbolStream& symbol_stream) const = 0;
 };
 
 template <typename Token_t>
@@ -81,6 +84,13 @@ class SymbolModel : public ISymbolModel {
     (void)context;
     (void)token_id;
     (void)audio_channel;
+    KTL_ASSERT(false);  // This should be implemented by the derived class.
+  }
+
+  void decodeAudioToSymbols(const IAudioChannel& audio_channel,
+                            ISymbolStream& symbol_stream) const override {
+    (void)audio_channel;
+    (void)symbol_stream;
     KTL_ASSERT(false);  // This should be implemented by the derived class.
   }
 

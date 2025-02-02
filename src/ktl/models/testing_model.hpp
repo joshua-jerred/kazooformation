@@ -9,7 +9,7 @@
 #include <ktl/audio/fft.hpp>
 #include <ktl/audio/wave_tools.hpp>
 #include <ktl/encoder.hpp>
-#include <ktl/symbol_model.hpp>
+#include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo::model {
@@ -23,7 +23,7 @@ class Testing {
     _SYMBOL_COUNT
   };
 
-  class Model : public SymbolModel<Token> {
+  class Model final : public SymbolModel<Token> {
    public:
     Model()
         : SymbolModel<Token>{{{Token::SYMBOL_0, 0}, {Token::SYMBOL_1, 1}}, 1} {}
@@ -45,29 +45,29 @@ class Testing {
           KTL_ASSERT(false);
       };
     }
-  };
 
-  static constexpr void decodeAudioToSymbols(
-      const IAudioChannel& audio_channel, SymbolStream<Token>& symbol_stream) {
-    const auto samples = audio_channel.getSamplesRef();
-    const size_t num_samples = samples.size();
+    void decodeAudioToSymbols(const IAudioChannel& audio_channel,
+                              ISymbolStream& symbol_stream) const override {
+      const auto samples = audio_channel.getSamplesRef();
+      const size_t num_samples = samples.size();
 
-    Fft::FftResults results;
-    for (size_t i = 0; i < num_samples; i += SAMPLES_PER_SYMBOL) {
-      std::span<const int16_t> symbol_width_samples{samples.data() + i,
-                                                    SAMPLES_PER_SYMBOL};
-      Fft::performFftFrequency(symbol_width_samples, results);
+      Fft::FftResults results;
+      for (size_t i = 0; i < num_samples; i += SAMPLES_PER_SYMBOL) {
+        std::span<const int16_t> symbol_width_samples{samples.data() + i,
+                                                      SAMPLES_PER_SYMBOL};
+        Fft::performFftFrequency(symbol_width_samples, results);
 
-      double peak_freq = results.max_amplitude.first;
-      if (std::abs(peak_freq - SYM_0_FREQ) < MAX_SYM_FREQ_DEVIATION) {
-        symbol_stream.addSymbol(Token::SYMBOL_0);
-      } else if (std::abs(peak_freq - SYM_1_FREQ) < MAX_SYM_FREQ_DEVIATION) {
-        symbol_stream.addSymbol(Token::SYMBOL_1);
-      } else {
-        symbol_stream.addSymbol(Token::UNKNOWN);
+        double peak_freq = results.max_amplitude.first;
+        if (std::abs(peak_freq - SYM_0_FREQ) < MAX_SYM_FREQ_DEVIATION) {
+          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
+        } else if (std::abs(peak_freq - SYM_1_FREQ) < MAX_SYM_FREQ_DEVIATION) {
+          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
+        } else {
+          symbol_stream.addSymbolId(static_cast<uint32_t>(Token::UNKNOWN));
+        }
       }
     }
-  }
+  };
 
   using Stream = SymbolStream<Token>;
   using Transcoder = Encoder<Token>;

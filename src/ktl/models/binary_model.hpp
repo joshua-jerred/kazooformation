@@ -6,7 +6,7 @@
 #pragma once
 
 #include <ktl/encoder.hpp>
-#include <ktl/symbol_model.hpp>
+#include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
 namespace kazoo::model {

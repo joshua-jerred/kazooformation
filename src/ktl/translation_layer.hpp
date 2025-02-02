@@ -23,7 +23,8 @@ class TranslationLayer {
   enum class ModelType {
     UNKNOWN = 0,
     TESTING,
-    BINARY
+    BINARY,
+    K1_MODEL
   };
 
   TranslationLayer(const ModelType model)
@@ -49,6 +50,14 @@ class TranslationLayer {
     WavFile wav_file;
     wav_file.loadFromAudioChannel(audio_channel_);
     wav_file.write(filename);
+  }
+
+  void loadAndDecodeWav(const std::string& filename) {
+    WavFile wav_file;
+    wav_file.read(filename);
+    wav_file.populateAudioChannel(audio_channel_);
+    // encoder_.decodeAudioChannel(audio_channel_, symbol_stream_);
+    // stats_.num_bytes = symbol_stream_.getNumBytes();
   }
 
   struct Stats {

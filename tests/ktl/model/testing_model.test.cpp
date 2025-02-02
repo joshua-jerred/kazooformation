@@ -57,7 +57,8 @@ TEST(TestingModel_test, encodeAndDecode) {
 
     // Decode the audio file using the testing model
     kazoo::SymbolStream<kazoo::model::Testing::Token> s_stream{model};
-    kazoo::model::Testing::decodeAudioToSymbols(wav_file, s_stream);
+    kazoo::model::Testing::Model m{};
+    m.decodeAudioToSymbols(wav_file, s_stream);
     ASSERT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
 
     // Make sure the symbols are correct
