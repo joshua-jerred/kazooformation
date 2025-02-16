@@ -20,6 +20,8 @@
     "*.dbclient-js": "javascript",
     "version": "plaintext",
     "compare": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "iostream": "cpp",
+    "span": "cpp"
   }
 }
