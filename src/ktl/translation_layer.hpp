@@ -54,7 +54,7 @@ class TranslationLayer {
   }
 
   void playAudioBlocking(bool clear_audio_channel = true) {
-    PulseAudio::play(audio_channel_);
+    PulseAudio::Player::play(audio_channel_);
     if (clear_audio_channel) {
       audio_channel_.clear();
     }

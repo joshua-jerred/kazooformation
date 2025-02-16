@@ -20,6 +20,8 @@
 
 namespace kazoo {
 
+namespace PulseAudio {
+
 inline constexpr pa_sample_format_t PULSE_AUDIO_SAMPLE_FORMAT = PA_SAMPLE_S16NE;
 inline constexpr uint8_t NUM_PULSE_CHANNELS = 1;
 inline constexpr pa_sample_spec PULSE_AUDIO_SAMPLE_SPEC = {
@@ -30,15 +32,15 @@ const std::string PULSE_AUDIO_APP_NAME = "ktl";
 
 /// @cite
 /// https://github.com/joshua-jerred/SignalEasel/blob/main/src/pulse_audio_writer.cpp
-// class PulseAudio : public IAudioChannel {
-class PulseAudio {
+/// @todo refactor
+class Player {
  public:
-  PulseAudio() = default;
+  Player() = default;
 
-  static void play(const IAudioChannel& channel) {
+  static void play(const IAudioChannel &channel) {
     const auto data = channel.getSamplesRef();
 
-    pa_simple* s =
+    pa_simple *s =
         pa_simple_new(nullptr,                       // Use the default server.
                       PULSE_AUDIO_APP_NAME.c_str(),  // Our application's name.
                       PA_STREAM_PLAYBACK,        // Stream direction (output).
@@ -68,5 +70,45 @@ class PulseAudio {
     pa_simple_free(s);
   }
 };
+
+// typedef std::array<int16_t, PULSE_AUDIO_BUFFER_SIZE> PulseAudioBuffer;
+
+// class Reader {
+//  public:
+//   Reader();
+//   ~Reader();
+
+//   // rule of 5
+//   Reader(const Reader &) = delete;
+//   Reader &operator=(const Reader &) = delete;
+//   Reader(Reader &&) = delete;
+//   Reader &operator=(Reader &&) = delete;
+
+//   /**
+//    * @brief Returns true if there was enough audio to process
+//    */
+//   bool process();
+//   uint32_t getRms() const { return rms_; }
+//   double getVolume() const { return volume_; }
+//   uint64_t getLatency() const { return latency_; }
+
+//   const PulseAudioBuffer &getAudioBuffer() const { return audio_buffer_; }
+
+//  private:
+//   /**
+//    * @brief Latency in milliseconds
+//    */
+//   uint32_t latency_ = 0;
+//   uint64_t rms_ = 0;
+//   double volume_ = 0;
+//   pa_sample_spec ss_ = {PULSE_AUDIO_SAMPLE_FORMAT, AUDIO_SAMPLE_RATE,
+//                         NUM_PULSE_CHANNELS};
+
+//   pa_simple *s_ = nullptr;
+
+//   std::array<int16_t, PULSE_AUDIO_BUFFER_SIZE> audio_buffer_{};
+// };
+
+}  // namespace PulseAudio
 
 }  // namespace kazoo
