@@ -19,6 +19,10 @@ target_sources(kazoo_translation_layer INTERFACE
         src/ktl/binary_stream.cpp
         src/ktl/translation_layer.cpp
         src/ktl/models/k1_model.cpp
+        src/ktl/audio/kazoo_pcm/doot1_pcm.cpp
+        src/ktl/audio/kazoo_pcm/doot2_pcm.cpp
+        src/ktl/audio/kazoo_pcm/doot3_pcm.cpp
+        src/ktl/audio/kazoo_pcm/doot4_pcm.cpp
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 

@@ -20,8 +20,11 @@ int main() {
     std::span<const uint8_t> user_input_span{
         reinterpret_cast<const uint8_t*>(user_input.data()), user_input.size()};
     tl.addData(user_input_span);
-    tl.encode();
+    constexpr bool PRE_POST_PADDING = true;
+    tl.encode(PRE_POST_PADDING);
     tl.playAudioBlocking();
+
+    break;  // single input for testing
   }
 
   return 0;

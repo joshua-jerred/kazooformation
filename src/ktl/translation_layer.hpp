@@ -40,9 +40,9 @@ class TranslationLayer {
     stats_.num_bytes = symbol_stream_.getNumBytes();
   }
 
-  void encode() {
-    stats_.symbols_last_encoded =
-        encoder_.encodeAvailableSymbols(symbol_stream_, audio_channel_);
+  void encode(bool pre_post_padding = false) {
+    stats_.symbols_last_encoded = encoder_.encodeAvailableSymbols(
+        symbol_stream_, audio_channel_, pre_post_padding);
     stats_.num_bytes = symbol_stream_.getNumBytes();
     stats_.audio_samples = audio_channel_.getNumSamples();
   }

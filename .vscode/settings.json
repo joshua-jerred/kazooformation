@@ -22,6 +22,8 @@
     "compare": "cpp",
     "filesystem": "cpp",
     "iostream": "cpp",
-    "span": "cpp"
+    "span": "cpp",
+    "array": "cpp",
+    "algorithm": "cpp"
   }
 }
