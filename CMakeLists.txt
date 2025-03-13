@@ -58,6 +58,8 @@ target_link_libraries(kazoo_translation_layer_test
         GTest::GTest
         GTest::Main
         kazoo_translation_layer
+        pulse-simple
+        pulse
 )
 gtest_discover_tests(kazoo_translation_layer_test)
 target_include_directories(kazoo_translation_layer_test

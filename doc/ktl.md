@@ -172,3 +172,11 @@ stop
 
 @enduml
 ```
+
+# Demodulation
+
+Kazooformation is essentially a form of FSK. It's targeting modern linux hosts,
+so we can assume that computational resources are not a huge concern.
+
+The plan is to take FFTs of 1/4 to 1/8 the symbol length, allowing for symbol
+edges to be detected.

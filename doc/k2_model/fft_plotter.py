@@ -152,7 +152,7 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
     plt.grid()
 
 
-def __plot_amplitude_distribution(
+def plot_amplitude_distribution(
     base_dir, filename, axis, fft_params: dict, normalize, apply_notch_filter=False
 ):
     positive_freqs, positive_magnitudes = do_fft(
@@ -225,7 +225,7 @@ def plot_files(base_dir, output_dir, input_files, fft_params):
         if DIST_NORM_PLOT:
             norm_hist_axis = axis[plot_number, column_index]
             norm_hist_axis.set_title(f"Amplitude Distribution of {filename}")
-            __plot_amplitude_distribution(
+            plot_amplitude_distribution(
                 base_dir, filename, norm_hist_axis, fft_params, True
             )
             column_index += 1

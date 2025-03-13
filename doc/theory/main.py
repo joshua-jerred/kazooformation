@@ -1,3 +1,5 @@
+# Run from the project root directory
+
 import wav_trimmer
 import fft_ploter
 
@@ -31,26 +33,27 @@ for file, noise_level in NOISE_FILES:
 
 FFT_INPUT_FILES = []
 FFT_INPUT_FILES = [
-    "kazooE_sample.wav",
+    # "kazooE_sample.wav",
     "kazooA_sample.wav",
-    # f"output/kazooA_sample_noise_0.2.wav",
+    # "output/kazooA_sample_noise_0.2.wav",
     # f"output/kazooA_sample_noise_0.4.wav",
     # f"output/kazooA_sample_noise_0.6.wav",
     # f"output/kazooA_sample_noise_0.8.wav",
-    "kazooG_sample.wav",
+    # "kazooG_sample.wav",
     "kazooD_sample.wav",
     "white_noise.wav",
 ]
+
 # FFT_INPUT_FILES = ["KazooDoHigh_0.1s.wav", "KazooDo_0.1s.wav"]
 fft_params = {
-    "FFT_MIN_FREQ": 0,
-    "FFT_MAX_FREQ": 5000,
+    "FFT_MIN_FREQ": 1000,
+    "FFT_MAX_FREQ": 3000,
     "CARRIER_FREQ": 2000,
     "CARRIER_FREQ_WIDTH": 100,  # 500 Hz on either side of the carrier frequency
     "FFT_DISTRIBUTION_BINS": 100,
     "FFT_DISTRIBUTION_MAX": 50,
     "FFT_DISTRIBUTION_MAX_NORMALIZED": 0.5,
-    "NOTCH_FREQS": [1100, 3080],
+    "NOTCH_FREQS": [1100, 1700, 3080],
     "NOTCH_HARMONICS": 5,
     "NOTCH_QUALITY_FACTOR": 30,
     # "BANDPASS_FREQS": [2500],
