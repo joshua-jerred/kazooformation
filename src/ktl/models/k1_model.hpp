@@ -54,21 +54,71 @@ class K1Model {
 
     void decodeAudioToSymbols(const IAudioChannel& audio_channel,
                               ISymbolStream& symbol_stream) const override {
+      static constexpr uint32_t NUM_FFTS_PER_SYMBOL = 4;
       const auto samples = audio_channel.getSamplesRef();
       const size_t num_samples = samples.size();
 
-      Fft::FftResults results;
-      for (size_t i = 0; i < num_samples; i += SAMPLES_PER_SYMBOL) {
+      for (size_t i = 0; i + SAMPLES_PER_SYMBOL <= num_samples;
+           i += SAMPLES_PER_SYMBOL) {
+        for (size_t j = 0; j < NUM_FFTS_PER_SYMBOL; j++) {
+          Fft::FftResults partial_fft_results;
+
+          // Span containing NUM_FFTS_PER_SYMBOL worth of samples, an FFT is
+          // performed NUM_FFTS_PER_SYMBOL times per symbol for alignment
+          // reasons.
+
+          const size_t start_position =
+              i + (j * (SAMPLES_PER_SYMBOL / NUM_FFTS_PER_SYMBOL));
+          const size_t samples_per_fft =
+              SAMPLES_PER_SYMBOL / NUM_FFTS_PER_SYMBOL;
+          std::span<const int16_t> symbol_width_samples{
+              samples.data() + start_position, samples_per_fft};
+          Fft::performFftFrequency(symbol_width_samples, partial_fft_results);
+          Token symbol = detectSymbolFromFftResults(partial_fft_results);
+
+          std::cout << "DSymbol " << static_cast<uint32_t>(symbol) << " [" << i
+                    << ", " << j << ", " << start_position << ", "
+                    << samples_per_fft << "]: "
+                    << " pfreq: " << partial_fft_results.max_amplitude.frequency
+                    << " max_amp: "
+                    << partial_fft_results.max_amplitude.amplitude
+                    << " avg_amp: " << partial_fft_results.average_amplitude
+                    << " amp_variance: "
+                    << partial_fft_results.amplitude_variance
+                    << " amp_sdev: " << partial_fft_results.amplitude_std_dev
+                    << std::endl;
+        }
+
+        // Current implementation
+        Fft::FftResults results;
         std::span<const int16_t> symbol_width_samples{samples.data() + i,
                                                       SAMPLES_PER_SYMBOL};
         Fft::performFftFrequency(symbol_width_samples, results);
 
-        double peak_freq = results.max_amplitude.first;
+        double peak_freq = results.max_amplitude.frequency;
         if (peak_freq < CENTER_FREQ) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
         } else {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
         }
+      }
+    }
+
+    uint32_t getNumSamplesPerSymbol() const override {
+      return SAMPLES_PER_SYMBOL;
+    }
+
+   private:
+    Token detectSymbolFromFftResults(const Fft::FftResults& results) const {
+      const double peak_freq = results.max_amplitude.frequency;
+      if (peak_freq < MIN_FREQ || peak_freq > MAX_FREQ) {
+        return Token::UNKNOWN;
+      }
+
+      if (peak_freq < CENTER_FREQ) {
+        return Token::SYMBOL_0;
+      } else {
+        return Token::SYMBOL_1;
       }
     }
   };
@@ -83,6 +133,13 @@ class K1Model {
   static const std::array<int16_t, SAMPLES_PER_SYMBOL> SYMBOL_1_SAMPLES;
 
   static constexpr double CENTER_FREQ = 2000.0;
+
+  /// @brief The minimum frequency of a FFT peak to be considered for symbol
+  /// detection.
+  static constexpr double MIN_FREQ = 800.0;
+  /// @brief The maximum frequency of a FFT peak to be considered for symbol
+  /// detection.
+  static constexpr double MAX_FREQ = 6000.0;
 };
 
 }  // namespace kazoo::model

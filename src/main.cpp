@@ -2,25 +2,27 @@
 
 #include <ktl/translation_layer.hpp>
 
+constexpr bool PRE_POST_PADDING = true;
+
+void getUserInput(std::string &user_input_string) {
+  std::cout << "Enter a string to be spoken by kazoo or 'q' to quit: ";
+  std::getline(std::cin, user_input_string);
+}
+
 int main() {
   std::cout << "kazoo connect" << std::endl;
 
-  // const std::array<uint8_t, 12> OUTPUT{'H', 'e', 'l', 'l', 'o', ' ',
-  //  'W', 'o', 'r', 'l', 'd', '!'};
-
   std::string user_input;
   while (true) {
-    std::cout << "Enter a string to be spoken by kazoo or 'q' to quit: ";
-    std::getline(std::cin, user_input);
-    if (user_input == "q") {
-      break;
-    }
+    getUserInput(user_input);
+    if (user_input == "q") break;  // quit
 
     kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
     std::span<const uint8_t> user_input_span{
-        reinterpret_cast<const uint8_t*>(user_input.data()), user_input.size()};
+        reinterpret_cast<const uint8_t *>(user_input.data()),
+        user_input.size()};
+
     tl.addData(user_input_span);
-    constexpr bool PRE_POST_PADDING = true;
     tl.encode(PRE_POST_PADDING);
     tl.playAudioBlocking();
 

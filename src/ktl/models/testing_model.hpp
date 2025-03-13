@@ -57,7 +57,7 @@ class Testing {
                                                       SAMPLES_PER_SYMBOL};
         Fft::performFftFrequency(symbol_width_samples, results);
 
-        double peak_freq = results.max_amplitude.first;
+        double peak_freq = results.max_amplitude.frequency;
         if (std::abs(peak_freq - SYM_0_FREQ) < MAX_SYM_FREQ_DEVIATION) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
         } else if (std::abs(peak_freq - SYM_1_FREQ) < MAX_SYM_FREQ_DEVIATION) {

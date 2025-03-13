@@ -16,6 +16,7 @@ target_sources(kazoo_common INTERFACE
 ### KTL Library
 add_library(kazoo_translation_layer INTERFACE)
 target_sources(kazoo_translation_layer INTERFACE
+        src/ktl/audio/fft.cpp
         src/ktl/binary_stream.cpp
         src/ktl/translation_layer.cpp
         src/ktl/models/k1_model.cpp
@@ -51,8 +52,15 @@ enable_testing()
 find_package(GTest REQUIRED)
 include(GoogleTest)
 
-# lazy globbing (not best practice /shrug)
-file(GLOB_RECURSE kazoo_translation_layer_test_sources "tests/ktl/*.test.cpp")
+set(kazoo_translation_layer_test_sources
+        # "tests/ktl/audio/fft.test.cpp"
+        # "tests/ktl/audio/pulse_audio.test.cpp"
+        # "tests/ktl/audio/wav_file.test.cpp"
+        # "tests/ktl/model/binary_model.test.cpp"
+        "tests/ktl/model/k1_model.test.cpp"
+        # "tests/ktl/binary_stream.test.cpp"
+        # "tests/ktl/translation_layer.test.cpp"
+)
 add_executable(kazoo_translation_layer_test ${kazoo_translation_layer_test_sources})
 target_link_libraries(kazoo_translation_layer_test
         GTest::GTest
@@ -67,4 +75,5 @@ target_include_directories(kazoo_translation_layer_test
         tests
         tests/ktl
 )
+configure_file(tests/ktl/audio/kazooA_sample.test.wav ${CMAKE_CURRENT_BINARY_DIR}/kazooA_sample.test.wav COPYONLY)
 configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)

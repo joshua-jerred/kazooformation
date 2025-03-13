@@ -45,6 +45,8 @@ class ISymbolModel {
 
   virtual void decodeAudioToSymbols(const IAudioChannel& audio_channel,
                                     ISymbolStream& symbol_stream) const = 0;
+
+  virtual uint32_t getNumSamplesPerSymbol() const = 0;
 };
 
 template <typename Token_t>
@@ -92,6 +94,11 @@ class SymbolModel : public ISymbolModel {
     (void)audio_channel;
     (void)symbol_stream;
     KTL_ASSERT(false);  // This should be implemented by the derived class.
+  }
+
+  uint32_t getNumSamplesPerSymbol() const override {
+    KTL_ASSERT(false);  // This should be implemented by the derived class.
+    return 0;
   }
 
  private:

@@ -8,6 +8,8 @@
 #include <cmath>
 #include <complex>
 #include <fftw3.h>
+#include <fstream>
+#include <iostream>
 #include <span>
 
 #include "audio_channel.hpp"
@@ -53,19 +55,49 @@ class Fft {
   // frequency:amplitude
   struct FftResults {
     /// @brief Frequency/amplitude pair.
-    using FreqAmp = std::pair<double, double>;
+    struct FreqAmp {
+      double frequency;
+      // double amplitude_not_normalized;
+      double amplitude;
+    };
 
     /// @brief Vector of frequency/amplitude pairs.
     std::vector<FreqAmp> frequency_amplitude;
 
     /// @brief Maximum amplitude found in the frequency domain.
     FreqAmp max_amplitude{0.0, 0.0};
+    /// @brief The index into frequency_amplitude of the maximum amplitude.
     size_t max_amplitude_index = 0;
+
+    /// @brief The average amplitude of the frequency domain.
+    double average_amplitude = 0.0;
+    double amplitude_variance = 0.0;
+    double amplitude_std_dev = 0.0;
+
+    // -- normalized amplitude results -- //
+    // std::vector<FreqAmp> normalized_frequency_amplitude;
+    // FreqAmp normalized_max_amplitude{0.0, 0.0};
 
     void reset() {
       frequency_amplitude.clear();
       max_amplitude = {0.0, 0.0};
       max_amplitude_index = 0;
+      average_amplitude = 0.0;
+      amplitude_variance = 0.0;
+      amplitude_std_dev = 0.0;
+    }
+
+    void saveResultsToCsvFile(const std::string& filename) const {
+      std::ofstream file(filename);
+      if (!file.is_open()) {
+        throw std::runtime_error("Failed to open file for writing: " +
+                                 filename);
+      }
+
+      file << "Frequency,Amplitude" << std::endl;
+      for (const auto& res : frequency_amplitude) {
+        file << res.frequency << "," << res.amplitude << std::endl;
+      }
     }
   };
 
@@ -76,6 +108,8 @@ class Fft {
                                   FftResults& results,
                                   uint32_t fixed_fft_bins = 0) {
     // https://cplusplus.com/forum/beginner/251061/
+    // https://dsp.stackexchange.com/questions/19899/how-to-determine-snr-from-fft-of-measured-data
+    // https://download.ni.com/evaluation/pxi/Understanding%20FFTs%20and%20Windowing.pdf
 
     const uint32_t num_samples = input.size();
     const uint32_t fft_bins =
@@ -87,24 +121,26 @@ class Fft {
     std::vector<double> in;  // Data in the time domain
     for (const auto sample : input) {
       in.push_back(static_cast<double>(sample) / 32768.0);
-      // in.push_back(static_cast<double>(a));
     }
 
+    // Output is n / 2 + 1 complex numbers per
+    // https://www.fftw.org/doc/One_002dDimensional-DFTs-of-Real-Data.html
     std::vector<std::complex<double>> out(in.size() / 2 + 1);
 
-    fftw_plan p = fftw_plan_dft_r2c_1d(
+    // Perform the FFT
+    fftw_plan fft_plan = fftw_plan_dft_r2c_1d(
         in.size(), in.data(), reinterpret_cast<fftw_complex*>(out.data()),
         FFTW_ESTIMATE);
+    fftw_execute(fft_plan);
+    fftw_destroy_plan(fft_plan);
 
-    fftw_execute(p);
-
-    // std::cout << "in/out size: " << in.size() << " " << out.size() << '\n';
     double max_amplitude = 0.0;
     double freq_at_max_amplitude = 0.0;
     size_t max_amplitude_index = 0;
+    double average_amplitude = 0.0;
     for (int K = 1; K < out.size(); ++K) {
       const double frequency = K * delta_f;
-      const double amplitude = 2 * std::abs(out.at(K)) / in.size();
+      const double amplitude = std::abs(out[K]) * 2.0 / num_samples;
 
       if (amplitude > max_amplitude) {
         max_amplitude = amplitude;
@@ -112,12 +148,24 @@ class Fft {
         max_amplitude_index = K;
       }
 
+      average_amplitude += amplitude;
       results.frequency_amplitude.push_back({frequency, amplitude});
     }
     results.max_amplitude = {freq_at_max_amplitude, max_amplitude};
     results.max_amplitude_index = max_amplitude_index;
+    results.average_amplitude = average_amplitude / out.size();
 
-    fftw_destroy_plan(p);  // destructor
+    // Calculate the variance/standard deviation of the amplitudes
+    {
+      double variance = 0.0;
+      for (const auto& res : results.frequency_amplitude) {
+        variance += std::pow(res.amplitude - results.average_amplitude, 2);
+      }
+      variance /= results.frequency_amplitude.size();
+
+      results.amplitude_variance = variance;
+      results.amplitude_std_dev = std::sqrt(variance);
+    }
   }
 
   static void prepareCosWave(std::span<fftw_complex> in) {
@@ -130,3 +178,6 @@ class Fft {
 };
 
 }  // namespace kazoo
+
+std::ostream& operator<<(std::ostream& os,
+                         const kazoo::Fft::FftResults& results);

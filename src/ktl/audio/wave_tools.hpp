@@ -5,6 +5,9 @@
 
 #pragma once
 
+#include <cmath>
+#include <random>
+
 #include <ktl/audio/audio_channel.hpp>
 #include <ktl/audio/audio_constants.hpp>
 
@@ -42,6 +45,19 @@ class WaveTools {
     }
 
     return wave_angle;
+  }
+
+  static void addGaussianNoise(IAudioChannel &channel, const double mean,
+                               const double std_deviation,
+                               const size_t num_samples) {
+    std::default_random_engine generator;
+    std::normal_distribution<double> dist(mean, std_deviation);
+
+    for (size_t i = 0; i < num_samples; i++) {
+      const double noise = dist(generator);
+      const int16_t sample = static_cast<int16_t>(noise * MAX_SAMPLE_AMPLITUDE);
+      channel.addSample(sample);
+    }
   }
 };
 
