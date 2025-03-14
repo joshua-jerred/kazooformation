@@ -10,7 +10,7 @@
 #include <ktl/translation_layer.hpp>
 
 TEST(TranslationLayer_test, encode_to_wav) {
-  GTEST_SKIP();
+  // GTEST_SKIP();
 
   const std::string TEST_FILE_PATH = "TranslationLayer_test.encode_to_wav.wav";
   if (std::filesystem::exists(TEST_FILE_PATH)) {
@@ -38,7 +38,7 @@ TEST(TranslationLayer_test, encode_to_wav) {
 }
 
 TEST(TranslationLayer_test, encode_and_decode_wav) {
-  GTEST_SKIP();
+  // GTEST_SKIP();
 
   const std::string TEST_FILE_PATH =
       "translation_layer_encode_and_decode.test.wav";
@@ -81,7 +81,7 @@ TEST(TranslationLayer_test, encode_and_decode_wav) {
 
 /// @test The very first test with actual kazoo symbols
 TEST(TranslationLayer_test, kazoo_hello_world) {
-  GTEST_SKIP();
+  // GTEST_SKIP();
 
   const std::string TEST_FILE_PATH =
       "TranslationLayer_test.kazoo_hello_world.wav";

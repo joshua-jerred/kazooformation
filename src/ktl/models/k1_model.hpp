@@ -14,6 +14,14 @@
 
 namespace kazoo::model {
 
+constexpr bool DEBUG_PRINT = false;
+inline void debugPrint(const std::string& str) {
+  if constexpr (!DEBUG_PRINT) {
+    return;
+  }
+  std::cout << str << std::endl;
+}
+
 class K1Model {
  public:
   enum class Token : uint32_t {
@@ -97,20 +105,24 @@ class K1Model {
           Fft::performFftFrequency(window_span, partial_fft_results);
 
           Token symbol = detectSymbolFromFftResults(partial_fft_results);
-          std::cout << "DSymbol ";
-          std::cout << (symbol == Token::SYMBOL_0   ? "0"
-                        : symbol == Token::SYMBOL_1 ? "1"
-                                                    : "X")
-                    << " [" << i << ", " << j << ", " << start_position << "]: "
-                    << " pfreq: " << partial_fft_results.max_amplitude.frequency
-                    << " max_amp: "
-                    << partial_fft_results.max_amplitude.amplitude
-                    << " avg_amp: " << partial_fft_results.average_amplitude
-                    << " amp_variance: "
-                    << partial_fft_results.normalized_amplitude_variance
-                    << " amp_sdev: "
-                    << partial_fft_results.normalized_amplitude_std_dev
-                    << std::endl;
+
+          if (DEBUG_PRINT) {
+            std::cout << (symbol == Token::SYMBOL_0   ? "0"
+                          : symbol == Token::SYMBOL_1 ? "1"
+                                                      : "X")
+                      << " [" << i << ", " << j << ", " << start_position
+                      << "]: "
+                      << " pfreq: "
+                      << partial_fft_results.max_amplitude.frequency
+                      << " max_amp: "
+                      << partial_fft_results.max_amplitude.amplitude
+                      << " avg_amp: " << partial_fft_results.average_amplitude
+                      << " amp_variance: "
+                      << partial_fft_results.normalized_amplitude_variance
+                      << " amp_sdev: "
+                      << partial_fft_results.normalized_amplitude_std_dev
+                      << std::endl;
+          }
 
           sample_index += FFT_WINDOW_SIZE;
 
@@ -128,7 +140,7 @@ class K1Model {
         if (detected_symbols.size() < NUM_FFTS_PER_SYMBOL - 2) {
           // We didn't get enough symbols to make a decision, so we don't add
           // anything.
-          std::cout << "rejecting symbol" << std::endl;
+          // debugPrint("rejecting symbol");
           continue;
         }
 
@@ -145,9 +157,11 @@ class K1Model {
 
         if (num_0_count > num_1_count) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
+          debugPrint("Detected Symbol: 0");
           std::cout << "Detected Symbol: 0" << std::endl;
         } else if (num_1_count > num_0_count) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
+          debugPrint("Detected Symbol: 1");
           std::cout << "Detected Symbol: 1" << std::endl;
         } else {
           // If it's a tie, we don't know what it is.

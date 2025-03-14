@@ -24,34 +24,6 @@ class Fft {
  public:
   Fft() = default;
 
-  // static void compute() {
-  //   const int N = 64;
-  //   std::array<fftw_complex, N> in;
-  //   std::array<fftw_complex, N> out;
-  //
-  //   int i;
-  //   prepareCosWave(in);
-  //   performFft(in, out);
-  //   for (i = 0; i < N; i++)
-  //     printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
-  // }
-
-  //  static void performFft(std::span<fftw_complex> in,
-  //                         std::span<fftw_complex> out) {
-  //    const int N = in.size();
-  //    if (in.size() != out.size()) {
-  //      throw std::runtime_error("Input and output arrays must be the same
-  //      size");
-  //    }
-  //
-  //    fftw_plan p;
-  //    p = fftw_plan_dft_1d(N, in.data(), out.data(), FFTW_FORWARD,
-  //    FFTW_ESTIMATE); fftw_execute(p); fftw_destroy_plan(p); fftw_cleanup();
-  //
-  //    for (int i = 0; i < N; i++)
-  //      printf("freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
-  //  }
-
   // frequency:amplitude
   struct FftResults {
     /// @brief Frequency/amplitude pair.
@@ -87,6 +59,7 @@ class Fft {
       average_amplitude = 0.0;
       normalized_amplitude_variance = 0.0;
       normalized_amplitude_std_dev = 0.0;
+      normalized_frequency_amplitude.clear();
     }
 
     void saveResultsToCsvFile(const std::string& filename) const {

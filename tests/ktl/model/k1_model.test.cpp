@@ -138,7 +138,7 @@ TEST_F(K1Model_test, decode_misaligned) {
                   misalignment_samples);
 
     // Add more garbage samples to the audio channel
-    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.0, 0.1,
+    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.1, 0.5,
                                        misalignment_samples);
 
     kazoo::WavFile wav_file;

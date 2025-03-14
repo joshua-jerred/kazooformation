@@ -79,29 +79,18 @@ TEST(Fft_test, whiteNoiseTest) {
 TEST(Fft_test, kazooA_sample) {
   const std::string RESULTS_CSV_FILE = "Fft_test.kazooA_sample.fft_results.csv";
 
-  // Delete the file if it exists
-  if (std::filesystem::exists(RESULTS_CSV_FILE)) {
+  if (std::filesystem::exists(RESULTS_CSV_FILE)) {  // Delete it if it exists
     std::filesystem::remove(RESULTS_CSV_FILE);
   }
   ASSERT_FALSE(std::filesystem::exists(RESULTS_CSV_FILE));
 
   kazoo::WavFile wav_file;
   wav_file.read("kazooA_sample.test.wav");
-
-  constexpr double GAUSSIAN_MEAN = 0.0;
-  constexpr double GAUSSIAN_STD_DEV = 0.1;
-  constexpr size_t NUM_SAMPLES = 400;
-
-  kazoo::WaveTools::addGaussianNoise(wav_file, GAUSSIAN_MEAN, GAUSSIAN_STD_DEV,
-                                     NUM_SAMPLES);
-  EXPECT_EQ(wav_file.getNumSamples(), NUM_SAMPLES);
-  EXPECT_EQ(wav_file.getSamplesRef().size(), NUM_SAMPLES);
-
   const auto wav_span = wav_file.getSamplesRef();
+
   kazoo::Fft::FftResults results;
   kazoo::Fft::performFftFrequency(wav_span, results);
 
-  // std::cout << results;
   results.saveResultsToCsvFile(RESULTS_CSV_FILE);
 
   // constexpr double FREQ_EPSILON = 10.0;

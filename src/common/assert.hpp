@@ -12,5 +12,5 @@
 void ktlast_(bool eval, const char *file, int line, const char *func,
              const char *eval_str);
 
-/// @brief This is lazy, but it'll result in my checking more things.
+/// @brief This is lazy, but it'll result in me checking more things.
 #define KTL_ASSERT(eval) ktlast_(eval, __FILE_NAME__, __LINE__, __func__, #eval)
