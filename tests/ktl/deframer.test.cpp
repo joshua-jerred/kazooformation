@@ -10,11 +10,11 @@ TEST(Deframer_test, helloWorldDeframe) {
   kazoo::KtlFrame input_frame{"Hello World!"};
   std::vector<uint8_t> input_data = input_frame.encodeFrame(2, 2);
 
-  for (const auto& byte : input_data) {
-    std::cout << std::dec << static_cast<int>(byte);
-    std::cout << " (" << std::bitset<8>(byte) << ", ";
-    std::cout << std::hex << static_cast<int>(byte) << ")" << std::endl;
-  }
+  // for (const auto& byte : input_data) {
+  // std::cout << std::dec << static_cast<int>(byte);
+  // std::cout << " (" << std::bitset<8>(byte) << ", ";
+  // std::cout << std::hex << static_cast<int>(byte) << ")" << std::endl;
+  // }
 
   kazoo::BinaryStream input_stream{};
 

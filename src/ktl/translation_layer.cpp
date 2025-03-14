@@ -12,6 +12,7 @@
 #include <ktl/binary_stream.hpp>
 #include <ktl/models/binary_model.hpp>
 #include <ktl/models/k1_model.hpp>
+#include <ktl/models/k2/k2_model.hpp>
 #include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
@@ -20,6 +21,7 @@ namespace kazoo {
 static const model::Testing::Model TEST_MODEL{};
 static const model::Binary::Model BIN_MODEL{};
 static const model::K1Model::Model K1_MODEL{};
+static const model::K2PeakModel::Model K2_PEAK_MODEL{};
 
 const ISymbolModel& TranslationLayer::getStaticSymbolModel(
     const ModelType model_type) {
@@ -30,6 +32,8 @@ const ISymbolModel& TranslationLayer::getStaticSymbolModel(
       return BIN_MODEL;
     case ModelType::K1_MODEL:
       return K1_MODEL;
+    case ModelType::K2_PEAK_MODEL:
+      return K2_PEAK_MODEL;
     default:
       KTL_ASSERT("Invalid model type");
       throw std::runtime_error("Invalid model type");

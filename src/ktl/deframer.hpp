@@ -65,7 +65,7 @@ class Deframer {
   };
 
   void changeState(State new_state) {
-    std::cout << "State change: " << static_cast<int>(new_state) << "\n";
+    // std::cout << "State change: " << static_cast<int>(new_state) << "\n";
     state_ = new_state;
   }
 
@@ -88,7 +88,7 @@ class Deframer {
         byte_aligned = true;
         std::cout << "-Found alignment byte" << std::endl;
       } else if (byte_buffer == KtlFrame::FRAME_START_BYTE_A) {
-        std::cout << "--Found first byte of frame start" << std::endl;
+        // std::cout << "--Found first byte of frame start" << std::endl;
 
         // The next byte must be the second byte of the frame start
         uint8_t next_byte = 0;
@@ -169,14 +169,15 @@ class Deframer {
 
     frame_size_ = frame_size;
 
-    std::cout << "----Found frame size: " << std::dec << frame_size_ << " >>\n";
+    // std::cout << "----Found frame size: " << std::dec << frame_size_ << "
+    // >>\n";
 
     changeState(State::FIND_FRAME_DATA);
     return findFrameData(binary_stream);
   }
 
   bool findFrameData(BinaryStream &binary_stream) {
-    std::cout << "findFrameData" << std::endl;
+    // std::cout << "findFrameData" << std::endl;
     KTL_ASSERT(frame_size_ <= KtlFrame::MAX_FRAME_DATA_SIZE);
 
     if (binary_stream.getNumBytes() <= frame_size_) {
@@ -189,7 +190,7 @@ class Deframer {
       KTL_ASSERT(binary_stream.popByte(byte));
       frame_data_.push_back(byte);
     }
-    std::cout << "-Found frame data" << std::endl;
+    // std::cout << "-Found frame data" << std::endl;
     changeState(State::FIND_FRAME_END);
     return findFrameEnd(binary_stream);
   }
@@ -197,14 +198,14 @@ class Deframer {
   bool findFrameEnd(BinaryStream &binary_stream) {
     // Here we expect to find the end of the frame, if we don't, assume
     // everything is wrong and reset.
-    std::cout << "findFrameEnd" << std::endl;
+    // std::cout << "findFrameEnd" << std::endl;
     if (binary_stream.getNumBytes() < 1) {
       return false;  // Wait until we have enough bytes
     }
     uint8_t byte_buffer = 0;
     KTL_ASSERT(binary_stream.popByte(byte_buffer));
     if (byte_buffer == KtlFrame::FRAME_END_BYTE_A) {
-      std::cout << "\n<< Found frame end" << std::endl;
+      std::cout << "<< Found frame end" << std::endl;
       changeState(State::FOUND_FRAME);
       return true;  // << Final state, frame found
     }

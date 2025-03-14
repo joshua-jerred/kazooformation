@@ -13,17 +13,17 @@
 #include <ktl/encoder.hpp>
 #include <ktl/models/k1_model.hpp>
 
-class K1Model_test : public testing::Test {
+class K2PeakModel_test : public testing::Test {
  protected:
-  K1Model_test() {}
+  K2PeakModel_test() {}
 
-  // ~K1Model_test() override = default;
+  // ~K2PeakModel_test() override = default;
 
   const kazoo::model::K1Model::Model model_ = kazoo::model::K1Model::Model{};
 };
 
-TEST_F(K1Model_test, encode_and_decode) {
-  const std::string TEST_WAV_FILE = "K1Model_test.encode_and_decode.wav";
+TEST_F(K2PeakModel_test, encode_and_decode) {
+  const std::string TEST_WAV_FILE = "K2PeakModel_test.encode_and_decode.wav";
   static constexpr size_t SYM_COUNT = 18;
 
   // Delete the test file if it exists
@@ -91,10 +91,10 @@ TEST_F(K1Model_test, encode_and_decode) {
   }
 }
 
-TEST_F(K1Model_test, decode_misaligned) {
+TEST_F(K2PeakModel_test, decode_misaligned) {
   const auto model = kazoo::model::K1Model::Model{};
 
-  const std::string TEST_WAV_FILE = "K1Model_test.decode_misaligned.wav";
+  const std::string TEST_WAV_FILE = "K2PeakModel_test.decode_misaligned.wav";
   static constexpr size_t SYM_COUNT = 6;
 
   // Delete the test file if it exists

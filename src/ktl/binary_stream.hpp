@@ -120,8 +120,8 @@ class BinaryStream {
 
   bool popByte(uint8_t &output) {
     bool res = popBits(output, 8);
-    std::cout << "popByte: " << std::bitset<8>(output) << ", "
-              << static_cast<char>(output) << std::endl;
+    // std::cout << "popByte: " << std::bitset<8>(output) << ", "
+    // << static_cast<char>(output) << std::endl;
     return res;
   }
 

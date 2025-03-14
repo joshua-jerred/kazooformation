@@ -20,6 +20,7 @@ target_sources(kazoo_translation_layer INTERFACE
         src/ktl/binary_stream.cpp
         src/ktl/translation_layer.cpp
         src/ktl/models/k1_model.cpp
+        src/ktl/models/k2/k2_model.cpp
         src/ktl/audio/kazoo_pcm/doot1_pcm.cpp
         src/ktl/audio/kazoo_pcm/doot2_pcm.cpp
         src/ktl/audio/kazoo_pcm/doot3_pcm.cpp
@@ -58,6 +59,7 @@ set(kazoo_translation_layer_test_sources
         "tests/ktl/audio/wav_file.test.cpp"
         "tests/ktl/model/binary_model.test.cpp"
         "tests/ktl/model/k1_model.test.cpp"
+        "tests/ktl/model/k2_peak_model.test.cpp"
         "tests/ktl/binary_stream.test.cpp"
         "tests/ktl/deframer.test.cpp"
         "tests/ktl/translation_layer.test.cpp"

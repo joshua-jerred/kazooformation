@@ -43,7 +43,8 @@ class TranslationLayer {
     UNKNOWN = 0,
     TESTING,
     BINARY,
-    K1_MODEL
+    K1_MODEL,
+    K2_PEAK_MODEL
   };
 
   TranslationLayer(const ModelType model)
@@ -220,7 +221,9 @@ class TranslationLayer {
         // std::cout << "Not quiet anymore" << std::endl;
       }
 
-      model::K1Model::Stream rx_symbol_stream{model_ref_};
+      model::K1Model::Stream k1_symbol_stream{model_ref_};
+      ISymbolStream& rx_symbol_stream = k1_symbol_stream;
+
       stats_mutex_.lock();
       rx_audio_channel.addSamples(pulse_audio_reader.getAudioBuffer());
       stats_.rx_audio_samples = rx_audio_channel.getNumSamples();

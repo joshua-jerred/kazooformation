@@ -49,7 +49,7 @@ class SymbolStream : public ISymbolStream {
     return symbols_.size() * symbol_model_.getSymbolBitWidth();
   }
 
-  size_t getNumBytes() const { return std::ceil(getNumBits() / 8.0); }
+  size_t getNumBytes() const override { return std::ceil(getNumBits() / 8.0); }
 
   bool popSymbol(Token_t &token) {
     if (symbols_.empty()) {
@@ -70,7 +70,7 @@ class SymbolStream : public ISymbolStream {
   }
 
   bool populateBinaryStream(BinaryStream &binary_stream, size_t num_bytes,
-                            bool pop_symbols = true) {
+                            bool pop_symbols = true) override {
     if (num_bytes > getNumBytes()) {
       return false;
     }

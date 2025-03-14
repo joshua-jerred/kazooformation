@@ -24,6 +24,7 @@
     "iostream": "cpp",
     "span": "cpp",
     "array": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "ostream": "cpp"
   }
 }
