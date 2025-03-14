@@ -18,8 +18,8 @@ TEST(Deframer_test, helloWorldDeframe) {
 
   kazoo::BinaryStream input_stream{};
 
-  // Add a byte for confusion (binary stream must be byte aligned before adding
-  // bytes)
+  // Add a byte for confusion
+  // (binary stream must be byte aligned before adding bytes)
   input_stream.addBits(0b00100001, 8);
   input_stream.addBytes(input_data);
 

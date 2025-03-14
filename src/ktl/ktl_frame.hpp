@@ -22,7 +22,7 @@ class KtlFrame {
   static constexpr uint8_t FRAME_START_BYTE_A = 0b11111000;
   static constexpr uint8_t FRAME_START_BYTE_B = 0b00000111;
 
-  static constexpr uint8_t FRAME_ALIGN_BYTE = 0xA5;
+  static constexpr uint8_t FRAME_ALIGN_BYTE = 0xA5;  // 0b10100101
 
   static constexpr size_t MAX_FRAME_DATA_SIZE = 50;
 
@@ -49,8 +49,8 @@ class KtlFrame {
   /// @return
   std::vector<uint8_t> encodeFrame(size_t preamble_size = 0,
                                    size_t postamble_size = 0) const {
-    KTL_ASSERT(preamble_size % 2 == 0);
-    KTL_ASSERT(postamble_size % 2 == 0);
+    // KTL_ASSERT(preamble_size % 2 == 0);
+    // KTL_ASSERT(postamble_size % 2 == 0);
     std::vector<uint8_t> encoded_frame;
 
     for (size_t i = 0; i < preamble_size; ++i) {
@@ -99,6 +99,8 @@ class KtlFrame {
       frame_data_field_.push_back(static_cast<uint8_t>(c));
     }
   }
+
+  std::vector<uint8_t> getData() const { return frame_data_field_; }
 
   size_t getDataSize() const { return frame_data_field_.size(); }
 

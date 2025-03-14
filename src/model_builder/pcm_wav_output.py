@@ -20,6 +20,8 @@ FILES_TO_CONVERT = [
     ("doc/theory/kazooE_sample.wav", "src/ktl/audio/kazoo_pcm/doot4_pcm.cpp"),
     ("src/ktl/models/k2/kazooA.wav", "src/ktl/models/k2/kazoo_A_pcm.cpp"),
     ("src/ktl/models/k2/kazooD.wav", "src/ktl/models/k2/kazoo_D_pcm.cpp"),
+    ("src/ktl/models/k2/kazooE.wav", "src/ktl/models/k2/kazoo_E_pcm.cpp"),
+    ("src/ktl/models/k2/kazooG.wav", "src/ktl/models/k2/kazoo_G_pcm.cpp"),
 ]
 
 

@@ -11,6 +11,7 @@
 
 #include <ktl/translation_layer.hpp>
 
+constexpr bool CHAT_MODE = true;
 constexpr bool PRE_POST_PADDING = true;
 
 std::atomic<bool> s_run_flag{true};
@@ -72,7 +73,10 @@ int main() {
         kazoo::KtlFrame frame{user_input};
         tl.sendFrame(frame);
         auto stats = tl.getStats();
-        std::cout << stats << std::endl;
+
+        if (!CHAT_MODE) {
+          std::cout << stats << std::endl;
+        }
       }
       // tl.addData(user_input_span);
       // tl.encode(PRE_POST_PADDING);
@@ -85,14 +89,14 @@ int main() {
     if (rx_mode) {
       auto frameOpt = tl.getReceivedFrame();
       if (frameOpt.has_value()) {
-        std::cout << "Received frame: "
-                  << std::string(frameOpt.value().getDataSize(), ' ')
-                  << std::endl;
-        exit(0);
+        auto frame = frameOpt.value();
+        auto data = frame.getData();
+        std::string received_message(data.begin(), data.end());
+        std::cout << "<RX>: " << received_message << std::endl;
       }
 
       auto stats = tl.getStats();
-      if (!stats.is_quiet) {
+      if (!stats.is_quiet && !CHAT_MODE) {
         std::cout << stats << std::endl;
       }
     }

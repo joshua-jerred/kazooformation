@@ -36,28 +36,24 @@ def trim_wav(input_file, output_file, start_sample_index, trim_length, sample_ra
 
     print(f"Trimmed file saved as {output_file}")
 
-def add_noise(base_dir, output_dir, input_file, noise_level):
+def add_noise(input_file, output_file, noise_level):
     assert noise_level <= 1.0 and noise_level >= 0.0
 
-    input_file_path = os.path.join(base_dir, input_file)
-    base, ext = os.path.splitext(input_file)
-    output_file = f"{base}_noise_{noise_level}{ext}"
-    output_path = output_dir + output_file
 
     # source https://stackoverflow.com/a/78926556/20310850
-    audio = AudioSegment.from_file(input_file_path, format="wav")
+    audio = AudioSegment.from_file(input_file, format="wav")
     noise = WhiteNoise().to_audio_segment(duration=len(audio))
     adjusted_noise = noise.apply_gain(ratio_to_db(noise_level))
     audio = audio.overlay(adjusted_noise)
-    
+
     # noise.export(output_dir + "white_noise.wav", format="wav")
     # sample_rate, data = wavfile.read(file_path)
 
     # if data.dtype != np.int16:
         # raise RuntimeError("not 16-bit PCM")
 
-    audio.export(output_path, format="wav")
+    audio.export(output_file, format="wav")
 
     # wavfile.write(output_path, sample_rate, data)
 
-    print(f"Added noise to {output_path} - {noise_level}")
+    print(f"Added noise to {output_file} - {noise_level}")

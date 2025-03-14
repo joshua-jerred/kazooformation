@@ -32,10 +32,10 @@
 namespace kazoo {
 
 class TranslationLayer {
-  static constexpr size_t FRAME_PREAMBLE_SIZE = 6;
-  static constexpr size_t FRAME_POSTAMBLE_SIZE = 4;
-  static_assert(FRAME_PREAMBLE_SIZE % 2 == 0,
-                "Frame preamble size must be divisible by 2");
+  static constexpr size_t FRAME_PREAMBLE_SIZE = 2;
+  static constexpr size_t FRAME_POSTAMBLE_SIZE = 6;
+  // static_assert(FRAME_PREAMBLE_SIZE % 2 == 0,
+  // "Frame preamble size must be divisible by 2");
   static_assert(FRAME_POSTAMBLE_SIZE % 2 == 0,
                 "Frame postamble size must be divisible by 2");
 
@@ -174,7 +174,7 @@ class TranslationLayer {
 
  private:
   void listeningThreadFunc() {
-    std::cout << "Listening thread started." << std::endl;
+    // std::cout << "Listening thread started." << std::endl;
     PulseAudio::Reader pulse_audio_reader{};
     AudioChannel rx_audio_channel;
 
@@ -205,7 +205,7 @@ class TranslationLayer {
           quiet_iter++;
           if (quiet_iter == 2) {
             rx_audio_channel.clear();
-            std::cout << "Quiet input, flushing stream..." << std::endl;
+            // std::cout << "Quiet input, waiting..." << std::endl;
             stats_.is_quiet = true;
             continue;
           } else if (quiet_iter > 2) {
@@ -245,8 +245,8 @@ class TranslationLayer {
       BinaryStream rx_binary_stream;
       bool res = rx_symbol_stream.populateBinaryStream(
           rx_binary_stream, rx_symbol_stream.getNumBytes(), POP_SYMBOLS);
-      std::cout << "Binary stream size: " << rx_binary_stream.getNumBytes()
-                << " res: " << res << std::endl;
+      // std::cout << "Binary stream size: " << rx_binary_stream.getNumBytes()
+      // << " res: " << res << std::endl;
 
       // if (!rx_binary_stream.isByteAligned()) {
       // stats_.decoded_was_byte_aligned = false;
@@ -257,17 +257,17 @@ class TranslationLayer {
 
       if (!rx_binary_stream.isByteAligned() &&
           rx_binary_stream.getNumBytes() > 7) {
-        std::cout << "not byte aligned, padding" << std::endl;
+        // std::cout << "not byte aligned, padding" << std::endl;
         // continue;
         rx_binary_stream.pad();
       } else {
         continue;
       }
 
-      std::cout << "byte aligned" << std::endl;
+      // std::cout << "byte aligned" << std::endl;
       Deframer deframer{};
       if (deframer.processInput(rx_binary_stream)) {
-        std::cout << "!!!!yo we got a frame!" << std::endl;
+        // std::cout << "!!!!yo we got a frame!" << std::endl;
 
         KtlFrame frame;
         deframer.getFrame(frame);
@@ -279,7 +279,7 @@ class TranslationLayer {
         deframer.reset();
         /// @todo
       }
-      std::cout << std::endl;
+      // std::cout << std::endl;
     }
     std::cout << "Listening thread stopped." << std::endl;
     // PulseAudio::Player::startListening();
@@ -291,8 +291,8 @@ class TranslationLayer {
   std::reference_wrapper<const ISymbolModel> model_ref_{
       getStaticSymbolModel(model_type_)};
 
-  model::K1Model::Stream tx_symbol_stream_{model_ref_};
-  model::K1Model::Transcoder encoder_{model_ref_};
+  model::K2PeakModel::Stream tx_symbol_stream_{model_ref_};
+  model::K2PeakModel::Transcoder encoder_{model_ref_};
 
   BinaryStream tx_binary_stream_;
   AudioChannel tx_audio_channel_;

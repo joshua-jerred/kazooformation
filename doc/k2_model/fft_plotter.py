@@ -9,11 +9,12 @@ def plot_vertical_line(label, axis, x, color="black", linestyle="-", width=3, of
     axis.axvline(x, color=color, linestyle=linestyle, linewidth=width)
     axis.text(
         x,
-        80,
-        f"{label}: {x:.0f} Hz",
-        verticalalignment="top",
-        horizontalalignment="center",
-        color="black",
+        0.1,
+        f"{label}: {x:.0f}",
+        # verticalalignment="top",
+        # horizontalalignment="center",
+        color=color,
+        rotation=60,
     )
 
 def do_fft(base_dir, filename, fft_params, apply_filters):
@@ -102,7 +103,7 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
     i = 1
     for peak_index in peak_indices:
         peak_freq = positive_freqs[peak_index]
-        plot_vertical_line(f"Peak {i}", axis, peak_freq, color="r", width=1)
+        plot_vertical_line(f"{i}", axis, peak_freq, color="r", width=1)
         i += 1
         
     # Detect fundamental frequency (first peak)
@@ -160,6 +161,13 @@ def plot_amplitude_distribution(
     )
 
     normalized_magnitudes = positive_magnitudes / np.max(positive_magnitudes)
+    variance = np.var(normalized_magnitudes)
+    std_dev = np.std(normalized_magnitudes)
+    mean = np.mean(normalized_magnitudes)
+    median = np.median(normalized_magnitudes)
+    print(f"Dist Variance: {variance:.4f}, Std Dev: {std_dev:.4f}, Mean: {mean:.4f}, Median: {median:.4f}")
+    
+    
     axis.hist(
         normalized_magnitudes,
         bins=fft_params["FFT_DISTRIBUTION_BINS"],
@@ -167,9 +175,14 @@ def plot_amplitude_distribution(
         alpha=0.7,
         range=(0, fft_params["FFT_DISTRIBUTION_MAX_NORMALIZED"]),
     )
-    
     noise_floor = fft_params["NOISE_FLOOR_VALUE"]
-    axis.axvline(noise_floor, color="r", linestyle="--", label="Noise Floor")
+    # axis.axvline(noise_floor, color="r", linestyle="--", label="Noise Floor")
+    # axis.axvline(mean, color="g", linestyle="--", label="Mean")
+    # axis.axvline(median, color="b", linestyle="--", label="Median")
+    plot_vertical_line("Noise Floor", axis, noise_floor, color='r', linestyle='solid')
+    plot_vertical_line("Mean", axis, mean, color='g', linestyle='--')
+    plot_vertical_line("Median", axis, median, color='b', linestyle='--')
+    plot_vertical_line("Std Dev", axis, mean + std_dev, color='orange', linestyle='--')
 
     plt.xlabel("Amplitude")
     plt.ylabel("Count")
@@ -194,11 +207,11 @@ def plot_files(base_dir, output_dir, input_files, fft_params):
     WAV_PLOT = True
     DIST_PLOT = True
     DIST_NORM_PLOT = True
-    
+
     num_plots = 2
     num_plots += 1 if WAV_PLOT else 0
     num_plots += 1 if DIST_NORM_PLOT else 0
-    
+
     figure, axis = plt.subplots(len(input_files), num_plots)
 
     plot_number = 0
