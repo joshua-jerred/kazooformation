@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <complex>
 #include <fftw3.h>
@@ -51,6 +52,31 @@ class Fft {
     /// @brief Normalized frequency/amplitude pairs, where the amplitude is
     /// normalized to the maximum amplitude with a range of 0.0 to 1.0.
     std::vector<FreqAmp> normalized_frequency_amplitude;
+
+    std::vector<FreqAmp> getNormalizedPeaks(size_t n,
+                                            double min_cutout_amplitude,
+                                            double min_cut_off_freq,
+                                            double max_cut_off_freq) const {
+      std::vector<FreqAmp> peaks;
+      for (const auto& res : normalized_frequency_amplitude) {
+        if (res.amplitude > min_cutout_amplitude &&
+            res.frequency > min_cut_off_freq &&
+            res.frequency < max_cut_off_freq) {
+          peaks.push_back(res);
+        }
+      }
+
+      std::sort(peaks.begin(), peaks.end(),
+                [](const Fft::FftResults::FreqAmp& a,
+                   const Fft::FftResults::FreqAmp& b) {
+                  return a.amplitude > b.amplitude;
+                });
+
+      if (peaks.size() > n) {
+        peaks.resize(n);
+      }
+      return peaks;
+    }
 
     void reset() {
       frequency_amplitude.clear();
@@ -134,7 +160,9 @@ class Fft {
 
     // Normalize the amplitudes to the maximum amplitude
     for (auto& res : results.frequency_amplitude) {
-      results.normalized_frequency_amplitude.push_back(res);
+      results.normalized_frequency_amplitude.push_back(
+          {res.frequency, res.amplitude / max_amplitude});
+      // results.normalized_frequency_amplitude.push_back(
     }
 
     KTL_ASSERT(results.normalized_frequency_amplitude.size() ==

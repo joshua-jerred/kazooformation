@@ -34,20 +34,22 @@ for file, noise_level in NOISE_FILES:
 FFT_INPUT_FILES = []
 FFT_INPUT_FILES = [
     # "kazooE_sample.wav",
-    "kazooA_sample.wav",
+    # "kazooA_sample.wav",
+    "KazooDo_0.1s.wav",
+    "KazooDoHigh_0.1s.wav",
     # "output/kazooA_sample_noise_0.2.wav",
     # f"output/kazooA_sample_noise_0.4.wav",
     # f"output/kazooA_sample_noise_0.6.wav",
     # f"output/kazooA_sample_noise_0.8.wav",
     # "kazooG_sample.wav",
-    "kazooD_sample.wav",
+    # "kazooD_sample.wav",
     "white_noise.wav",
 ]
 
 # FFT_INPUT_FILES = ["KazooDoHigh_0.1s.wav", "KazooDo_0.1s.wav"]
 fft_params = {
-    "FFT_MIN_FREQ": 1000,
-    "FFT_MAX_FREQ": 3000,
+    "FFT_MIN_FREQ": 500,
+    "FFT_MAX_FREQ": 5000,
     "CARRIER_FREQ": 2000,
     "CARRIER_FREQ_WIDTH": 100,  # 500 Hz on either side of the carrier frequency
     "FFT_DISTRIBUTION_BINS": 100,

@@ -44,7 +44,7 @@ FFT_INPUT_FILES = [
 ]
 
 fft_params = {
-    "FFT_MIN_FREQ": 1000,
+    "FFT_MIN_FREQ": 500,
     "FFT_MAX_FREQ": 3000,
     "CARRIER_FREQ": 2000,
     "CARRIER_FREQ_WIDTH": 100,  # 500 Hz on either side of the carrier frequency

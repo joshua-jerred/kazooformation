@@ -13,8 +13,13 @@ FILES_TO_CONVERT = [
     ),
     ("doc/theory/kazooD_sample.wav", "src/ktl/audio/kazoo_pcm/doot1_pcm.cpp"),
     ("doc/theory/kazooG_sample.wav", "src/ktl/audio/kazoo_pcm/doot2_pcm.cpp"),
-    ("src/model_builder/k1_data/KazooDoHigh_0.1s.wav", "src/ktl/audio/kazoo_pcm/doot3_pcm.cpp"),
+    (
+        "src/model_builder/k1_data/KazooDoHigh_0.1s.wav",
+        "src/ktl/audio/kazoo_pcm/doot3_pcm.cpp",
+    ),
     ("doc/theory/kazooE_sample.wav", "src/ktl/audio/kazoo_pcm/doot4_pcm.cpp"),
+    ("src/ktl/models/k2/kazooA.wav", "src/ktl/models/k2/kazoo_A_pcm.cpp"),
+    ("src/ktl/models/k2/kazooD.wav", "src/ktl/models/k2/kazoo_D_pcm.cpp"),
 ]
 
 
@@ -26,11 +31,18 @@ def savePcmDataToFile(input_wav_path, output_path):
 
         cpp_output = output_path.endswith(".cpp")
         if cpp_output:
+            base_array_name = "pcm_data"
+            if "/k2/" in output_path:
+                base_array_name = "k2_pcm_data"
+
             array_name = (
-                "kazoo::pcm_data::"
+                f"kazoo::{base_array_name}::"
                 + output_path.split("/")[-1].replace(".cpp", "").upper()
             )
-            f.write("""#include <ktl/audio/kazoo_pcm.hpp>\n\n""")
+            if "/k2/" in output_path:
+                f.write("""#include <ktl/models/k2/k2_pcm.hpp>\n\n""")
+            else:
+                f.write("""#include <ktl/audio/kazoo_pcm.hpp>\n\n""")
 
             f.write(
                 f"const std::array<int16_t, {len(flattened)}> {array_name} = " + "{\n"

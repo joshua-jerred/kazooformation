@@ -25,6 +25,7 @@
 #include <ktl/ktl_frame.hpp>
 #include <ktl/models/binary_model.hpp>
 #include <ktl/models/k1_model.hpp>
+#include <ktl/models/k2/k2_model.hpp>
 #include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
@@ -222,7 +223,14 @@ class TranslationLayer {
       }
 
       model::K1Model::Stream k1_symbol_stream{model_ref_};
-      ISymbolStream& rx_symbol_stream = k1_symbol_stream;
+      model::K2PeakModel::Stream k2_symbol_stream{model_ref_};
+
+      ISymbolStream& rx_symbol_stream =
+          model_type_ == ModelType::K1_MODEL
+              ? static_cast<ISymbolStream&>(k1_symbol_stream)
+          : model_type_ == ModelType::K2_PEAK_MODEL
+              ? static_cast<ISymbolStream&>(k2_symbol_stream)
+              : static_cast<ISymbolStream&>(k1_symbol_stream);
 
       stats_mutex_.lock();
       rx_audio_channel.addSamples(pulse_audio_reader.getAudioBuffer());

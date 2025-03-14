@@ -19,7 +19,7 @@ static std::string s_user_input = "";
 
 bool rx_mode = true;
 
-kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
+kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K2_PEAK_MODEL};
 
 void getUserInput() {
   // while (s_run_flag) {
@@ -88,6 +88,7 @@ int main() {
         std::cout << "Received frame: "
                   << std::string(frameOpt.value().getDataSize(), ' ')
                   << std::endl;
+        exit(0);
       }
 
       auto stats = tl.getStats();

@@ -88,7 +88,7 @@ class Deframer {
         byte_aligned = true;
         std::cout << "-Found alignment byte" << std::endl;
       } else if (byte_buffer == KtlFrame::FRAME_START_BYTE_A) {
-        // std::cout << "--Found first byte of frame start" << std::endl;
+        std::cout << "--Found first byte of frame start" << std::endl;
 
         // The next byte must be the second byte of the frame start
         uint8_t next_byte = 0;
