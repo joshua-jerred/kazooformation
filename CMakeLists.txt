@@ -53,12 +53,13 @@ find_package(GTest REQUIRED)
 include(GoogleTest)
 
 set(kazoo_translation_layer_test_sources
-        # "tests/ktl/audio/fft.test.cpp"
-        # "tests/ktl/audio/pulse_audio.test.cpp"
-        # "tests/ktl/audio/wav_file.test.cpp"
-        # "tests/ktl/model/binary_model.test.cpp"
+        "tests/ktl/audio/fft.test.cpp"
+        "tests/ktl/audio/pulse_audio.test.cpp"
+        "tests/ktl/audio/wav_file.test.cpp"
+        "tests/ktl/model/binary_model.test.cpp"
         "tests/ktl/model/k1_model.test.cpp"
-        # "tests/ktl/binary_stream.test.cpp"
+        "tests/ktl/binary_stream.test.cpp"
+        "tests/ktl/deframer.test.cpp"
         # "tests/ktl/translation_layer.test.cpp"
 )
 add_executable(kazoo_translation_layer_test ${kazoo_translation_layer_test_sources})

@@ -80,7 +80,7 @@ TEST(TranslationLayer_test, encode_and_decode_wav) {
 }
 
 /// @test The very first test with actual kazoo symbols
-TEST(TranslationLayer_test, kazoo_hello_world) {
+TEST(TranslationLayer_test, kazoo_hello_world_wav) {
   // GTEST_SKIP();
 
   const std::string TEST_FILE_PATH =
@@ -108,4 +108,42 @@ TEST(TranslationLayer_test, kazoo_hello_world) {
   }
 
   EXPECT_EQ(decoded_str, "Hello World!");
+}
+
+/// @test The very first test with actual kazoo symbols
+TEST(TranslationLayer_test, kazoo_hello_world_pulse) {
+  // GTEST_SKIP(); << "Skipping pulse audio loopback test";
+
+  kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
+
+  const std::string INPUT_DATA = "Hello World!";
+  kazoo::KtlFrame frame{INPUT_DATA};
+
+  // Start listening to the microphone
+  tl.startListening();
+
+  // Give it time to warm up
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+  tl.sendFrame(frame);
+  // Encode the data and play it via the speakers
+  // tl.addData(INPUT_DATA);
+  // tl.encode();
+  // tl.playAudioBlocking();
+
+  // Stop listening to the microphone
+  tl.stopListening();
+
+  auto stats = tl.getStats();
+  std::cout << stats << std::endl;
+
+  EXPECT_EQ(stats.num_bytes_received, INPUT_DATA.size());
+
+  // std::vector<uint8_t> decoded_data{};
+  // tl.getListenedBytes(decoded_data);
+  // std::string decoded_str{};
+  // for (const auto& byte : decoded_data) {
+  //   decoded_str.push_back(byte);
+  // }
+  // EXPECT_EQ(decoded_str, "Hello World!");
 }

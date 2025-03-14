@@ -95,8 +95,8 @@ class BinaryStream {
   /// @param num_bits - The number of bits to pop off the front of the stream.
   /// @return \c true if there were enough bits to complete the operation,
   /// \c false otherwise.
-  /// @exception You cannot pop bits off the front if input bit buffer is in
-  /// use.
+  /// @exception You cannot pop bits off the front when the input bit buffer is
+  /// in use.
   bool popBits(uint8_t &output, size_t num_bits) {
     KTL_ASSERT(num_bits_in_input_buffer_ == 0);
     if (num_bits > 8 || num_bits == 0) {
@@ -116,6 +116,12 @@ class BinaryStream {
     }
 
     return true;
+  }
+
+  bool popByte(uint8_t &output) {
+    bool res = popBits(output, 8);
+    std::cout << "popByte: " << std::bitset<8>(output) << std::endl;
+    return res;
   }
 
   /// @brief Add bytes to the stream. If the stream is not byte aligned when
@@ -215,7 +221,7 @@ class BinaryStream {
 
   /// @details Same deal as above, but for the output buffer. This can only
   /// be allowed to be non-zero if the input buffer is zero. This is to
-  /// be used for the getBits() method.
+  /// be used in the getBits() method.
   size_t num_bits_used_in_output_buffer_{0};
 };
 

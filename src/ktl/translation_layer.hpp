@@ -20,6 +20,8 @@
 #include "audio/wav_file.hpp"
 
 #include <ktl/binary_stream.hpp>
+#include <ktl/deframer.hpp>
+#include <ktl/ktl_frame.hpp>
 #include <ktl/models/binary_model.hpp>
 #include <ktl/models/k1_model.hpp>
 #include <ktl/models/testing_model.hpp>
@@ -28,6 +30,13 @@
 namespace kazoo {
 
 class TranslationLayer {
+  static constexpr size_t FRAME_PREAMBLE_SIZE = 2;
+  static_assert(FRAME_PREAMBLE_SIZE % 2 == 0,
+                "Frame preamble size must be divisible by 2");
+  static constexpr size_t FRAME_POSTAMBLE_SIZE = 2;
+  static_assert(FRAME_POSTAMBLE_SIZE % 2 == 0,
+                "Frame postamble size must be divisible by 2");
+
  public:
   enum class ModelType {
     UNKNOWN = 0,
@@ -44,6 +53,35 @@ class TranslationLayer {
       std::cout << "Warning: Stopping listening in destructor." << std::endl;
       stopListening();
     }
+  }
+
+  struct Stats {
+    size_t num_bytes{0};
+
+    // cumulative
+    size_t num_bytes_encoded{0};
+    size_t num_bytes_received{0};
+    size_t symbols_last_encoded{0};
+    size_t audio_samples{0};
+
+    bool decoded_was_byte_aligned{false};
+
+    size_t rx_audio_samples{0};
+    size_t tx_audio_samples{0};
+  };
+
+  Stats getStats() {
+    std::lock_guard<std::mutex> lock(stats_mutex_);
+    return stats_;
+  }
+
+  void sendFrame(const KtlFrame& frame) {
+    std::vector<uint8_t> frame_bytes =
+        frame.encodeFrame(FRAME_PREAMBLE_SIZE, FRAME_POSTAMBLE_SIZE);
+    addData(frame_bytes);
+    encode();
+    playAudioBlocking();
+    tx_audio_channel_.clear();
   }
 
   /// @brief Takes input data and processes it through the symbol stream.
@@ -114,24 +152,9 @@ class TranslationLayer {
     }
   }
 
-  struct Stats {
-    size_t num_bytes{0};
-
-    // cumulative
-    size_t num_bytes_encoded{0};
-    size_t num_bytes_received{0};
-    size_t symbols_last_encoded{0};
-    size_t audio_samples{0};
-
-    bool decoded_was_byte_aligned{false};
-
-    size_t rx_audio_samples{0};
-    size_t tx_audio_samples{0};
-  };
-
-  Stats getStats() {
-    std::lock_guard<std::mutex> lock(stats_mutex_);
-    return stats_;
+  bool getFrame(KtlFrame& frame) {
+    // Placeholder for future implementation
+    return false;
   }
 
  private:
@@ -159,6 +182,11 @@ class TranslationLayer {
       rx_audio_channel.clear();
       stats_.num_bytes_received = rx_symbol_stream_.getNumBytes();
       stats_mutex_.unlock();
+
+      BinaryStream rx_binary_stream;
+      constexpr bool POP_SYMBOLS = true;
+      rx_symbol_stream_.populateBinaryStream(
+          rx_binary_stream, rx_symbol_stream_.getNumBytes(), POP_SYMBOLS);
     }
     std::cout << "Listening thread stopped." << std::endl;
     // PulseAudio::Player::startListening();
@@ -180,6 +208,7 @@ class TranslationLayer {
   // Listening
   std::atomic<bool> is_listening_{false};
   std::thread listening_thread_{};
+  Deframer deframer_{};
 
   std::mutex stats_mutex_;
   Stats stats_;
