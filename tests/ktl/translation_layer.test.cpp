@@ -112,7 +112,7 @@ TEST(TranslationLayer_test, kazoo_hello_world_wav) {
 
 /// @test The very first test with actual kazoo symbols
 TEST(TranslationLayer_test, kazoo_hello_world_pulse) {
-  // GTEST_SKIP(); << "Skipping pulse audio loopback test";
+  GTEST_SKIP() << "Skipping pulse audio loopback test.";
 
   kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
 
