@@ -71,20 +71,22 @@ class Fft {
 
     /// @brief The average amplitude of the frequency domain.
     double average_amplitude = 0.0;
-    double amplitude_variance = 0.0;
-    double amplitude_std_dev = 0.0;
+    double normalized_amplitude_variance = 0.0;
+    double normalized_amplitude_std_dev = 0.0;
 
     // -- normalized amplitude results -- //
-    // std::vector<FreqAmp> normalized_frequency_amplitude;
-    // FreqAmp normalized_max_amplitude{0.0, 0.0};
+
+    /// @brief Normalized frequency/amplitude pairs, where the amplitude is
+    /// normalized to the maximum amplitude with a range of 0.0 to 1.0.
+    std::vector<FreqAmp> normalized_frequency_amplitude;
 
     void reset() {
       frequency_amplitude.clear();
       max_amplitude = {0.0, 0.0};
       max_amplitude_index = 0;
       average_amplitude = 0.0;
-      amplitude_variance = 0.0;
-      amplitude_std_dev = 0.0;
+      normalized_amplitude_variance = 0.0;
+      normalized_amplitude_std_dev = 0.0;
     }
 
     void saveResultsToCsvFile(const std::string& filename) const {
@@ -110,10 +112,12 @@ class Fft {
     // https://cplusplus.com/forum/beginner/251061/
     // https://dsp.stackexchange.com/questions/19899/how-to-determine-snr-from-fft-of-measured-data
     // https://download.ni.com/evaluation/pxi/Understanding%20FFTs%20and%20Windowing.pdf
+    results.reset();
 
     const uint32_t num_samples = input.size();
     const uint32_t fft_bins =
         fixed_fft_bins == 0 ? num_samples : fixed_fft_bins;
+
     // The frequency resolution of the FFT (bin width)
     const double delta_f = static_cast<double>(AUDIO_SAMPLE_RATE) / fft_bins;
 
@@ -155,16 +159,26 @@ class Fft {
     results.max_amplitude_index = max_amplitude_index;
     results.average_amplitude = average_amplitude / out.size();
 
-    // Calculate the variance/standard deviation of the amplitudes
-    {
-      double variance = 0.0;
-      for (const auto& res : results.frequency_amplitude) {
-        variance += std::pow(res.amplitude - results.average_amplitude, 2);
-      }
-      variance /= results.frequency_amplitude.size();
+    // Normalize the amplitudes to the maximum amplitude
+    for (auto& res : results.frequency_amplitude) {
+      results.normalized_frequency_amplitude.push_back(res);
+    }
 
-      results.amplitude_variance = variance;
-      results.amplitude_std_dev = std::sqrt(variance);
+    KTL_ASSERT(results.normalized_frequency_amplitude.size() ==
+               results.frequency_amplitude.size());
+
+    // Calculate the variance/standard deviation of the amplitudes and normalize
+    // the amplitudes
+    {
+      double normalized_variance = 0.0;
+      for (auto& res : results.normalized_frequency_amplitude) {
+        normalized_variance +=
+            std::pow(res.amplitude - results.average_amplitude, 2);
+      }
+      normalized_variance /= results.normalized_frequency_amplitude.size();
+
+      results.normalized_amplitude_variance = normalized_variance;
+      results.normalized_amplitude_std_dev = std::sqrt(normalized_variance);
     }
   }
 

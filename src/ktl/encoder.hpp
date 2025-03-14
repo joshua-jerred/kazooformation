@@ -52,15 +52,15 @@ class Encoder {
   /// @brief Adds a preamble to the audio channel to help with synchronization.
   /// @param audio_channel - The audio channel to add the preamble to.
   void encodePreamble(IAudioChannel& audio_channel) {
-    auto encodeSpan = [&audio_channel](std::span<const int16_t> span) {
-      for (int16_t sample : span) {
-        audio_channel.addSample(sample);
-      }
-    };
+    // auto encodeSpan = [&audio_channel](std::span<const int16_t> span) {
+    //   for (int16_t sample : span) {
+    //     audio_channel.addSample(sample);
+    //   }
+    // };
 
-    encodeSpan(pcm_data::DOOT2_PCM);
-    encodeSpan(pcm_data::DOOT3_PCM);
-    encodeSpan(pcm_data::DOOT1_PCM);
+    // encodeSpan(pcm_data::DOOT2_PCM);
+    // encodeSpan(pcm_data::DOOT3_PCM);
+    // encodeSpan(pcm_data::DOOT1_PCM);
 
     // encodeSpan(pcm_data::DOOT4_PCM);
     // encodeSpan(pcm_data::DOOT3_PCM);

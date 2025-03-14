@@ -26,9 +26,9 @@ inline constexpr pa_sample_format_t PULSE_AUDIO_SAMPLE_FORMAT = PA_SAMPLE_S16NE;
 inline constexpr uint8_t NUM_PULSE_CHANNELS = 1;
 inline constexpr pa_sample_spec PULSE_AUDIO_SAMPLE_SPEC = {
     PULSE_AUDIO_SAMPLE_FORMAT, AUDIO_SAMPLE_RATE, NUM_PULSE_CHANNELS};
-const std::string PULSE_AUDIO_APP_NAME = "ktl";
+const std::string PULSE_AUDIO_APP_NAME = "kazooformation";
 // inline constexpr size_t BUFFER_SIZE_IN_SECONDS = 1;
-inline constexpr size_t PULSE_AUDIO_BUFFER_SIZE = 16000;
+inline constexpr size_t PULSE_AUDIO_READ_BUFFER_SIZE = AUDIO_SAMPLE_RATE;
 
 /// @cite
 /// https://github.com/joshua-jerred/SignalEasel/blob/main/src/pulse_audio_writer.cpp
@@ -71,29 +71,30 @@ class Player {
   }
 };
 
-typedef std::array<int16_t, PULSE_AUDIO_BUFFER_SIZE> PulseAudioBuffer;
+typedef std::array<int16_t, PULSE_AUDIO_READ_BUFFER_SIZE> PulseAudioBuffer;
 
 class Reader {
  public:
   Reader() {
-    s_ = pa_simple_new(nullptr,                       // Use the default server.
-                       PULSE_AUDIO_APP_NAME.c_str(),  // Our application's name.
-                       PA_STREAM_RECORD,          // Stream direction (output).
-                       nullptr,                   // Use the default device.
-                       "StreamReader",            // Description of our stream.
-                       &PULSE_AUDIO_SAMPLE_SPEC,  // The output sample format
-                       nullptr,                   // Use default channel map
-                       nullptr,  // Use default buffering attributes.
-                       nullptr   // Ignore error code.
-    );
+    pulse_server_ =
+        pa_simple_new(nullptr,                       // Use the default server.
+                      PULSE_AUDIO_APP_NAME.c_str(),  // Our application's name.
+                      PA_STREAM_RECORD,          // Stream direction (output).
+                      nullptr,                   // Use the default device.
+                      "StreamReader",            // Description of our stream.
+                      &PULSE_AUDIO_SAMPLE_SPEC,  // The output sample format
+                      nullptr,                   // Use default channel map
+                      nullptr,  // Use default buffering attributes.
+                      nullptr   // Ignore error code.
+        );
 
-    if (!s_) {
+    if (!pulse_server_) {
       // throw Exception(Exception::Id::PULSE_OPEN_ERROR);
       KTL_ASSERT(false);
     }
   }
 
-  ~Reader() { pa_simple_free(s_); }
+  ~Reader() { pa_simple_free(pulse_server_); }
 
   // rule of 5
   Reader(const Reader &) = delete;
@@ -105,10 +106,10 @@ class Reader {
   bool process() {
     int error = 0;
 
-    latency_ = pa_simple_get_latency(s_, &error) / 1000;
+    latency_ = pa_simple_get_latency(pulse_server_, &error) / 1000;
     constexpr double RATIO_MULTIPLIER =
         static_cast<double>(AUDIO_SAMPLE_RATE) /
-        static_cast<double>(PULSE_AUDIO_BUFFER_SIZE) / 1000.0;
+        static_cast<double>(PULSE_AUDIO_READ_BUFFER_SIZE) / 1000.0;
     double latency_ratio = static_cast<double>(latency_) * RATIO_MULTIPLIER;
 
     if (latency_ratio < 1.0) {
@@ -117,7 +118,7 @@ class Reader {
     // std::cout << "Ratio: " << latency_ * RATIO_MULTIPLIER << "\n";
 
     if (pa_simple_read(
-            s_,                    // The stream to read from
+            pulse_server_,         // The stream to read from
             audio_buffer_.data(),  // Where to store the read data
             static_cast<size_t>(audio_buffer_.size() *
                                 sizeof(int16_t)),  // How much to read
@@ -156,9 +157,9 @@ class Reader {
   pa_sample_spec ss_ = {PULSE_AUDIO_SAMPLE_FORMAT, AUDIO_SAMPLE_RATE,
                         NUM_PULSE_CHANNELS};
 
-  pa_simple *s_ = nullptr;
+  pa_simple *pulse_server_ = nullptr;
 
-  std::array<int16_t, PULSE_AUDIO_BUFFER_SIZE> audio_buffer_{};
+  std::array<int16_t, PULSE_AUDIO_READ_BUFFER_SIZE> audio_buffer_{};
 };
 
 }  // namespace PulseAudio

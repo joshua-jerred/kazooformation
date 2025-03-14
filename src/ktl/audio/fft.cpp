@@ -12,8 +12,9 @@ std::ostream& operator<<(std::ostream& os,
      << "]: " << results.max_amplitude.amplitude
      << " at frequency: " << results.max_amplitude.frequency << std::endl;
   os << "Average Amplitude: " << results.average_amplitude << std::endl;
-  os << "Amplitude Variance: " << results.amplitude_variance << std::endl;
-  os << "Amplitude Standard Deviation: " << results.amplitude_std_dev
+  os << "Amplitude Variance: " << results.normalized_amplitude_variance
+     << std::endl;
+  os << "Amplitude Standard Deviation: " << results.normalized_amplitude_std_dev
      << std::endl;
   // for (const auto& res : results.frequency_amplitude) {
   // std::cout << "freq: " << res.frequency << " amp: " << res.amplitude

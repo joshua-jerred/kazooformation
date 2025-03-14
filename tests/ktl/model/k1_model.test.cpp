@@ -95,7 +95,7 @@ TEST_F(K1Model_test, decode_misaligned) {
   const auto model = kazoo::model::K1Model::Model{};
 
   const std::string TEST_WAV_FILE = "K1Model_test.decode_misaligned.wav";
-  static constexpr size_t SYM_COUNT = 5;
+  static constexpr size_t SYM_COUNT = 6;
 
   // Delete the test file if it exists
   if (std::filesystem::exists(TEST_WAV_FILE)) {
@@ -105,12 +105,12 @@ TEST_F(K1Model_test, decode_misaligned) {
 
   using Token = kazoo::model::K1Model::Token;
   const std::array<Token, SYM_COUNT> symbols = {
-      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_0,
-      Token::SYMBOL_1};
+      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1,
+      Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0};
 
   // First, encode the file
   {
-    const double misalignment_ratio = 1.75;
+    const double misalignment_ratio = 1.0;
     const size_t misalignment_samples =
         model_.getNumSamplesPerSymbol() * misalignment_ratio;
 
