@@ -119,6 +119,8 @@ TEST(TranslationLayer_test, kazoo_hello_world_pulse) {
   const std::string INPUT_DATA = "Hello World!";
   kazoo::KtlFrame frame{INPUT_DATA};
 
+  auto stats = tl.getStats();
+  EXPECT_EQ(stats.num_frames_received, 0);
   // Start listening to the microphone
   tl.startListening();
 
@@ -126,18 +128,24 @@ TEST(TranslationLayer_test, kazoo_hello_world_pulse) {
   std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
   tl.sendFrame(frame);
+  // tl.sendFrame(frame);
   // Encode the data and play it via the speakers
   // tl.addData(INPUT_DATA);
   // tl.encode();
   // tl.playAudioBlocking();
 
+  std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+
   // Stop listening to the microphone
   tl.stopListening();
 
-  auto stats = tl.getStats();
+  stats = tl.getStats();
   std::cout << stats << std::endl;
+  EXPECT_EQ(stats.num_frames_received, 1);
 
-  EXPECT_EQ(stats.num_bytes_received, INPUT_DATA.size());
+  auto frameOpt = tl.getReceivedFrame();
+  EXPECT_TRUE(frameOpt.has_value());
+  EXPECT_EQ(frameOpt.value().getDataSize(), INPUT_DATA.size());
 
   // std::vector<uint8_t> decoded_data{};
   // tl.getListenedBytes(decoded_data);

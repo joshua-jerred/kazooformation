@@ -60,7 +60,7 @@ set(kazoo_translation_layer_test_sources
         "tests/ktl/model/k1_model.test.cpp"
         "tests/ktl/binary_stream.test.cpp"
         "tests/ktl/deframer.test.cpp"
-        # "tests/ktl/translation_layer.test.cpp"
+        "tests/ktl/translation_layer.test.cpp"
 )
 add_executable(kazoo_translation_layer_test ${kazoo_translation_layer_test_sources})
 target_link_libraries(kazoo_translation_layer_test

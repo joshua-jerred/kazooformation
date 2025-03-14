@@ -56,6 +56,10 @@ class AudioChannel : public IAudioChannel {
 
   void clear() override { samples_.clear(); }
 
+  uint32_t getLengthMs() const {
+    return static_cast<uint32_t>(samples_.size() * 1000 / 44100);
+  }
+
  protected:
   std::vector<Sample> samples_{};
 };

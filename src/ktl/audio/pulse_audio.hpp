@@ -28,7 +28,9 @@ inline constexpr pa_sample_spec PULSE_AUDIO_SAMPLE_SPEC = {
     PULSE_AUDIO_SAMPLE_FORMAT, AUDIO_SAMPLE_RATE, NUM_PULSE_CHANNELS};
 const std::string PULSE_AUDIO_APP_NAME = "kazooformation";
 // inline constexpr size_t BUFFER_SIZE_IN_SECONDS = 1;
-inline constexpr size_t PULSE_AUDIO_READ_BUFFER_SIZE = AUDIO_SAMPLE_RATE;
+inline constexpr size_t PULSE_AUDIO_READ_BUFFER_SIZE = AUDIO_SAMPLE_RATE / 1;
+inline constexpr size_t BUFFER_TIME_IN_MS =
+    PULSE_AUDIO_READ_BUFFER_SIZE * 1000 / AUDIO_SAMPLE_RATE;
 
 /// @cite
 /// https://github.com/joshua-jerred/SignalEasel/blob/main/src/pulse_audio_writer.cpp
@@ -106,16 +108,17 @@ class Reader {
   bool process() {
     int error = 0;
 
-    latency_ = pa_simple_get_latency(pulse_server_, &error) / 1000;
-    constexpr double RATIO_MULTIPLIER =
-        static_cast<double>(AUDIO_SAMPLE_RATE) /
-        static_cast<double>(PULSE_AUDIO_READ_BUFFER_SIZE) / 1000.0;
-    double latency_ratio = static_cast<double>(latency_) * RATIO_MULTIPLIER;
+    audio_latency_ms_ = pa_simple_get_latency(pulse_server_, &error) / 1000;
+    // constexpr double RATIO_MULTIPLIER =
+    // static_cast<double>(AUDIO_SAMPLE_RATE) /
+    // static_cast<double>(PULSE_AUDIO_READ_BUFFER_SIZE) / 1000.0;
+    // double latency_ratio =
+    // static_cast<double>(audio_latency_ms_) * RATIO_MULTIPLIER;
 
-    if (latency_ratio < 1.0) {
+    if (audio_latency_ms_ < BUFFER_TIME_IN_MS) {  // not enough audio
       return false;
     }
-    // std::cout << "Ratio: " << latency_ * RATIO_MULTIPLIER << "\n";
+    // std::cout << "Ratio: " << audio_latency_ms_ * RATIO_MULTIPLIER << "\n";
 
     if (pa_simple_read(
             pulse_server_,         // The stream to read from
@@ -143,7 +146,7 @@ class Reader {
 
   uint32_t getRms() const { return rms_; }
   double getVolume() const { return volume_; }
-  uint64_t getLatency() const { return latency_; }
+  uint64_t getLatency() const { return audio_latency_ms_; }
 
   const PulseAudioBuffer &getAudioBuffer() const { return audio_buffer_; }
 
@@ -151,7 +154,7 @@ class Reader {
   /**
    * @brief Latency in milliseconds
    */
-  uint32_t latency_ = 0;
+  uint32_t audio_latency_ms_ = 0;
   uint64_t rms_ = 0;
   double volume_ = 0;
   pa_sample_spec ss_ = {PULSE_AUDIO_SAMPLE_FORMAT, AUDIO_SAMPLE_RATE,

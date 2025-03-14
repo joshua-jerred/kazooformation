@@ -158,11 +158,11 @@ class K1Model {
         if (num_0_count > num_1_count) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_0));
           debugPrint("Detected Symbol: 0");
-          std::cout << "Detected Symbol: 0" << std::endl;
+          // std::cout << "Detected Symbol: 0" << std::endl;
         } else if (num_1_count > num_0_count) {
           symbol_stream.addSymbolId(static_cast<uint32_t>(Token::SYMBOL_1));
           debugPrint("Detected Symbol: 1");
-          std::cout << "Detected Symbol: 1" << std::endl;
+          // std::cout << "Detected Symbol: 1" << std::endl;
         } else {
           // If it's a tie, we don't know what it is.
           // symbol_stream.addSymbolId(static_cast<uint32_t>(Token::UNKNOWN));

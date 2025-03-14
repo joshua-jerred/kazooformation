@@ -37,6 +37,8 @@ class KtlFrame {
 
   KtlFrame(const std::string &data) { setData(data); }
 
+  KtlFrame(const std::span<uint8_t> data) { setData(data); }
+
   ~KtlFrame() = default;
 
   /// @brief
@@ -74,9 +76,9 @@ class KtlFrame {
     encoded_frame.push_back(FRAME_END_BYTE_A);
     // encoded_frame.push_back(FRAME_END_BYTE_B);
 
-    // for (size_t i = 0; i < postamble_size; ++i) {
-    // encoded_frame.push_back(FRAME_END_BYTE_B);
-    // }
+    for (size_t i = 0; i < postamble_size; ++i) {
+      encoded_frame.push_back(FRAME_ALIGN_BYTE);
+    }
 
     KTL_ASSERT(encoded_frame.size() <= MAX_FRAME_SIZE);
     return encoded_frame;

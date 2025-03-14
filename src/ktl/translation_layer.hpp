@@ -11,6 +11,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <queue>
 #include <span>
 #include <string>
 #include <thread>
@@ -30,10 +31,10 @@
 namespace kazoo {
 
 class TranslationLayer {
-  static constexpr size_t FRAME_PREAMBLE_SIZE = 2;
+  static constexpr size_t FRAME_PREAMBLE_SIZE = 6;
+  static constexpr size_t FRAME_POSTAMBLE_SIZE = 4;
   static_assert(FRAME_PREAMBLE_SIZE % 2 == 0,
                 "Frame preamble size must be divisible by 2");
-  static constexpr size_t FRAME_POSTAMBLE_SIZE = 2;
   static_assert(FRAME_POSTAMBLE_SIZE % 2 == 0,
                 "Frame postamble size must be divisible by 2");
 
@@ -68,6 +69,13 @@ class TranslationLayer {
 
     size_t rx_audio_samples{0};
     size_t tx_audio_samples{0};
+
+    size_t num_frames_received{0};
+
+    uint32_t pulse_audio_latency_ms{0};
+    double pulse_audio_volume{0.0};
+    double pulse_audio_rms{0.0};
+    bool is_quiet = false;
   };
 
   Stats getStats() {
@@ -152,9 +160,14 @@ class TranslationLayer {
     }
   }
 
-  bool getFrame(KtlFrame& frame) {
-    // Placeholder for future implementation
-    return false;
+  std::optional<KtlFrame> getReceivedFrame() {
+    std::lock_guard<std::mutex> lock(received_frames_mutex_);
+    if (received_frames_.empty()) {
+      return std::nullopt;
+    }
+    KtlFrame frame = received_frames_.front();
+    received_frames_.pop();
+    return frame;
   }
 
  private:
@@ -163,30 +176,99 @@ class TranslationLayer {
     PulseAudio::Reader pulse_audio_reader{};
     AudioChannel rx_audio_channel;
 
+    bool quiet_input = false;
+    size_t quiet_iter = 0;
+
     while (is_listening_) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
       if (!pulse_audio_reader.process()) {
         continue;
       }
+      std::cout << std::dec;
+      // std::cout << pulse_audio_reader.getLatency() << "ms "
+      // << pulse_audio_reader.getVolume() << " "
+      // << pulse_audio_reader.getRms() << std::endl;
+      stats_.pulse_audio_latency_ms = pulse_audio_reader.getLatency();
+      stats_.pulse_audio_volume = pulse_audio_reader.getVolume();
+      stats_.pulse_audio_rms = pulse_audio_reader.getRms();
 
-      std::cout << pulse_audio_reader.getLatency() << "ms "
-                << pulse_audio_reader.getVolume() << " "
-                << pulse_audio_reader.getRms() << std::endl;
+      if (pulse_audio_reader.getRms() < 1) {
+        if (!quiet_input) {
+          // std::cout << "Quiet input..." << std::endl;
+          quiet_input = true;
+          quiet_iter = 0;
+        } else {
+          // allow the first one to pass through so we can flush the stream
+          quiet_iter++;
+          if (quiet_iter == 2) {
+            rx_audio_channel.clear();
+            std::cout << "Quiet input, flushing stream..." << std::endl;
+            stats_.is_quiet = true;
+            continue;
+          } else if (quiet_iter > 2) {
+            continue;
+          }
+        }
+        quiet_input = true;
 
+        // stats_.rx_audio_samples = 0;
+      } else {
+        quiet_input = false;
+        stats_.is_quiet = false;
+        quiet_iter = 0;
+        // std::cout << "Not quiet anymore" << std::endl;
+      }
+
+      model::K1Model::Stream rx_symbol_stream{model_ref_};
       stats_mutex_.lock();
       rx_audio_channel.addSamples(pulse_audio_reader.getAudioBuffer());
       stats_.rx_audio_samples = rx_audio_channel.getNumSamples();
       getStaticSymbolModel(model_type_)
-          .decodeAudioToSymbols(rx_audio_channel, rx_symbol_stream_);
-      rx_audio_channel.clear();
-      stats_.num_bytes_received = rx_symbol_stream_.getNumBytes();
+          .decodeAudioToSymbols(rx_audio_channel, rx_symbol_stream);
+      // rx_audio_channel.clear();
+      stats_.num_bytes_received = rx_symbol_stream.getNumBytes();
       stats_mutex_.unlock();
 
+      constexpr bool POP_SYMBOLS = false;
       BinaryStream rx_binary_stream;
-      constexpr bool POP_SYMBOLS = true;
-      rx_symbol_stream_.populateBinaryStream(
-          rx_binary_stream, rx_symbol_stream_.getNumBytes(), POP_SYMBOLS);
+      bool res = rx_symbol_stream.populateBinaryStream(
+          rx_binary_stream, rx_symbol_stream.getNumBytes(), POP_SYMBOLS);
+      std::cout << "Binary stream size: " << rx_binary_stream.getNumBytes()
+                << " res: " << res << std::endl;
+
+      // if (!rx_binary_stream.isByteAligned()) {
+      // stats_.decoded_was_byte_aligned = false;
+      // rx_binary_stream.pad();
+      // } else {
+      // stats_.decoded_was_byte_aligned = true;
+      // }
+
+      if (!rx_binary_stream.isByteAligned() &&
+          rx_binary_stream.getNumBytes() > 7) {
+        std::cout << "not byte aligned, padding" << std::endl;
+        // continue;
+        rx_binary_stream.pad();
+      } else {
+        continue;
+      }
+
+      std::cout << "byte aligned" << std::endl;
+      Deframer deframer{};
+      if (deframer.processInput(rx_binary_stream)) {
+        std::cout << "!!!!yo we got a frame!" << std::endl;
+
+        KtlFrame frame;
+        deframer.getFrame(frame);
+        received_frames_mutex_.lock();
+        received_frames_.push(frame);
+        received_frames_mutex_.unlock();
+        stats_.num_frames_received++;  /// @todo not thread safe
+        rx_audio_channel.clear();
+        deframer.reset();
+        /// @todo
+      }
+      std::cout << std::endl;
     }
     std::cout << "Listening thread stopped." << std::endl;
     // PulseAudio::Player::startListening();
@@ -199,7 +281,6 @@ class TranslationLayer {
       getStaticSymbolModel(model_type_)};
 
   model::K1Model::Stream tx_symbol_stream_{model_ref_};
-  model::K1Model::Stream rx_symbol_stream_{model_ref_};
   model::K1Model::Transcoder encoder_{model_ref_};
 
   BinaryStream tx_binary_stream_;
@@ -208,7 +289,9 @@ class TranslationLayer {
   // Listening
   std::atomic<bool> is_listening_{false};
   std::thread listening_thread_{};
-  Deframer deframer_{};
+
+  std::mutex received_frames_mutex_;
+  std::queue<KtlFrame> received_frames_;
 
   std::mutex stats_mutex_;
   Stats stats_;

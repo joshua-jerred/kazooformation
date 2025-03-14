@@ -40,6 +40,7 @@ const ISymbolModel& TranslationLayer::getStaticSymbolModel(
 
 std::ostream& operator<<(std::ostream& os,
                          const kazoo::TranslationLayer::Stats& stats) {
+  os << std::dec;
   os << "Bytes In TX Buffer: " << stats.num_bytes
      << ", Rx Bytes: " << stats.num_bytes_received
      << ", Symbols Last Encoded: " << stats.symbols_last_encoded
@@ -47,6 +48,10 @@ std::ostream& operator<<(std::ostream& os,
      << ", Decoded WAV Aligned: "
      << (stats.decoded_was_byte_aligned ? "Yes" : "No")
      << ", RX Audio Samples: " << stats.rx_audio_samples
-     << ", TX Audio Samples: " << stats.tx_audio_samples;
+     << ", TX Audio Samples: " << stats.tx_audio_samples
+     << ", Num Frames Received: " << stats.num_frames_received
+     << ", Pulse [latency: " << stats.pulse_audio_latency_ms
+     << "ms, volume: " << stats.pulse_audio_volume
+     << ", rms: " << stats.pulse_audio_rms << "]";
   return os;
 }
