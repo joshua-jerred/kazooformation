@@ -14,11 +14,27 @@
 
 namespace kazoo {
 
+class IEncoder {
+ public:
+  virtual ~IEncoder() = default;
+
+  virtual void clear() = 0;
+
+  virtual size_t encodeAvailableSymbols(ISymbolStream& symbol_stream,
+                                        IAudioChannel& audio_channel,
+                                        bool pre_post_padding = false) = 0;
+};
+
 template <typename Token_t>
-class Encoder {
+class Encoder : public IEncoder {
  public:
   Encoder(const ISymbolModel& symbol_model)
-      : symbol_model_(symbol_model) {}
+      : symbol_model_(symbol_model) {
+  }
+
+  void clear() override {
+    context_ = EncoderContext{};
+  }
 
   /// @brief Pops symbols from the front of the symbol stream and encodes them
   /// into the audio buffer.
@@ -26,18 +42,17 @@ class Encoder {
   /// @param pre_post_padding - If true, the encoder will add padding before
   /// and after the symbols to help with synchronization.
   /// @return The number of symbols that were added.
-  size_t encodeAvailableSymbols(SymbolStream<Token_t>& symbol_stream,
+  size_t encodeAvailableSymbols(ISymbolStream& symbol_stream,
                                 IAudioChannel& audio_channel,
-                                bool pre_post_padding = false) {
+                                bool pre_post_padding = false) override {
     if (pre_post_padding) {
       encodePreamble(audio_channel);
     }
 
     size_t num_symbols_added = 0;
-    Token_t symbol_token;
-    while (symbol_stream.popSymbol(symbol_token)) {
-      symbol_model_.encodeSymbol(context_, static_cast<uint32_t>(symbol_token),
-                                 audio_channel);
+    uint32_t symbol_token_id;
+    while (symbol_stream.popSymbolTokenId(symbol_token_id)) {
+      symbol_model_.encodeSymbol(context_, symbol_token_id, audio_channel);
       ++num_symbols_added;
     }
 
@@ -66,15 +81,16 @@ class Encoder {
     // encodeSpan(pcm_data::DOOT3_PCM);
 
     // bit of silence
-    static constexpr size_t PREAMBLE_SYMBOLS = 4410UL;  // 44100 / 10;
-    const int16_t SILENT_SAMPLE = 0;
-    for (size_t i = 0; i < PREAMBLE_SYMBOLS; ++i) {
-      audio_channel.addSample(SILENT_SAMPLE);
-    }
+    // static constexpr size_t PREAMBLE_SYMBOLS = 4410UL;  // 44100 / 10;
+    // const int16_t SILENT_SAMPLE = 0;
+    // for (size_t i = 0; i < PREAMBLE_SYMBOLS; ++i) {
+    //   audio_channel.addSample(SILENT_SAMPLE);
+    // }
   }
 
   /// @todo
-  void encodeTail(IAudioChannel& audio_channel) {}
+  void encodeTail(IAudioChannel& audio_channel) {
+  }
 
   EncoderContext context_;
 

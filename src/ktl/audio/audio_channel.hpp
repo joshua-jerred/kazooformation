@@ -11,6 +11,8 @@
 #include <span>
 #include <vector>
 
+#include "common/assert.hpp"
+
 namespace kazoo {
 
 class IAudioChannel {
@@ -30,7 +32,9 @@ class AudioChannel : public IAudioChannel {
  public:
   AudioChannel() = default;
 
-  void addSample(const Sample sample) override { samples_.push_back(sample); }
+  void addSample(const Sample sample) override {
+    samples_.push_back(sample);
+  }
 
   void addSamples(std::span<const Sample> samples) {
     for (const auto sample : samples) {
@@ -38,7 +42,9 @@ class AudioChannel : public IAudioChannel {
     }
   }
 
-  size_t getNumSamples() const { return samples_.size(); }
+  size_t getNumSamples() const {
+    return samples_.size();
+  }
 
   // bool popSample(Sample& sample) {
   //   if (samples_.empty()) {
@@ -54,10 +60,26 @@ class AudioChannel : public IAudioChannel {
     return {samples_.data(), samples_.size()};
   }
 
-  void clear() override { samples_.clear(); }
+  void clear() override {
+    samples_.clear();
+  }
 
   uint32_t getLengthMs() const {
     return static_cast<uint32_t>(samples_.size() * 1000 / 44100);
+  }
+
+  Sample getSample(size_t index) const {
+    if (index >= samples_.size()) {
+      KTL_ASSERT(false);
+    }
+    return samples_.at(index);
+  }
+
+  void setSample(size_t index, Sample sample) {
+    if (index >= samples_.size()) {
+      KTL_ASSERT(false);
+    }
+    samples_.at(index) = sample;
   }
 
  protected:

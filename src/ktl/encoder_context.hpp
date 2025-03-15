@@ -9,8 +9,10 @@
 
 namespace kazoo {
 
+/// @brief Encoder context, used to store state information be
 struct EncoderContext {
   double wave_angle = 0;
+
   std::optional<uint32_t> previous_symbol_token_id = std::nullopt;
 };
 

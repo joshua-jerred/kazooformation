@@ -11,7 +11,7 @@
 
 #include <ktl/translation_layer.hpp>
 
-constexpr bool CHAT_MODE = true;
+constexpr bool CHAT_MODE = false;
 constexpr bool PRE_POST_PADDING = true;
 
 std::atomic<bool> s_run_flag{true};

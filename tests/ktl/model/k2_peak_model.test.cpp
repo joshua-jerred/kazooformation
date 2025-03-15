@@ -15,7 +15,8 @@
 
 class K2PeakModel_test : public testing::Test {
  protected:
-  K2PeakModel_test() {}
+  K2PeakModel_test() {
+  }
 
   // ~K2PeakModel_test() override = default;
 
@@ -107,7 +108,7 @@ TEST_F(K2PeakModel_test, decode_misaligned) {
 
   // First, encode the file
   {
-    const double misalignment_ratio = 1.6;
+    const double misalignment_ratio = 1.5;  // 50% misalignment
     const size_t misalignment_samples =
         model_.getNumSamplesPerSymbol() * misalignment_ratio;
 
@@ -156,7 +157,7 @@ TEST_F(K2PeakModel_test, decode_misaligned) {
     ASSERT_NE(wav_file.getNumSamples(),
               kazoo::model::K2PeakModel::SAMPLES_PER_SYMBOL * SYM_COUNT);
 
-    // Decode the audio file using the testing model
+    // Decode the audio file using the model
     kazoo::SymbolStream<kazoo::model::K2PeakModel::Token> s_stream{model};
     kazoo::model::K2PeakModel::Model m{};
     m.decodeAudioToSymbols(wav_file, s_stream);

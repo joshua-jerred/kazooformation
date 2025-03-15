@@ -15,17 +15,9 @@
 #include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
-#define K2_DEBUG_PRINT
+// #define K2_DEBUG_PRINT
 
 namespace kazoo::model {
-
-// constexpr bool DEBUG_PRINT = false;
-// inline void debugPrint(const std::string& str) {
-// if constexpr (!DEBUG_PRINT) {
-// return;
-// }
-// std::cout << str << std::endl;
-// }
 
 class K2PeakModel {
  public:
@@ -47,7 +39,8 @@ class K2PeakModel {
                               {Token::SYMBOL_01, 0b01},
                               {Token::SYMBOL_10, 0b10},
                               {Token::SYMBOL_11, 0b11}},
-                             SYMBOL_BIT_WIDTH} {}
+                             SYMBOL_BIT_WIDTH} {
+    }
 
     void encodeSymbol(EncoderContext& context, uint32_t token_id,
                       IAudioChannel& audio_channel) const override {
@@ -220,7 +213,12 @@ class K2PeakModel {
       double sym_1_poi_power = 0;
       double sym_2_poi_power = 0;
       double sym_3_poi_power = 0;
-      double power_outside_poi = 0;
+
+      // Start at a non-zero for the sake of a sensible SNR value later on.
+      // SNR would be better calculated by taking the integral of the whole FFT
+      // and then subtracting the peaks of interest.
+      double power_outside_poi = 0.2;
+
       for (const auto& res : sorted_peaks) {
         const double peak_to_check = res.frequency;
         bool peak_used_by_symbol = false;

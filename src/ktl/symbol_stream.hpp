@@ -31,11 +31,18 @@ class SymbolStream : public ISymbolStream {
   /// @brief Constructor
   /// @param symbol_model - The symbol table
   SymbolStream(const ISymbolModel &symbol_model)
-      : symbol_model_(symbol_model) {}
+      : symbol_model_(symbol_model) {
+  }
+
+  void clear() override {
+    symbols_.clear();
+  }
 
   /// @brief Add a symbol to the end of the stream.
   /// @param token - The symbol token to add.
-  void addSymbol(Token_t token) { symbols_.push_back(token); }
+  void addSymbol(Token_t token) {
+    symbols_.push_back(token);
+  }
 
   void addSymbolId(uint32_t token_id) override {
     symbols_.push_back(static_cast<Token_t>(token_id));
@@ -43,13 +50,17 @@ class SymbolStream : public ISymbolStream {
 
   /// @brief Get the number of symbols in the stream.
   /// @return size_t The number of symbols
-  size_t getNumSymbols() const { return symbols_.size(); }
+  size_t getNumSymbols() const {
+    return symbols_.size();
+  }
 
   size_t getNumBits() const {
     return symbols_.size() * symbol_model_.getSymbolBitWidth();
   }
 
-  size_t getNumBytes() const override { return std::ceil(getNumBits() / 8.0); }
+  size_t getNumBytes() const override {
+    return std::ceil(getNumBits() / 8.0);
+  }
 
   bool popSymbol(Token_t &token) {
     if (symbols_.empty()) {
@@ -60,7 +71,7 @@ class SymbolStream : public ISymbolStream {
     return true;
   }
 
-  bool popSymbolTokenId(uint32_t &token_id) {
+  bool popSymbolTokenId(uint32_t &token_id) override {
     if (symbols_.empty()) {
       return false;
     }
@@ -94,11 +105,12 @@ class SymbolStream : public ISymbolStream {
     return true;
   }
 
-  /// @brief Process a binary stream and convert it to symbols.
+  /// @brief Process a binary stream and convert it to symbols, removing the
+  /// bits from the binary stream.
   /// @param binary_stream - The binary stream to process
-  /// @param pop_bytes - Whether to pop bytes from the input stream
   /// @return std::pair<number of bytes processed, number of symbols processed>
-  std::pair<size_t, size_t> processBinaryStream(BinaryStream &binary_stream) {
+  std::pair<size_t, size_t> processBinaryStream(
+      BinaryStream &binary_stream) override {
     KTL_ASSERT(binary_stream.isByteAligned());
     size_t num_bytes = binary_stream.getNumBytes();
     uint8_t symbol_value_buffer{0};

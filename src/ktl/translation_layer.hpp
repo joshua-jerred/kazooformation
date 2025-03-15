@@ -34,10 +34,10 @@ namespace kazoo {
 class TranslationLayer {
   static constexpr size_t FRAME_PREAMBLE_SIZE = 2;
   static constexpr size_t FRAME_POSTAMBLE_SIZE = 6;
-  // static_assert(FRAME_PREAMBLE_SIZE % 2 == 0,
-  // "Frame preamble size must be divisible by 2");
-  static_assert(FRAME_POSTAMBLE_SIZE % 2 == 0,
-                "Frame postamble size must be divisible by 2");
+
+  /// @brief The volume threshold below which pulse audio is considered
+  /// quiet/not receiving audio.
+  static constexpr double MIN_VOLUME_THRESHOLD = 0.05;
 
  public:
   enum class ModelType {
@@ -195,7 +195,7 @@ class TranslationLayer {
       stats_.pulse_audio_volume = pulse_audio_reader.getVolume();
       stats_.pulse_audio_rms = pulse_audio_reader.getRms();
 
-      if (pulse_audio_reader.getRms() < 1) {
+      if (pulse_audio_reader.getVolume() < MIN_VOLUME_THRESHOLD) {
         if (!quiet_input) {
           // std::cout << "Quiet input..." << std::endl;
           quiet_input = true;
