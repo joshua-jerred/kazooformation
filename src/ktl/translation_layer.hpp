@@ -33,11 +33,11 @@ namespace kazoo {
 
 class TranslationLayer {
   static constexpr size_t FRAME_PREAMBLE_SIZE = 2;
-  static constexpr size_t FRAME_POSTAMBLE_SIZE = 6;
+  static constexpr size_t FRAME_POSTAMBLE_SIZE = 2;
 
   /// @brief The volume threshold below which pulse audio is considered
   /// quiet/not receiving audio.
-  static constexpr double MIN_VOLUME_THRESHOLD = 0.05;
+  static constexpr double MIN_VOLUME_THRESHOLD = 0.01;
 
  public:
   enum class ModelType {
@@ -49,7 +49,8 @@ class TranslationLayer {
   };
 
   TranslationLayer(const ModelType model)
-      : model_type_(model) {}
+      : model_type_(model) {
+  }
 
   ~TranslationLayer() {
     if (is_listening_) {
@@ -103,55 +104,19 @@ class TranslationLayer {
     stats_.num_bytes = tx_symbol_stream_.getNumBytes();
   }
 
-  void encode(bool pre_post_padding = false) {
-    stats_.symbols_last_encoded = encoder_.encodeAvailableSymbols(
-        tx_symbol_stream_, tx_audio_channel_, pre_post_padding);
-    stats_.num_bytes = tx_symbol_stream_.getNumBytes();
-    stats_.num_bytes_encoded += stats_.symbols_last_encoded;
-    stats_.audio_samples = tx_audio_channel_.getNumSamples();
-  }
+  void encode(bool pre_post_padding = false);
 
-  void saveWav(const std::string& filename) {
-    WavFile wav_file;
-    wav_file.loadFromAudioChannel(tx_audio_channel_);
-    wav_file.write(filename);
-  }
+  void saveWav(const std::string& filename);
 
-  void playAudioBlocking(bool clear_audio_channel = true) {
-    PulseAudio::Player::play(tx_audio_channel_);
-    if (clear_audio_channel) {
-      tx_audio_channel_.clear();
-    }
-  }
+  void playAudioBlocking(bool clear_audio_channel = true);
 
-  void loadAndDecodeWav(const std::string& filename,
-                        std::vector<uint8_t>& data) {
-    WavFile wav_file;
-    wav_file.read(filename);
-    wav_file.populateAudioChannel(tx_audio_channel_);
-    getStaticSymbolModel(model_type_)
-        .decodeAudioToSymbols(tx_audio_channel_, tx_symbol_stream_);
-
-    constexpr bool POP_SYMBOLS = true;
-    KTL_ASSERT(tx_symbol_stream_.populateBinaryStream(
-        tx_binary_stream_, tx_symbol_stream_.getNumBytes(), POP_SYMBOLS));
-
-    if (!tx_binary_stream_.isByteAligned()) {
-      stats_.decoded_was_byte_aligned = false;
-      tx_binary_stream_.pad();
-    } else {
-      stats_.decoded_was_byte_aligned = true;
-    }
-
-    data = tx_binary_stream_.getBytes(tx_binary_stream_.getNumBytes());
-  }
+  void loadAndDecodeWav(const std::string& filename, std::vector<uint8_t>& data);
 
   /// @brief Starts listening for audio input on the default audio device.
   void startListening() {
     KTL_ASSERT(!is_listening_);
     is_listening_ = true;
-    listening_thread_ =
-        std::thread(&TranslationLayer::listeningThreadFunc, this);
+    listening_thread_ = std::thread(&TranslationLayer::listeningThreadFunc, this);
   }
 
   void stopListening() {
@@ -205,7 +170,7 @@ class TranslationLayer {
           quiet_iter++;
           if (quiet_iter == 2) {
             rx_audio_channel.clear();
-            // std::cout << "Quiet input, waiting..." << std::endl;
+            std::cout << "Quiet input, clearing" << std::endl;
             stats_.is_quiet = true;
             continue;
           } else if (quiet_iter > 2) {
@@ -216,10 +181,13 @@ class TranslationLayer {
 
         // stats_.rx_audio_samples = 0;
       } else {
+        if (quiet_input) {
+          std::cout << "Not quiet input..." << std::endl;
+        }
+        // std::cout << "Not quiet anymore" << std::endl;
         quiet_input = false;
         stats_.is_quiet = false;
         quiet_iter = 0;
-        // std::cout << "Not quiet anymore" << std::endl;
       }
 
       model::K1Model::Stream k1_symbol_stream{model_ref_};
@@ -255,8 +223,7 @@ class TranslationLayer {
       // stats_.decoded_was_byte_aligned = true;
       // }
 
-      if (!rx_binary_stream.isByteAligned() &&
-          rx_binary_stream.getNumBytes() > 7) {
+      if (!rx_binary_stream.isByteAligned() && rx_binary_stream.getNumBytes() > 7) {
         // std::cout << "not byte aligned, padding" << std::endl;
         // continue;
         rx_binary_stream.pad();
@@ -267,7 +234,7 @@ class TranslationLayer {
       // std::cout << "byte aligned" << std::endl;
       Deframer deframer{};
       if (deframer.processInput(rx_binary_stream)) {
-        // std::cout << "!!!!yo we got a frame!" << std::endl;
+        // std::cout << "!!!! we got a frame!" << std::endl;
 
         KtlFrame frame;
         deframer.getFrame(frame);
@@ -310,5 +277,4 @@ class TranslationLayer {
 
 }  // namespace kazoo
 
-std::ostream& operator<<(std::ostream& os,
-                         const kazoo::TranslationLayer::Stats& stats);
+std::ostream& operator<<(std::ostream& os, const kazoo::TranslationLayer::Stats& stats);

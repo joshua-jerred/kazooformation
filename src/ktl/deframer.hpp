@@ -20,7 +20,10 @@ namespace kazoo {
 
 class Deframer {
  public:
-  Deframer() = default;
+  Deframer(size_t preamble_size = 0)
+      : preamble_size_(preamble_size) {
+  }
+
   ~Deframer() = default;
 
   /// @brief Process the input binary stream in a stateful manner to extract
@@ -105,23 +108,20 @@ class Deframer {
           return findFrameSize(binary_stream);
         } else {
 #ifdef DEBUG_FRAME_START_DETECT
-          std::cout
-              << "Byte was not the second byte of frame start, instead it was: "
-              << std::bitset<8>(next_byte) << " ("
-              << static_cast<int>(next_byte) << ", 0x" << std::hex
-              << static_cast<int>(next_byte) << "), moving on. "
-              << binary_stream.getNumBytes() << " bytes left in the stream."
-              << std::endl;
+          std::cout << "Byte was not the second byte of frame start, instead it was: "
+                    << std::bitset<8>(next_byte) << " (" << static_cast<int>(next_byte)
+                    << ", 0x" << std::hex << static_cast<int>(next_byte)
+                    << "), moving on. " << binary_stream.getNumBytes()
+                    << " bytes left in the stream." << std::endl;
 #endif
         }
       } else {
 #ifdef DEBUG_FRAME_START_DETECT
-        std::cout
-            << "Byte was not the first byte of frame start, instead it was: "
-            << std::bitset<8>(byte_buffer) << " (" << std::hex
-            << static_cast<int>(byte_buffer) << "), moving on. "
-            << binary_stream.getNumBytes() << " bytes left in the stream."
-            << std::endl;
+        std::cout << "Byte was not the first byte of frame start, instead it was: "
+                  << std::bitset<8>(byte_buffer) << " (" << std::hex
+                  << static_cast<int>(byte_buffer) << "), moving on. "
+                  << binary_stream.getNumBytes() << " bytes left in the stream."
+                  << std::endl;
 #endif
       }
 
@@ -139,12 +139,12 @@ class Deframer {
         byte_buffer = (byte_buffer << 1) | static_cast<uint8_t>(bitOpt.value());
 #ifdef DEBUG_FRAME_START_DETECT
 
-        std::cout << "new byte_buffer: \n " << std::bitset<8>(byte_buffer)
-                  << ", 0x" << std::hex << static_cast<int>(byte_buffer) << ", "
+        std::cout << "new byte_buffer: \n " << std::bitset<8>(byte_buffer) << ", 0x"
+                  << std::hex << static_cast<int>(byte_buffer) << ", "
                   << static_cast<char>(byte_buffer) << "\n "
-                  << std::bitset<8>(
-                         static_cast<uint8_t>(KtlFrame::FRAME_START_BYTE_A))
+                  << std::bitset<8>(static_cast<uint8_t>(KtlFrame::FRAME_START_BYTE_A))
                   << std::endl;
+        printFrameData(binary_stream);
 #endif
       }
     }
@@ -154,11 +154,12 @@ class Deframer {
 
   bool findFrameSize(BinaryStream &binary_stream) {
 #ifdef DEBUG_FRAME_START_DETECT
-    std::cout << "findFrameSize" << binary_stream.getNumBytes()
+    std::cout << "findFrameSize: " << binary_stream.getNumBytes()
               << " bytes in the stream." << std::endl;
 #endif
 
-    if (binary_stream.getNumBytes() < 3) {
+    // + preamble_size_ so we wait for the preamble bytes
+    if (binary_stream.getNumBytes() < 3 + preamble_size_) {
       return false;
     }
 
@@ -171,16 +172,16 @@ class Deframer {
     uint16_t frame_size = (static_cast<uint16_t>(msb) << 8) | lsb;
 
     if (frame_size > KtlFrame::MAX_FRAME_DATA_SIZE) {
-      std::cout << "frame size too big, resetting" << std::endl;
-      reset();
+      std::cout << std::hex << frame_size << "frame size too big, resetting" << std::endl;
+      // reset();
+      printFrameData(binary_stream);
       return false;
     }
 
     frame_size_ = frame_size;
 
 #ifdef DEBUG_FRAME_START_DETECT
-    std::cout << "----Found frame size: " << std::dec << frame_size_
-              << std::endl;
+    std::cout << "----Found frame size: " << std::dec << frame_size_ << std::endl;
 #endif
 
     changeState(State::FIND_FRAME_DATA);
@@ -206,6 +207,7 @@ class Deframer {
 
 #ifdef DEBUG_FRAME_START_DETECT
     std::cout << "-Found frame data" << std::endl;
+    printFrameData(binary_stream);
 #endif
     changeState(State::FIND_FRAME_END);
     return findFrameEnd(binary_stream);
@@ -217,6 +219,7 @@ class Deframer {
 #ifdef DEBUG_FRAME_START_DETECT
     std::cout << "findFrameEnd with " << binary_stream.getNumBytes()
               << " bytes in the stream." << std::endl;
+    printFrameData(binary_stream);
 #endif
     if (binary_stream.getNumBytes() < 1) {
       return false;  // Wait until we have enough bytes
@@ -232,11 +235,20 @@ class Deframer {
     }
 
 #ifdef DEBUG_FRAME_START_DETECT
-    std::cout << "Did not find frame end. Instead found: "
-              << std::bitset<8>(byte_buffer) << " (" << std::hex
-              << static_cast<int>(byte_buffer) << ")" << std::endl;
+    std::cout << "Did not find frame end. Instead found: " << std::bitset<8>(byte_buffer)
+              << " (" << std::hex << static_cast<int>(byte_buffer) << ")" << std::endl;
+    printFrameData(binary_stream);
 #endif
     return false;
+  }
+
+  void printFrameData(BinaryStream &binary_stream) {
+    std::cout << "Frame data: ";
+    for (const auto &byte : binary_stream.getStreamDataConst()) {
+      // std::cout << std::bitset<8>(byte) << " ";
+      std::cout << static_cast<char>(byte) << " ";
+    }
+    std::cout << std::endl;
   }
 
   State state_{State::FIND_FRAME_START};
@@ -245,6 +257,8 @@ class Deframer {
   uint16_t frame_size_{0};
 
   std::vector<uint8_t> frame_data_{};
+
+  size_t preamble_size_{0};
 };
 
 }  // namespace kazoo

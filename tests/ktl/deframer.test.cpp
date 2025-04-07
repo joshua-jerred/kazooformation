@@ -21,6 +21,8 @@ TEST(Deframer_test, helloWorldDeframe) {
   // Add a byte for confusion
   // (binary stream must be byte aligned before adding bytes)
   input_stream.addBits(0b00100001, 8);
+
+  // add the actual hello world
   input_stream.addBytes(input_data);
 
   kazoo::Deframer deframer{};
@@ -32,9 +34,8 @@ TEST(Deframer_test, helloWorldDeframe) {
 //   std::vector<uint8_t> input_data = input_frame.encodeFrame(2, 2);
 //   kazoo::BinaryStream input_stream{};
 
-//   // Add a byte for confusion (binary stream must be byte aligned before
-//   adding
-//   // bytes)
+//   // Add a byte for confusion as the binary stream must be byte aligned before
+//   // adding bytes.
 //   input_stream.addBits(0b00100001, 8);
 //   input_stream.addBytes(input_data);
 
