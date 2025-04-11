@@ -15,7 +15,7 @@
 #include <ktl/models/symbol_model.hpp>
 #include <ktl/symbol_stream.hpp>
 
-#define K3_DEBUG_PRINT
+// #define K3_DEBUG_PRINT
 
 namespace kazoo::model {
 
@@ -30,9 +30,9 @@ class K3ReasonableModel {
 
   static constexpr size_t SYMBOL_BIT_WIDTH = 1;
 
-  class Model final : public SymbolModel<Token> {
+  class K3Model final : public SymbolModel<Token> {
    public:
-    Model()
+    K3Model()
         : SymbolModel<Token>{{{Token::SYMBOL_0, 0b0}, {Token::SYMBOL_1, 0b1}},
                              SYMBOL_BIT_WIDTH} {
     }
@@ -256,8 +256,8 @@ class K3ReasonableModel {
     }
   };
 
-  using Stream = SymbolStream<Token>;
-  using Transcoder = Encoder<Token>;
+  using K3Stream = SymbolStream<Token>;
+  using K3Transcoder = Encoder<Token>;
 
   static constexpr size_t SAMPLES_PER_SYMBOL = 4410U;
 
@@ -273,7 +273,8 @@ class K3ReasonableModel {
   static constexpr std::array<double, NUM_PEAKS_OF_INTEREST> SYM_A_00_PEAKS_OF_INTEREST{
       1400.0, 1400.0, 1400.0};  // lazy, it's just 1400
   static constexpr std::array<double, NUM_PEAKS_OF_INTEREST> SYM_D_01_PEAKS_OF_INTEREST{
-      3220.0, 1610.0, 3220.0};
+      3220.0, 1610.0,
+      3220.0};  // this symbol should be replaced, it's partial FFTs aren't consistent.
 };
 
 }  // namespace kazoo::model

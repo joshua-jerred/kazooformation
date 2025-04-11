@@ -26,6 +26,7 @@
 #include <ktl/models/binary_model.hpp>
 #include <ktl/models/k1_model.hpp>
 #include <ktl/models/k2/k2_model.hpp>
+#include <ktl/models/k3/k3_model.hpp>
 #include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
@@ -45,7 +46,8 @@ class TranslationLayer {
     TESTING,
     BINARY,
     K1_MODEL,
-    K2_PEAK_MODEL
+    K2_PEAK_MODEL,
+    K3_REASONABLE_MODEL
   };
 
   TranslationLayer(const ModelType model)
@@ -137,6 +139,10 @@ class TranslationLayer {
     return frame;
   }
 
+  void setContinuousMode(bool continuous_mode) {
+    is_continuous_mode_ = continuous_mode;
+  }
+
  private:
   void listeningThreadFunc() {
     // std::cout << "Listening thread started." << std::endl;
@@ -182,9 +188,8 @@ class TranslationLayer {
         // stats_.rx_audio_samples = 0;
       } else {
         if (quiet_input) {
-          std::cout << "Not quiet input..." << std::endl;
+          // std::cout << "Not quiet anymore" << std::endl;
         }
-        // std::cout << "Not quiet anymore" << std::endl;
         quiet_input = false;
         stats_.is_quiet = false;
         quiet_iter = 0;
@@ -192,13 +197,14 @@ class TranslationLayer {
 
       model::K1Model::Stream k1_symbol_stream{model_ref_};
       model::K2PeakModel::Stream k2_symbol_stream{model_ref_};
+      model::K3ReasonableModel::K3Stream k3_symbol_stream{model_ref_};
 
       ISymbolStream& rx_symbol_stream =
           model_type_ == ModelType::K1_MODEL
               ? static_cast<ISymbolStream&>(k1_symbol_stream)
           : model_type_ == ModelType::K2_PEAK_MODEL
               ? static_cast<ISymbolStream&>(k2_symbol_stream)
-              : static_cast<ISymbolStream&>(k1_symbol_stream);
+              : static_cast<ISymbolStream&>(k3_symbol_stream);
 
       stats_mutex_.lock();
       rx_audio_channel.addSamples(pulse_audio_reader.getAudioBuffer());
@@ -223,30 +229,34 @@ class TranslationLayer {
       // stats_.decoded_was_byte_aligned = true;
       // }
 
-      if (!rx_binary_stream.isByteAligned() && rx_binary_stream.getNumBytes() > 7) {
-        // std::cout << "not byte aligned, padding" << std::endl;
-        // continue;
-        rx_binary_stream.pad();
-      } else {
-        continue;
-      }
+      if (!is_continuous_mode_) {
+        // non-continuous output, use deframer to receive full frames
 
-      // std::cout << "byte aligned" << std::endl;
-      Deframer deframer{};
-      if (deframer.processInput(rx_binary_stream)) {
-        // std::cout << "!!!! we got a frame!" << std::endl;
+        if (!rx_binary_stream.isByteAligned() && rx_binary_stream.getNumBytes() > 7) {
+          // std::cout << "not byte aligned, padding" << std::endl;
+          // continue;
+          rx_binary_stream.pad();
+        } else {
+          continue;
+        }
 
-        KtlFrame frame;
-        deframer.getFrame(frame);
-        received_frames_mutex_.lock();
-        received_frames_.push(frame);
-        received_frames_mutex_.unlock();
-        stats_.num_frames_received++;  /// @todo not thread safe
-        rx_audio_channel.clear();
-        deframer.reset();
-        /// @todo
+        // std::cout << "byte aligned" << std::endl;
+        Deframer deframer{};
+        if (deframer.processInput(rx_binary_stream)) {
+          // std::cout << "!!!! we got a frame!" << std::endl;
+
+          KtlFrame frame;
+          deframer.getFrame(frame);
+          received_frames_mutex_.lock();
+          received_frames_.push(frame);
+          received_frames_mutex_.unlock();
+          stats_.num_frames_received++;  /// @todo not thread safe
+          rx_audio_channel.clear();
+          deframer.reset();
+          /// @todo
+        }
+        // std::cout << std::endl;
       }
-      // std::cout << std::endl;
     }
     std::cout << "Listening thread stopped." << std::endl;
     // PulseAudio::Player::startListening();
@@ -258,8 +268,10 @@ class TranslationLayer {
   std::reference_wrapper<const ISymbolModel> model_ref_{
       getStaticSymbolModel(model_type_)};
 
-  model::K2PeakModel::Stream tx_symbol_stream_{model_ref_};
-  model::K2PeakModel::Transcoder encoder_{model_ref_};
+  /// @todo This is preventing runtime model selection from working. I'm not going to get
+  /// to automatic link establishment, so it doesn't matter all that much.
+  model::K3ReasonableModel::K3Stream tx_symbol_stream_{model_ref_};
+  model::K3ReasonableModel::K3Transcoder encoder_{model_ref_};
 
   BinaryStream tx_binary_stream_;
   AudioChannel tx_audio_channel_;
@@ -267,6 +279,10 @@ class TranslationLayer {
   // Listening
   std::atomic<bool> is_listening_{false};
   std::thread listening_thread_{};
+
+  /// @brief If \c false then use the deframer, if \c true just output the bytes as ASCII
+  /// as they come in.
+  std::atomic<bool> is_continuous_mode_{false};
 
   std::mutex received_frames_mutex_;
   std::queue<KtlFrame> received_frames_;

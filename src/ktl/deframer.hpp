@@ -14,7 +14,7 @@
 #include <ktl/binary_stream.hpp>
 #include <ktl/ktl_frame.hpp>
 
-// #define DEBUG_FRAME_START_DETECT
+#define DEBUG_FRAME_START_DETECT
 
 namespace kazoo {
 
@@ -221,8 +221,9 @@ class Deframer {
               << " bytes in the stream." << std::endl;
     printFrameData(binary_stream);
 #endif
-    if (binary_stream.getNumBytes() < 1) {
-      return false;  // Wait until we have enough bytes
+    if (binary_stream.getNumBytes() < 2) {
+      return false;  // Wait until we have enough bytes (need at least 1, assume there is
+                     // a postamble)
     }
     uint8_t byte_buffer = 0;
     KTL_ASSERT(binary_stream.popByte(byte_buffer));

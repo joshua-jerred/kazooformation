@@ -20,8 +20,7 @@ class K3ReasonableModel_test : public testing::Test {
 
   // ~K3ReasonableModel_test() override = default;
 
-  const kazoo::model::K3ReasonableModel::Model model_ =
-      kazoo::model::K3ReasonableModel::Model{};
+  const kazoo::model::K3ReasonableModel::K3Model model_{};
 };
 
 /// @brief Test the individual symbols, is every portion of the symbol consistent
@@ -83,7 +82,7 @@ TEST_F(K3ReasonableModel_test, encode_and_decode) {
 
     // Decode the audio file using the testing model
     kazoo::SymbolStream<kazoo::model::K3ReasonableModel::Token> s_stream{model_};
-    kazoo::model::K3ReasonableModel::Model m{};
+    kazoo::model::K3ReasonableModel::K3Model m{};
     m.decodeAudioToSymbols(wav_file, s_stream);
     ASSERT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
 
@@ -108,7 +107,7 @@ TEST_F(K3ReasonableModel_test, decode_misaligned) {
 
   for (double misalignment_ratio = misalignment_min;
        misalignment_ratio < misalignment_max; misalignment_ratio += misalignment_step) {
-    const auto model = kazoo::model::K3ReasonableModel::Model{};
+    const auto model = kazoo::model::K3ReasonableModel::K3Model{};
 
     const std::string TEST_WAV_FILE = "K3ReasonableModel_test.decode_misaligned.wav";
     static constexpr size_t SYM_COUNT = 8;
@@ -173,7 +172,7 @@ TEST_F(K3ReasonableModel_test, decode_misaligned) {
 
       // Decode the audio file using the model
       kazoo::SymbolStream<kazoo::model::K3ReasonableModel::Token> s_stream{model};
-      kazoo::model::K3ReasonableModel::Model m{};
+      kazoo::model::K3ReasonableModel::K3Model m{};
       m.decodeAudioToSymbols(wav_file, s_stream);
       ASSERT_EQ(s_stream.getNumSymbols(), SYM_COUNT);
 

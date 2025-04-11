@@ -57,6 +57,15 @@ add_executable(kazoo_connect
 )
 target_link_libraries(kazoo_connect kazoo_translation_layer kazoo_common pulse-simple pulse)
 
+add_executable(kazoo_connect_server
+        src/http_server/main.cpp
+)
+target_link_libraries(kazoo_connect_server kazoo_translation_layer kazoo_common pulse-simple pulse)
+target_include_directories(kazoo_connect_server
+        PRIVATE
+        src/http_server
+)
+
 add_executable(model_score
         "tests/ktl_model_scoring/main.cpp"
         "tests/ktl_model_scoring/model_tester.cpp"

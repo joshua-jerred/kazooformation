@@ -18,9 +18,15 @@ std::atomic<bool> s_run_flag{true};
 std::atomic<bool> s_have_user_input{false};
 static std::string s_user_input = "";
 
-bool rx_mode = true;
+/// @brief when \c true we keep rxing when txing, nice for testing as you only need one
+/// client on the loopback. Toggle with "rx" command
+static std::atomic<bool> s_rx_during_tx_mode = false;
 
-kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K2_PEAK_MODEL};
+// non-continuous = use frames
+// continuous = continuous byte stream in the output
+static std::atomic<bool> s_continuous_mode = false;
+
+kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K3_REASONABLE_MODEL};
 
 void getUserInput() {
   // while (s_run_flag) {
@@ -32,15 +38,24 @@ void getUserInput() {
     s_run_flag = false;
     // break;
   }
-  if (s_user_input == "tx") {
-    if (rx_mode) {
-      rx_mode = false;
-      std::cout << "rx mode off" << std::endl;
+  if (s_user_input == "rx") {
+    if (s_rx_during_tx_mode) {
+      s_rx_during_tx_mode = false;
+      std::cout << "rx during tx mode off" << std::endl;
       tl.stopListening();
     } else {
-      rx_mode = true;
-      std::cout << "rx mode on" << std::endl;
-      tl.startListening();
+      s_rx_during_tx_mode = true;
+      std::cout << "rx during tx mode on" << std::endl;
+    }
+  }
+  if (s_user_input == "frame") {
+    s_continuous_mode = !s_continuous_mode;
+    if (s_continuous_mode) {
+      std::cout << "Continuous mode on" << std::endl;
+      tl.setContinuousMode(true);
+    } else {
+      std::cout << "Continuous mode off" << std::endl;
+      tl.setContinuousMode(false);
     }
   }
   // }
@@ -69,9 +84,17 @@ int main() {
       // reinterpret_cast<const uint8_t *>(user_input.data()),
       // user_input.size()};
 
-      if (user_input != "tx") {
+      if (user_input != "rx" && user_input != "frame") {
         kazoo::KtlFrame frame{user_input};
+
+        if (!s_rx_during_tx_mode) {
+          tl.stopListening();
+        }
         tl.sendFrame(frame);
+        if (!s_rx_during_tx_mode) {
+          tl.startListening();
+        }
+
         auto stats = tl.getStats();
 
         if (!CHAT_MODE) {
@@ -86,21 +109,23 @@ int main() {
       user_input_thread = std::thread(getUserInput);
     }
 
-    if (rx_mode) {
-      auto frameOpt = tl.getReceivedFrame();
-      if (frameOpt.has_value()) {
-        auto frame = frameOpt.value();
-        auto data = frame.getData();
-        std::string received_message(data.begin(), data.end());
-        std::cout << "<RX>: " << received_message << std::endl;
-      }
-
-      auto stats = tl.getStats();
-      if (!stats.is_quiet && !CHAT_MODE) {
-        std::cout << stats << std::endl;
-      }
+    // if (s_rx_during_tx_mode) {
+    auto frameOpt = tl.getReceivedFrame();
+    if (frameOpt.has_value()) {
+      auto frame = frameOpt.value();
+      auto data = frame.getData();
+      std::string received_message(data.begin(), data.end());
+      std::cout << "<RX>: " << received_message << std::endl;
     }
 
+    auto stats = tl.getStats();
+    if (!stats.is_quiet && !CHAT_MODE) {
+      std::cout << stats << std::endl;
+    }
+    // }
+
+    // this is one of those awful 'are we processing pulse audio quick enough' sequencing
+    // bits, wow this needs to be fixed
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
 
@@ -108,7 +133,7 @@ int main() {
     user_input_thread.join();
   }
 
-  if (rx_mode) {
+  if (s_rx_during_tx_mode) {
     tl.stopListening();
   }
 

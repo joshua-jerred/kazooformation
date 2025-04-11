@@ -13,6 +13,7 @@
 #include <ktl/models/binary_model.hpp>
 #include <ktl/models/k1_model.hpp>
 #include <ktl/models/k2/k2_model.hpp>
+#include <ktl/models/k3/k3_model.hpp>
 #include <ktl/models/testing_model.hpp>
 // #include <ktl/symbol_stream.hpp>
 
@@ -22,6 +23,7 @@ static const model::Testing::Model TEST_MODEL{};
 static const model::Binary::Model BIN_MODEL{};
 static const model::K1Model::Model K1_MODEL{};
 static const model::K2PeakModel::Model K2_PEAK_MODEL{};
+static const model::K3ReasonableModel::K3Model K3_MODEL{};
 
 const ISymbolModel& TranslationLayer::getStaticSymbolModel(const ModelType model_type) {
   switch (model_type) {
@@ -33,6 +35,8 @@ const ISymbolModel& TranslationLayer::getStaticSymbolModel(const ModelType model
       return K1_MODEL;
     case ModelType::K2_PEAK_MODEL:
       return K2_PEAK_MODEL;
+    case ModelType::K3_REASONABLE_MODEL:
+      return K3_MODEL;
     default:
       KTL_ASSERT("Invalid model type");
       throw std::runtime_error("Invalid model type");
