@@ -25,7 +25,7 @@
 namespace sock {
 constexpr int K_MAX_HOST_NAME_SIZE = 200;
 constexpr int K_MAX_CONNECTIONS = 5;
-constexpr int K_MAX_RECEIVE = 500;
+constexpr int K_MAX_RECEIVE = 2000;
 
 /**
  * @brief The TCP socket server class.
