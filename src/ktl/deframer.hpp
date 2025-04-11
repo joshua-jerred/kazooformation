@@ -14,7 +14,7 @@
 #include <ktl/binary_stream.hpp>
 #include <ktl/ktl_frame.hpp>
 
-#define DEBUG_FRAME_START_DETECT
+// #define DEBUG_FRAME_START_DETECT
 
 namespace kazoo {
 

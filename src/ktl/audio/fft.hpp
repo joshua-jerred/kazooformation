@@ -53,22 +53,19 @@ class Fft {
     /// normalized to the maximum amplitude with a range of 0.0 to 1.0.
     std::vector<FreqAmp> normalized_frequency_amplitude;
 
-    std::vector<FreqAmp> getNormalizedPeaks(size_t n,
-                                            double min_cutout_amplitude,
+    std::vector<FreqAmp> getNormalizedPeaks(size_t n, double min_cutout_amplitude,
                                             double min_cut_off_freq,
                                             double max_cut_off_freq) const {
       std::vector<FreqAmp> peaks;
       for (const auto& res : normalized_frequency_amplitude) {
-        if (res.amplitude > min_cutout_amplitude &&
-            res.frequency > min_cut_off_freq &&
+        if (res.amplitude > min_cutout_amplitude && res.frequency > min_cut_off_freq &&
             res.frequency < max_cut_off_freq) {
           peaks.push_back(res);
         }
       }
 
       std::sort(peaks.begin(), peaks.end(),
-                [](const Fft::FftResults::FreqAmp& a,
-                   const Fft::FftResults::FreqAmp& b) {
+                [](const Fft::FftResults::FreqAmp& a, const Fft::FftResults::FreqAmp& b) {
                   return a.amplitude > b.amplitude;
                 });
 
@@ -91,8 +88,7 @@ class Fft {
     void saveResultsToCsvFile(const std::string& filename) const {
       std::ofstream file(filename);
       if (!file.is_open()) {
-        throw std::runtime_error("Failed to open file for writing: " +
-                                 filename);
+        throw std::runtime_error("Failed to open file for writing: " + filename);
       }
 
       file << "Frequency,Amplitude" << std::endl;
@@ -106,16 +102,16 @@ class Fft {
   /// @param input - A span in PCM format. (16-bit signed integers,
   /// AUDIO_SAMPLE_RATE)
   static void performFftFrequency(const std::span<const int16_t> input,
-                                  FftResults& results,
-                                  uint32_t fixed_fft_bins = 0) {
+                                  FftResults& results, uint32_t fixed_fft_bins = 0,
+                                  double min_fft_freq = 0.0,
+                                  double max_fft_freq = 20'000.0) {
     // https://cplusplus.com/forum/beginner/251061/
     // https://dsp.stackexchange.com/questions/19899/how-to-determine-snr-from-fft-of-measured-data
     // https://download.ni.com/evaluation/pxi/Understanding%20FFTs%20and%20Windowing.pdf
     results.reset();
 
     const uint32_t num_samples = input.size();
-    const uint32_t fft_bins =
-        fixed_fft_bins == 0 ? num_samples : fixed_fft_bins;
+    const uint32_t fft_bins = fixed_fft_bins == 0 ? num_samples : fixed_fft_bins;
 
     // The frequency resolution of the FFT (bin width)
     const double delta_f = static_cast<double>(AUDIO_SAMPLE_RATE) / fft_bins;
@@ -132,8 +128,7 @@ class Fft {
 
     // Perform the FFT
     fftw_plan fft_plan = fftw_plan_dft_r2c_1d(
-        in.size(), in.data(), reinterpret_cast<fftw_complex*>(out.data()),
-        FFTW_ESTIMATE);
+        in.size(), in.data(), reinterpret_cast<fftw_complex*>(out.data()), FFTW_ESTIMATE);
     fftw_execute(fft_plan);
     fftw_destroy_plan(fft_plan);
 
@@ -143,6 +138,13 @@ class Fft {
     double average_amplitude = 0.0;
     for (int K = 1; K < out.size(); ++K) {
       const double frequency = K * delta_f;
+      if (frequency < min_fft_freq) {
+        continue;  // Skip frequencies below 1kHz
+      }
+      if (frequency > max_fft_freq) {
+        break;  // Stop at 4kHz
+      }
+
       const double amplitude = std::abs(out[K]) * 2.0 / num_samples;
 
       if (amplitude > max_amplitude) {
@@ -173,8 +175,7 @@ class Fft {
     {
       double normalized_variance = 0.0;
       for (auto& res : results.normalized_frequency_amplitude) {
-        normalized_variance +=
-            std::pow(res.amplitude - results.average_amplitude, 2);
+        normalized_variance += std::pow(res.amplitude - results.average_amplitude, 2);
       }
       normalized_variance /= results.normalized_frequency_amplitude.size();
 
@@ -194,5 +195,4 @@ class Fft {
 
 }  // namespace kazoo
 
-std::ostream& operator<<(std::ostream& os,
-                         const kazoo::Fft::FftResults& results);
+std::ostream& operator<<(std::ostream& os, const kazoo::Fft::FftResults& results);

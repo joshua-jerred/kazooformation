@@ -29,6 +29,9 @@ target_sources(kazoo_translation_layer INTERFACE
         src/ktl/audio/kazoo_pcm/doot2_pcm.cpp
         src/ktl/audio/kazoo_pcm/doot3_pcm.cpp
         src/ktl/audio/kazoo_pcm/doot4_pcm.cpp
+
+        src/ktl/models/k3/k3_doot_low.cpp
+        src/ktl/models/k3/k3_doot_high.cpp
 )
 target_include_directories(kazoo_translation_layer INTERFACE src)
 
@@ -76,6 +79,7 @@ set(kazoo_translation_layer_test_sources
         "tests/ktl/model/binary_model.test.cpp"
         "tests/ktl/model/k1_model.test.cpp"
         "tests/ktl/model/k2_peak_model.test.cpp"
+        "tests/ktl/model/k3_model.test.cpp"
         "tests/ktl/binary_stream.test.cpp"
         "tests/ktl/deframer.test.cpp"
         "tests/ktl/translation_layer.test.cpp"
@@ -95,4 +99,6 @@ target_include_directories(kazoo_translation_layer_test
         tests/ktl
 )
 configure_file(tests/ktl/audio/kazooA_sample.test.wav ${CMAKE_CURRENT_BINARY_DIR}/kazooA_sample.test.wav COPYONLY)
+configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)
+
 configure_file(tests/ktl/audio/wav_file.test.wav ${CMAKE_CURRENT_BINARY_DIR}/wav_file_input.test.wav COPYONLY)

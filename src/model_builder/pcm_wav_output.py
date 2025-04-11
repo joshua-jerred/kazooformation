@@ -1,4 +1,7 @@
-"""Convert wav files to PCM data lists for use in C++ code."""
+"""Convert wav files to PCM data lists for use in C++ code.
+
+Run from this dir
+"""
 
 from scipy.io import wavfile
 
@@ -22,6 +25,8 @@ FILES_TO_CONVERT = [
     ("src/ktl/models/k2/kazooD.wav", "src/ktl/models/k2/kazoo_D_pcm.cpp"),
     ("src/ktl/models/k2/kazooE.wav", "src/ktl/models/k2/kazoo_E_pcm.cpp"),
     ("src/ktl/models/k2/kazooG.wav", "src/ktl/models/k2/kazoo_G_pcm.cpp"),
+    ("doc/k3_model/output/doot_1.wav", "src/ktl/models/k3/k3_doot_low.cpp"),
+    ("doc/k3_model/output/doot_2.wav", "src/ktl/models/k3/k3_doot_high.cpp"),
 ]
 
 

@@ -50,7 +50,7 @@ TEST(TranslationLayer_test, encode_and_decode_wav) {
 
   // First, encode the data to a wav file
   {
-    kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::TESTING};
+    kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
     ASSERT_EQ(tl.getStats().num_bytes, 0);
     ASSERT_EQ(tl.getStats().symbols_last_encoded, 0);
     tl.addData(INPUT_DATA);
@@ -64,7 +64,7 @@ TEST(TranslationLayer_test, encode_and_decode_wav) {
   }
 
   // Now, decode the data from the wav file
-  kazoo::TranslationLayer tl2{kazoo::TranslationLayer::ModelType::TESTING};
+  kazoo::TranslationLayer tl2{kazoo::TranslationLayer::ModelType::K1_MODEL};
   ASSERT_EQ(tl2.getStats().num_bytes, 0);
 
   // Load the wav file and decode it
@@ -110,7 +110,7 @@ TEST(TranslationLayer_test, kazoo_hello_world_wav) {
 
 /// @test The very first test with actual kazoo symbols
 TEST(TranslationLayer_test, kazoo_hello_world_pulse) {
-  // GTEST_SKIP() << "Skipping pulse audio loopback test.";
+  GTEST_SKIP() << "Skipping pulse audio loopback test.";
 
   kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K1_MODEL};
 
