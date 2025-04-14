@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import kazoo from './kazoo.png';
 import './App.css';
 import React from 'react';
 // import "tailwindcss";
@@ -92,22 +93,24 @@ function App() {
           ))}
         </div>
         <div style={{
-          // alignContent: "left",
-          // alignItems: "left",
-          // alignSelf: "left",
-          width: "50%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          // width: "50%",
         }}>
         <input
         style={{
-          width: "40%",
+          width: "20em",
+          height: "2em",
           // padding: "0px",
           // margin: "0px",
           // border: "0px"
         }}
         onChange={(e) => setNewMessageText(e.target.value)}
         value={newMessageText}
+        placeholder='Type your message here...'
         ></input>
-        <button
+        {/* <button
         style={{
           width: "10%",
           padding: "0px",
@@ -117,7 +120,21 @@ function App() {
           // textColor: "white",
         }}
         onClick={handleSendMessage}
-        >send</button>
+        >send</button> */}
+        <img
+        src={kazoo}
+        style={{
+          // width: "100px",
+          height: "50px",
+          // padding: "0px",
+          // margin: "0px",
+          // marginLeft: "5px",
+          cursor: "pointer",
+        }}
+        onClick={handleSendMessage}
+        alt="send message"
+        ></img>
+</div>
 
           {pendingSend.length > 0 && (
         <div>
@@ -134,7 +151,6 @@ function App() {
           ))}
         </div>)}
 
-        </div>
       </header>
     </div>
   );
