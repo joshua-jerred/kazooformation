@@ -19,6 +19,11 @@ static std::mutex s_messages_mutex;
 static std::vector<std::string> s_messages_to_send = {};
 static std::vector<std::string> s_messages_received = {};
 
+static void debug(const std::string &message) {
+  (void)message;
+  // std::cout << message << std::endl;
+}
+
 kazoo::TranslationLayer s_kazooformation{
     kazoo::TranslationLayer::ModelType::K3_REASONABLE_MODEL};
 
@@ -56,11 +61,11 @@ void httpServerThread() {
       continue;
     }
 
-    std::cout << "Client connected" << std::endl;
+    debug("Client connected");
 
     std::string request;
     if (!client.receive(request)) {
-      std::cout << "Failed to receive message" << std::endl;
+      debug("Failed to receive message");
       continue;
     }
 
@@ -69,6 +74,9 @@ void httpServerThread() {
     std::string body;
 
     // parse it
+    // I spent a combined 15 minutes on this, I know how gross it is.
+    // The frontend uses a RESTful path but I don't look at that, only the
+    // method as there is only one endpoint.
     {
       size_t pos = request.find(" ");
       if (pos != std::string::npos) {
@@ -96,7 +104,8 @@ void httpServerThread() {
 
     HttpResponse response;
     if (method == "GET") {
-      std::cout << "GET Messages" << std::endl;
+      // std::cout << "GET Messages" << std::endl;
+      debug("GET Messages");
       response.body = "{\"messages\": [";
       std::lock_guard<std::mutex> lock(s_messages_mutex);
 
@@ -124,6 +133,11 @@ void httpServerThread() {
       std::lock_guard<std::mutex> lock(s_messages_mutex);
       s_messages_to_send.push_back(body);
       response.body = "{\"status\": \"ok\"}";
+    } else if (method == "DELETE") {
+      std::lock_guard<std::mutex> lock(s_messages_mutex);
+      std::cout << "DELETE Messages" << std::endl;
+      s_messages_received.clear();
+      s_messages_to_send.clear();
     } else {
       std::cout << "Unknown method: " << method << std::endl;
       continue;
