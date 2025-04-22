@@ -19,6 +19,8 @@ static std::mutex s_messages_mutex;
 static std::vector<std::string> s_messages_to_send = {};
 static std::vector<std::string> s_messages_received = {};
 
+static std::atomic<bool> s_sending_audio{false};
+
 static void debug(const std::string &message) {
   (void)message;
   // std::cout << message << std::endl;
@@ -106,27 +108,38 @@ void httpServerThread() {
     if (method == "GET") {
       // std::cout << "GET Messages" << std::endl;
       debug("GET Messages");
-      response.body = "{\"messages\": [";
+      response.body = "{";
+
       std::lock_guard<std::mutex> lock(s_messages_mutex);
+      {
+        response.body += "\"messages\": [";
 
-      for (size_t i = 0; i < s_messages_received.size(); ++i) {
-        response.body += "{\"text\": \"" + s_messages_received[i] + "\"}";
-        if (i != s_messages_received.size() - 1) {
-          response.body += ",";
+        for (size_t i = 0; i < s_messages_received.size(); ++i) {
+          response.body += "{\"text\": \"" + s_messages_received[i] + "\"}";
+          if (i != s_messages_received.size() - 1) {
+            response.body += ",";
+          }
         }
+        response.body += "]";
       }
-      response.body += "]";
-
-      response.body += ", \"messages_to_send\": [";
-      for (size_t i = 0; i < s_messages_to_send.size(); ++i) {
-        response.body += "{\"text\": \"" + s_messages_to_send[i] + "\"}";
-        if (i != s_messages_to_send.size() - 1) {
-          response.body += ",";
+      response.body += ", ";
+      {
+        response.body += "\"messages_to_send\": [";
+        for (size_t i = 0; i < s_messages_to_send.size(); ++i) {
+          response.body += "{\"text\": \"" + s_messages_to_send[i] + "\"}";
+          if (i != s_messages_to_send.size() - 1) {
+            response.body += ",";
+          }
         }
+        response.body += "]";
       }
-      response.body += "]";
-
+      response.body += ", ";
+      {
+        response.body += "\"sending_audio\": ";
+        response.body += s_sending_audio ? "true" : "false";
+      }
       response.body += "}";
+
     } else if (method == "POST") {
       std::cout << "POST Messages" << std::endl;
       std::cout << "Body: " << body << std::endl;
@@ -170,7 +183,9 @@ int main() {
       kazoo::KtlFrame frame{message};
 
       // s_kazooformation.stopListening();   // we don't want our own audio
+      s_sending_audio = true;
       s_kazooformation.sendFrame(frame);  // blocking send, this might take a bit
+      s_sending_audio = false;
       // s_kazooformation.startListening();
     } else {
       s_messages_mutex.unlock();

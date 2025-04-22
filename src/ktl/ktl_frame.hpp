@@ -35,9 +35,13 @@ class KtlFrame {
 
   KtlFrame() = default;
 
-  KtlFrame(const std::string &data) { setData(data); }
+  KtlFrame(const std::string &data) {
+    setData(data);
+  }
 
-  KtlFrame(const std::span<uint8_t> data) { setData(data); }
+  KtlFrame(const std::span<uint8_t> data) {
+    setData(data);
+  }
 
   ~KtlFrame() = default;
 
@@ -80,7 +84,7 @@ class KtlFrame {
       encoded_frame.push_back(FRAME_ALIGN_BYTE);
     }
 
-    KTL_ASSERT(encoded_frame.size() <= MAX_FRAME_SIZE);
+    KTL_ASSERT(encoded_frame.size() < MAX_FRAME_SIZE);
     return encoded_frame;
   }
 
@@ -100,9 +104,13 @@ class KtlFrame {
     }
   }
 
-  std::vector<uint8_t> getData() const { return frame_data_field_; }
+  std::vector<uint8_t> getData() const {
+    return frame_data_field_;
+  }
 
-  size_t getDataSize() const { return frame_data_field_.size(); }
+  size_t getDataSize() const {
+    return frame_data_field_.size();
+  }
 
  private:
   std::vector<uint8_t> frame_data_field_;

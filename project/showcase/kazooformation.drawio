@@ -1,0 +1,19 @@
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="b0KODjKjzjw1ipUYg30U">
+        <mxGraphModel dx="1297" dy="770" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="sJzz7ijXOu3t8v6-zQfb-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry width="500" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="&lt;div style=&quot;font-family: &amp;quot;Fira Code&amp;quot;, &amp;quot;Droid Sans Mono&amp;quot;, &amp;quot;monospace&amp;quot;, monospace; font-size: 16px; line-height: 22px; white-space: pre;&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;rounded=0;whiteSpace=wrap;" vertex="1" parent="1">
+                    <mxGeometry x="50" y="40" width="260" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;font face=&quot;Helvetica&quot;&gt;Kazooformation&lt;/font&gt;&lt;/h1&gt;&lt;p style=&quot;margin-bottom: 12px;&quot;&gt;&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;Kazooformation is a tool for sending, receiving, and storing data using kazoo sounds.&amp;nbsp;&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin-bottom: 12px;&quot;&gt;&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;It serves as a replacement for the physical layer of the OSI model, presented in an engaging way to make intimidating topics like signal analysis and information theory more approachable.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="10" width="260" height="170" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
