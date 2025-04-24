@@ -10,6 +10,11 @@ Simple CMake/GCC build system
 Build Essential, Lib FFTW-3, and Pulse Audio must be installed.
 
 ```bash
+# Optional: install prerequisite packages
+# @todo the FFTW-3 lib links to KTL but it cannot find the header
+sudo apt install libgtest-dev libpulse-dev libfftw3-dev
+
+# Create build dir
 mkdir build && cd build
 
 # CMake Configure
@@ -22,7 +27,7 @@ make
 ./kazoo_connect
 
 # Set Pulse Audio Defaults
-pactl list sinks
+pactl list sinks  
 pactl set-default-sink 1 # Use the device from the list command instead of `1`
 
 pactl list sources
