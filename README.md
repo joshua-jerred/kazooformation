@@ -1,5 +1,7 @@
 # Kazooformation
 
+![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/kazooformation.png)
+
 An abstract data storage, modulation, and demodulation system. Presented in an
 engaging way 
 
