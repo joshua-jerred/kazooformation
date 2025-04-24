@@ -88,7 +88,7 @@ class Encoder : public IEncoder {
     // }
   }
 
-  /// @todo
+  /// @todo This was done somewhere else. It should be defined at the model level.
   void encodeTail(IAudioChannel& audio_channel) {
   }
 

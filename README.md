@@ -13,7 +13,7 @@ Build Essential, Lib FFTW-3, and Pulse Audio must be installed.
 ```bash
 # Optional: install prerequisite packages
 # @todo the FFTW-3 lib links to KTL but it cannot find the header
-sudo apt install libgtest-dev libpulse-dev libfftw3-dev
+sudo apt install libgtest-dev libpulse-dev libfftw3-dev pulseaudio
 
 # Create build dir
 mkdir build && cd build
@@ -24,9 +24,6 @@ cmake ..
 # Build
 make
 
-# Launch Terminal Client
-./kazoo_connect
-
 # Set Pulse Audio Defaults
 pactl list sinks  
 pactl set-default-sink 1 # Use the device from the list command instead of `1`
@@ -34,7 +31,10 @@ pactl set-default-sink 1 # Use the device from the list command instead of `1`
 pactl list sources
 pactl set-default-source 1 # Use the device from the list command instead of `1`
 
-# Launch Web Server
+# Launch Terminal Client
+./kazoo_connect
+
+# Or Launch The Web Server
 ./kazoo_connect_server
 ```
 
