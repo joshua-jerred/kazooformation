@@ -192,11 +192,12 @@ def plot_wav_waveform(base_dir, filename, axis, fft_params: dict):
 
 def plot_files(base_dir, output_dir, input_files, fft_params):
     WAV_PLOT = True
-    DIST_PLOT = True
-    DIST_NORM_PLOT = True
+    NORM_FFT_PLOT = False
+    DIST_NORM_PLOT = False
     
-    num_plots = 2
+    num_plots = 1
     num_plots += 1 if WAV_PLOT else 0
+    num_plots += 1 if NORM_FFT_PLOT else 0
     num_plots += 1 if DIST_NORM_PLOT else 0
     
     figure, axis = plt.subplots(len(input_files), num_plots)
@@ -217,10 +218,11 @@ def plot_files(base_dir, output_dir, input_files, fft_params):
         plot_fft(base_dir, filename, fft_axis, fft_params, False)
         column_index += 1
 
-        fft_notch_axis = axis[plot_number, column_index]
-        fft_notch_axis.set_title(f"FFT with Notch & Band Pass Filters of {filename}")
-        plot_fft(base_dir, filename, fft_notch_axis, fft_params, True)
-        column_index += 1
+        if NORM_FFT_PLOT:
+            fft_notch_axis = axis[plot_number, column_index]
+            fft_notch_axis.set_title(f"FFT with Notch & Band Pass Filters of {filename}")
+            plot_fft(base_dir, filename, fft_notch_axis, fft_params, True)
+            column_index += 1
 
         if DIST_NORM_PLOT:
             norm_hist_axis = axis[plot_number, column_index]
@@ -231,6 +233,6 @@ def plot_files(base_dir, output_dir, input_files, fft_params):
             column_index += 1
         plot_number += 1
 
-    figure.set_size_inches(column_index * 10, 5 * len(input_files))
+    figure.set_size_inches(column_index * 10, 4 * len(input_files))
 
     plt.savefig(output_dir + "fft_results.png", pad_inches=0.0)

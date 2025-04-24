@@ -33,17 +33,20 @@ for file, noise_level in NOISE_FILES:
 
 FFT_INPUT_FILES = []
 FFT_INPUT_FILES = [
+    "ex1_perfect.wav",
+    "ex1_doot_messy.wav",
+    "ex1_doot_clean.wav",
     # "kazooE_sample.wav",
     # "kazooA_sample.wav",
-    "KazooDo_0.1s.wav",
-    "KazooDoHigh_0.1s.wav",
+    # "KazooDo_0.1s.wav",
+    # "KazooDoHigh_0.1s.wav",
     # "output/kazooA_sample_noise_0.2.wav",
     # f"output/kazooA_sample_noise_0.4.wav",
     # f"output/kazooA_sample_noise_0.6.wav",
     # f"output/kazooA_sample_noise_0.8.wav",
     # "kazooG_sample.wav",
     # "kazooD_sample.wav",
-    "white_noise.wav",
+    # "white_noise.wav",
 ]
 
 # FFT_INPUT_FILES = ["KazooDoHigh_0.1s.wav", "KazooDo_0.1s.wav"]
@@ -65,6 +68,6 @@ fft_params = {
     "NORMALIZE_FFT_FACTOR": 30,
     "NOISE_FLOOR_VALUE": 0.3,
     "FUNDAMENTAL_FREQ_MARGIN_HZ": 100,
-    "MAX_FUNDEMENTAL_FREQS": 4,
+    "MAX_FUNDEMENTAL_FREQS": 1,
 }
 fft_ploter.plot_files(BASE_DIR, OUTPUT_DIR, FFT_INPUT_FILES, fft_params)

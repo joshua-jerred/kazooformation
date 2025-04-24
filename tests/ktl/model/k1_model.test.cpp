@@ -15,7 +15,8 @@
 
 class K1Model_test : public testing::Test {
  protected:
-  K1Model_test() {}
+  K1Model_test() {
+  }
 
   // ~K1Model_test() override = default;
 
@@ -23,8 +24,8 @@ class K1Model_test : public testing::Test {
 };
 
 TEST_F(K1Model_test, encode_and_decode) {
-  const std::string TEST_WAV_FILE = "K1Model_test.encode_and_decode.wav";
-  static constexpr size_t SYM_COUNT = 18;
+  const std::string TEST_WAV_FILE = "ASCII_H_SOUND.wav";
+  static constexpr size_t SYM_COUNT = 8;
 
   // Delete the test file if it exists
   if (std::filesystem::exists(TEST_WAV_FILE)) {
@@ -34,11 +35,8 @@ TEST_F(K1Model_test, encode_and_decode) {
 
   using Token = kazoo::model::K1Model::Token;
   const std::array<Token, SYM_COUNT> symbols = {
-      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_0,
-      Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0,
-      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1,
-      Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_1, Token::SYMBOL_0,
-      Token::SYMBOL_1, Token::SYMBOL_1};
+      Token::SYMBOL_0, Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0,
+      Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_0};
 
   // First, encode the file
   {
@@ -53,8 +51,7 @@ TEST_F(K1Model_test, encode_and_decode) {
     // Encode the symbols into the audio buffer
     kazoo::Encoder<kazoo::model::K1Model::Token> encoder{model_};
     kazoo::AudioChannel audio_channel;
-    EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel),
-              SYM_COUNT);
+    EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel), SYM_COUNT);
     EXPECT_EQ(s_stream.getNumSymbols(),
               0);  // Ensure the symbols were popped from the stream
     EXPECT_EQ(audio_channel.getNumSamples(),
@@ -104,9 +101,9 @@ TEST_F(K1Model_test, decode_misaligned) {
   ASSERT_FALSE(std::filesystem::exists(TEST_WAV_FILE));
 
   using Token = kazoo::model::K1Model::Token;
-  const std::array<Token, SYM_COUNT> symbols = {
-      Token::SYMBOL_0, Token::SYMBOL_0, Token::SYMBOL_1,
-      Token::SYMBOL_1, Token::SYMBOL_0, Token::SYMBOL_0};
+  const std::array<Token, SYM_COUNT> symbols = {Token::SYMBOL_0, Token::SYMBOL_0,
+                                                Token::SYMBOL_1, Token::SYMBOL_1,
+                                                Token::SYMBOL_0, Token::SYMBOL_0};
 
   // First, encode the file
   {
@@ -124,22 +121,19 @@ TEST_F(K1Model_test, decode_misaligned) {
     // Prepare the audio channel by adding extra samples that would cause
     // misalignment.
     kazoo::AudioChannel audio_channel;
-    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.1, 0.5,
-                                       misalignment_samples);
+    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.1, 0.5, misalignment_samples);
 
     // Encode the symbols into the audio buffer
     kazoo::Encoder<kazoo::model::K1Model::Token> encoder{model};
-    EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel),
-              SYM_COUNT);
+    EXPECT_EQ(encoder.encodeAvailableSymbols(s_stream, audio_channel), SYM_COUNT);
     EXPECT_EQ(s_stream.getNumSymbols(),
               0);  // Ensure the symbols were popped from the stream
-    EXPECT_EQ(audio_channel.getNumSamples(),
-              kazoo::model::K1Model::SAMPLES_PER_SYMBOL * SYM_COUNT +
-                  misalignment_samples);
+    EXPECT_EQ(
+        audio_channel.getNumSamples(),
+        kazoo::model::K1Model::SAMPLES_PER_SYMBOL * SYM_COUNT + misalignment_samples);
 
     // Add more garbage samples to the audio channel
-    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.1, 0.5,
-                                       misalignment_samples);
+    kazoo::WaveTools::addGaussianNoise(audio_channel, 0.1, 0.5, misalignment_samples);
 
     kazoo::WavFile wav_file;
     wav_file.loadFromAudioChannel(audio_channel);

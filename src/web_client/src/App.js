@@ -6,7 +6,7 @@ import './App.css';
 import React from 'react';
 // import "tailwindcss";
 
-const KAZOO_API_URL = "http://localhost:/";
+// const KAZOO_API_URL = "http://localhost:/";
 
 function Message({ text, isPending=false }) {
   return (

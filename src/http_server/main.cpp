@@ -43,6 +43,7 @@ struct HttpResponse {
   }
 };
 
+/// @brief One of the HTTP servers of all time
 void httpServerThread() {
   sock::TcpSocketServer server;
   if (!server.init(SERVER_PORT)) {
