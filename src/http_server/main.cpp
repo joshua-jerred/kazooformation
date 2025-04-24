@@ -183,7 +183,8 @@ int main() {
       std::cout << "Sending message: " << message << std::endl;
       kazoo::KtlFrame frame{message};
 
-      // s_kazooformation.stopListening();   // we don't want our own audio
+      // s_kazooformation.stopListening();   // we don't want our own audio (only use when
+      // testing under loopback)
       s_sending_audio = true;
       s_kazooformation.sendFrame(frame);  // blocking send, this might take a bit
       s_sending_audio = false;
