@@ -2,8 +2,7 @@
 
 ![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/kazooformation.png)
 
-An abstract data storage, modulation, and demodulation system. Presented in an
-engaging way 
+An abstract data storage, modulation, and demodulation library using kazoo sounds.
 
 ## Build & Run
 
@@ -50,6 +49,11 @@ npm install
 npm run start
 ```
 
-## Attribution/Licensing
+## Licensing
 
-icon `src/web_client/public/soundwave.svg` is from `https://composeicons.com/icons/bootstrap/soundwave`, it falls under the MIT license.
+This project does not have a license yet, please contact me if you want to use
+this or need a license applied.
+
+## Attribution
+
+`src/web_client/public/soundwave.svg` is from `https://composeicons.com/icons/bootstrap/soundwave`, it falls under the MIT license.
