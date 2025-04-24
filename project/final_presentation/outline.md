@@ -6,8 +6,8 @@ Hello everyone,
 
 My name is Joshua Jerred and I'm a Computer Science student here.
 
-I am currently working at Miller Electric as an Embedded Software Engineer
-in a Co-Op position and I plan to work there full time after graduating.
+I am currently working as an Embedded Software Engineer in a Co-Op position and
+I plan to work at my current company full time after graduating.
 
 ...
 
@@ -17,8 +17,8 @@ Today I'd like to talk to you all about kazooformation.
 
 Information theory and signal analysis are confusing and intimidating topics.
 
-This leaves the pysical layer of the OSI model as an exercise for the reader.
-even though software solutions do exist down there.
+This leaves the pysical layer of the OSI model as an exercise for the reader;
+even though software solutions do in fact exist down there.
 
 I've implemented a few simple modulation and demodulation libraries in the past;
 
@@ -30,7 +30,9 @@ triganometry.
 
 This is where the kazoo comes into play.
 
-With a little bit of bluring the lines between what is possible and what is reasonable, I've created a physical layer that you can hear and feel, focusing on core intuition over textbook teaching.
+With a little bit of bluring the lines between what is possible and what is reasonable, 
+I've created a physical layer that you can hear and feel,
+focusing on core intuition over textbook teaching.
 
 ...
 
@@ -45,29 +47,31 @@ be used for anything.
 As an example of this abstract concept, here is a visualization of the ASCII,
 letter `H` being translated into kazoo signals using a basic binary model.
 
-It might not be audible to the people in the other room, but this is what the letter
-`H` sounds like
+It might not be audible to the people in the other room, but this is what the
+letter `H` sounds like:
 
 > Play `H`
 
-These signals can be used either live via a users microphone and speakers or
-they can be stored as audio files for later decoding.
+These signals can be used either live via a users speakers and microphone or
+they can be stored as audio files for later processing.
 
 ## Library Application Example: Kazoo Connect ??
 > 20s (2:20)
 
 As an example application of this library I created a barebones chat client on
-top of it. Using this chat client, text can be sent from one computer to
-another using only audio peripherals.
+top of it.
 
-No wifi, ethernet, or Bluetooth connection required.
+Using this chat client, text can be sent from one computer to
+another using only audio devices.
 
-## Future Plans [Org Diagram] ??
+No wifi, ethernet, or Bluetooth connection required, you only need to vibrate
+the air to send data across the room.
+
+## Future Plans [Org Diagram]
 <!-- > 15s (2:45) -->
 
-Unforunately I ran out of time and couldn't implement the Kazoo File System
-or the Kazoo Compiler, but this wouldn't be too difficult now that the
-Kazoo Translation Library is complete.
+I didn't get to implement the Kazoo File System or the Kazoo Compiler, but this
+wouldn't be too difficult as the Kazoo Translation Layer is fully functional.
 
 <!-- Kazoo connect simply uses this physical layer. -->
 
@@ -82,10 +86,11 @@ generic model structure.
 This means that different sounds and detection strategies can be used
 depending on the use case.
 
-For example, if you want to transmit kazoo sounds
-via the open air you would want to use a binary model that only has two unique
-kazoo sounds. If you're storing data in .wav files you would want to use a more
-efficient kazoo model.
+For example, if you want to transmit kazoo sounds via the open air you would
+want to use a binary model that only has two unique kazoo sounds.
+
+If you're storing data in .wav files you would want to use a more efficient
+kazoo model.
 
 ...
 
@@ -93,7 +98,8 @@ The kazoo connect chat client is a fairly simple application. For the backend
 I make a quick and dirty http server using unix tcp sockets; this keeps all
 state on the C++ side of things.
 
-The frontend was made using the react router starter app, it's a textbox, button, and a list.
+The frontend was made using the react router starter app, it's a textbox,
+button, and a list.
 
 ## Lessons Learned
 
@@ -102,17 +108,21 @@ just know that the top row shows an ideal signal, and the bottom two rows
 show kazoo signals.
 
 In my intro presentation I noted that the kazoo was an inherently noisy
-insturment, this turned out to be a massive issue.
+insturment, this turned out to be a massive issue that caused a great deal
+of pain.
 
-No matter the code that I threw at the problem, I couldn't differentiate between signals
-well enough to make this work open air without an audio cable.
+No matter the code that I threw at the problem, I couldn't differentiate between
+signals well enough to make this work open air without an audio cable.
 
 I eventually had to sit down in front of a microphone, kazoo in hand, and record
-cleaner samples.
+cleaner samples that did work.
+
+There is a good machine learning oppertunity here to select better signals.
 
 ## Answer any questions
 
 That's kazooformation; any questions?
 
 
-- hardware idea: 
+- hardware idea
+- phase, amplitude, multiplexing
