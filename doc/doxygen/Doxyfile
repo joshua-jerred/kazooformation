@@ -6,8 +6,8 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = "Kazooformation"
 PROJECT_NUMBER         = 1.0
-PROJECT_BRIEF          = "An engaging teaching tool for the lowest layer of the OSI model.""
-PROJECT_LOGO           = "docs/images/logo.png"
+PROJECT_BRIEF          = "Send and receive data using Kazoo noises; an engaging teaching tool for the lowest layer of the OSI model."
+PROJECT_LOGO           = "doc/images/logo.png"
 # TODO: Logo
 
 
@@ -19,7 +19,7 @@ INPUT  = src
 INPUT += tests
 INPUT += ./
 # EXCLUDE_PATTERNS = */lib/*
-IMAGE_PATH             = docs/images
+IMAGE_PATH             = doc/images
 RECURSIVE              = YES
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.cpp \
