@@ -293,9 +293,9 @@ DOTFILE_DIRS           =
 MSCFILE_DIRS           =
 DIAFILE_DIRS           =
 
-PLANTUML_JAR_PATH      = ./plantuml.jar
-PLANTUML_CFG_FILE      =
-PLANTUML_INCLUDE_PATH  =
+# PLANTUML_JAR_PATH      = ./plantuml.jar
+# PLANTUML_CFG_FILE      =
+# PLANTUML_INCLUDE_PATH  =
 
 DOT_GRAPH_MAX_NODES    = 50
 MAX_DOT_GRAPH_DEPTH    = 0
