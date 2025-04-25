@@ -25,60 +25,24 @@
 var NAVTREE =
 [
   [ "Kazooformation", "index.html", [
-    [ "Getting Started with Create React App", "index.html", [
-      [ "Available Scripts", "index.html#autotoc_md1", [
-        [ "<tt>npm start</tt>", "index.html#autotoc_md2", null ],
-        [ "<tt>npm test</tt>", "index.html#autotoc_md3", null ],
-        [ "<tt>npm run build</tt>", "index.html#autotoc_md4", null ],
-        [ "<tt>npm run eject</tt>", "index.html#autotoc_md5", null ]
-      ] ],
-      [ "Learn More", "index.html#autotoc_md6", [
-        [ "Code Splitting", "index.html#autotoc_md7", null ],
-        [ "Analyzing the Bundle Size", "index.html#autotoc_md8", null ],
-        [ "Making a Progressive Web App", "index.html#autotoc_md9", null ],
-        [ "Advanced Configuration", "index.html#autotoc_md10", null ],
-        [ "Deployment", "index.html#autotoc_md11", null ],
-        [ "<tt>npm run build</tt> fails to minify", "index.html#autotoc_md12", null ]
-      ] ]
-    ] ],
+    [ "Build & Run", "index.html#autotoc_md12", null ],
+    [ "Run With Optional Web Server", "index.html#autotoc_md13", null ],
+    [ "Licensing", "index.html#autotoc_md14", null ],
+    [ "Attribution", "index.html#autotoc_md15", null ],
     [ "K2 Model", "md_doc_k2_model_readme.html", null ],
-    [ "K2 Model", "md_doc_k3_model_readme.html", null ],
+    [ "K3 Model", "md_doc_k3_model_readme.html", null ],
     [ "Kazoo Translation Layer (KTL)", "md_doc_ktl.html", [
-      [ "Public Interface: <tt>ktl::TranslationLayer</tt>", "md_doc_ktl.html#autotoc_md16", null ],
-      [ "Models", "md_doc_ktl.html#autotoc_md17", [
-        [ "Model Scores", "md_doc_ktl.html#autotoc_md18", null ]
+      [ "Public Interface: <tt>ktl::TranslationLayer</tt>", "md_doc_ktl.html#autotoc_md3", null ],
+      [ "Models", "md_doc_ktl.html#autotoc_md4", [
+        [ "Model Scores", "md_doc_ktl.html#autotoc_md5", null ]
       ] ],
-      [ "Structure / Design", "md_doc_ktl.html#autotoc_md19", null ],
-      [ "Demodulation", "md_doc_ktl.html#autotoc_md20", null ]
-    ] ],
-    [ "Kazooformation Update and Open Questions", "md_doc_open_questions.html", [
-      [ "Update", "md_doc_open_questions.html#autotoc_md22", null ],
-      [ "Completion Plan", "md_doc_open_questions.html#autotoc_md23", null ]
+      [ "Structure / Design", "md_doc_ktl.html#autotoc_md6", null ],
+      [ "Demodulation", "md_doc_ktl.html#autotoc_md7", null ]
     ] ],
     [ "Sources", "md_doc_sources.html", null ],
-    [ "Final Presentation Outline", "md_project_final_presentation_outline.html", [
-      [ "Introduction - 20s (00:20)", "md_project_final_presentation_outline.html#autotoc_md28", null ],
-      [ "The Problem (Problem Description) 30s (00:50)", "md_project_final_presentation_outline.html#autotoc_md29", null ],
-      [ "The Solution [1] 40s (1:30)", "md_project_final_presentation_outline.html#autotoc_md30", [
-        [ "The Solution [2] 30s (2:00)", "md_project_final_presentation_outline.html#autotoc_md31", null ]
-      ] ],
-      [ "Library Application Example: Kazoo Connect ??", "md_project_final_presentation_outline.html#autotoc_md32", null ],
-      [ "Future Plans [Org Diagram]", "md_project_final_presentation_outline.html#autotoc_md33", null ],
-      [ "Technical Architecture", "md_project_final_presentation_outline.html#autotoc_md34", null ],
-      [ "Lessons Learned", "md_project_final_presentation_outline.html#autotoc_md35", null ],
-      [ "Answer any questions", "md_project_final_presentation_outline.html#autotoc_md36", null ]
+    [ "Theory", "md_doc_theory.html", [
+      [ "Discrete Kazoo Signals", "md_doc_theory.html#autotoc_md10", null ]
     ] ],
-    [ "Presentation Script", "md_project_intro_presentation_script.html", [
-      [ "Introduction Slide", "md_project_intro_presentation_script.html#autotoc_md38", null ],
-      [ "Title Slide", "md_project_intro_presentation_script.html#autotoc_md39", null ],
-      [ "The New Physical Layer", "md_project_intro_presentation_script.html#autotoc_md40", null ],
-      [ "Project Features", "md_project_intro_presentation_script.html#autotoc_md41", null ],
-      [ "Kazoo Modulation Diagram", "md_project_intro_presentation_script.html#autotoc_md42", null ],
-      [ "<em>SKIP</em> FFT Slide", "md_project_intro_presentation_script.html#autotoc_md43", null ],
-      [ "Technical Resources", "md_project_intro_presentation_script.html#autotoc_md44", null ]
-    ] ],
-    [ "Showcase Info", "md_project_showcase_info.html", null ],
-    [ "sources", "md_project_sound_3rd_party_sources.html", null ],
     [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
     [ "Test List", "test.html", null ],
@@ -121,8 +85,8 @@ var NAVTREEINDEX =
 "classkazoo_1_1KtlFrame.html#aad42ee39056ec070f250383a57d4faf2",
 "classkazoo_1_1TranslationLayer.html#acbbc8b2837b51ff8e02495068aea6760",
 "classkazoo_1_1model_1_1K2PeakModel_1_1Model.html#ad8897faa8ec9fe7ef28367d77da05dd9",
-"functions_i.html",
-"structkazoo_1_1WavFile_1_1FormatChunk.html#a448620cfdaeaa452e760a6f88e9afacc"
+"functions_v.html",
+"symbol__stream_8test_8cpp.html#af2191303e2c65b66678a8be2ba56f3dc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

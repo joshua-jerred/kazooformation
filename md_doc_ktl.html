@@ -106,7 +106,7 @@ $(document).ready(function(){initNavTree('md_doc_ktl.html',''); initResizable();
 <div class="contents">
 <div class="textblock"><p >The KTL is responsible for translating between raw data and Kazoo audio. This is the real meat and potatoes of the project.</p>
 <p >It is implemented as a C++ library, via CMake as an interface library, with the target name <code>kazoo_translation_layer</code>.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Public Interface: &lt;tt&gt;ktl::TranslationLayer&lt;/tt&gt;</h1>
 <p >The entire translation layer is intended to be used through an instance of the class, <code>ktl::TranslationLayer</code>, which can be found in <code><a class="el" href="translation__layer_8hpp.html">ktl/translation_layer.hpp</a></code>.</p>
 <div class="fragment"><div class="line"> {c++}</div>
@@ -143,7 +143,7 @@ Public Interface: &lt;tt&gt;ktl::TranslationLayer&lt;/tt&gt;</h1>
 <div class="line">    </div>
 <div class="line">    return 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
 Models</h1>
 <ul>
 <li>Testing Model &amp; Binary Model<ul>
@@ -155,7 +155,7 @@ Models</h1>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Model Scores</h2>
 <ul>
 <li>Noise Tolerance<ul>
@@ -175,7 +175,7 @@ Model Scores</h2>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md19"></a>
+<h1><a class="anchor" id="autotoc_md6"></a>
 Structure / Design</h1>
 <div class="fragment"><div class="line">@startuml ktl_structure</div>
 <div class="line"> </div>
@@ -273,7 +273,7 @@ Structure / Design</h1>
 <div class="line">stop</div>
 <div class="line"> </div>
 <div class="line">@enduml</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Demodulation</h1>
 <p >Kazooformation is essentially a form of FSK. It's targeting modern linux hosts, so we can assume that computational resources are not a huge concern.</p>
 <p >The plan is to take FFTs of 1/4 to 1/8 the symbol length, allowing for symbol edges to be detected. </p>

@@ -1,4 +1,4 @@
 <map id="kazoo::WavFile" name="kazoo::WavFile">
-<area shape="rect" id="node1" title="A class for reading and writing WAV files. ." alt="" coords="5,175,216,457"/>
+<area shape="rect" id="node1" title="A class for reading and writing WAV files." alt="" coords="5,175,216,457"/>
 <area shape="rect" id="node2" href="$classkazoo_1_1IAudioChannel.html" title=" " alt="" coords="29,5,192,127"/>
 </map>

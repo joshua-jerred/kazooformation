@@ -17,7 +17,6 @@ var searchData=
   ['kazoo_5fg_5fpcm_2ecpp_14',['kazoo_G_pcm.cpp',['../kazoo__G__pcm_8cpp.html',1,'']]],
   ['kazoo_5fpcm_2ehpp_15',['kazoo_pcm.hpp',['../kazoo__pcm_8hpp.html',1,'']]],
   ['ktl_2emd_16',['ktl.md',['../ktl_8md.html',1,'']]],
-  ['ktl_5fflow_2epuml_17',['ktl_flow.puml',['../ktl__flow_8puml.html',1,'']]],
-  ['ktl_5fframe_2ehpp_18',['ktl_frame.hpp',['../ktl__frame_8hpp.html',1,'']]],
-  ['readme_2emd_19',['readme.md',['../k2__model_2readme_8md.html',1,'(Global Namespace)'],['../k3__model_2readme_8md.html',1,'(Global Namespace)']]]
+  ['ktl_5fframe_2ehpp_17',['ktl_frame.hpp',['../ktl__frame_8hpp.html',1,'']]],
+  ['readme_2emd_18',['readme.md',['../k2__model_2readme_8md.html',1,'(Global Namespace)'],['../k3__model_2readme_8md.html',1,'(Global Namespace)']]]
 ];

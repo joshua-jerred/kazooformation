@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="A class for reading and writing WAV files. .">
+<g id="a_node1"><a xlink:title="A class for reading and writing WAV files.">
 <polygon fill="#bfbfbf" stroke="black" points="317,-0.5 317,-178.5 471,-178.5 471,-0.5 317,-0.5"/>
 <text text-anchor="middle" x="394" y="-166.5" font-family="Helvetica,sans-Serif" font-size="10.00">kazoo::WavFile</text>
 <polyline fill="none" stroke="black" points="317,-159.5 471,-159.5 "/>

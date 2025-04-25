@@ -136,7 +136,9 @@ Variables</h2></td></tr>
 <tr class="memitem:ae73186d3ac34d39277cc76b03f550854"><td class="memItemLeft" align="right" valign="top">constexpr pa_sample_spec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacekazoo_1_1PulseAudio.html#ae73186d3ac34d39277cc76b03f550854">PULSE_AUDIO_SAMPLE_SPEC</a></td></tr>
 <tr class="separator:ae73186d3ac34d39277cc76b03f550854"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >This is a modified version of my previous implementation: <a href="https://github.com/joshua-jerred/SignalEasel/blob/main/src/pulse_audio_writer.cpp">https://github.com/joshua-jerred/SignalEasel/blob/main/src/pulse_audio_writer.cpp</a> </p><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000006">Todo:</a></b></dt><dd>refactor </dd></dl>
+</div><h2 class="groupheader">Typedef Documentation</h2>
 <a id="a3049af903bc7436395f7ec5958531583" name="a3049af903bc7436395f7ec5958531583"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3049af903bc7436395f7ec5958531583">&#9670;&nbsp;</a></span>PulseAudioBuffer</h2>
 
@@ -217,8 +219,8 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= {</div>
 <div class="line">    <a class="code hl_variable" href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">PULSE_AUDIO_SAMPLE_FORMAT</a>, <a class="code hl_variable" href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">AUDIO_SAMPLE_RATE</a>, <a class="code hl_variable" href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">NUM_PULSE_CHANNELS</a>}</div>
-<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a254971071a606329a8ca875f2a99cd00"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">kazoo::PulseAudio::NUM_PULSE_CHANNELS</a></div><div class="ttdeci">constexpr uint8_t NUM_PULSE_CHANNELS</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:26</div></div>
-<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a4397ae46afca0a2d92e5de6e81a52a0b"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">kazoo::PulseAudio::PULSE_AUDIO_SAMPLE_FORMAT</a></div><div class="ttdeci">constexpr pa_sample_format_t PULSE_AUDIO_SAMPLE_FORMAT</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:25</div></div>
+<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a254971071a606329a8ca875f2a99cd00"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">kazoo::PulseAudio::NUM_PULSE_CHANNELS</a></div><div class="ttdeci">constexpr uint8_t NUM_PULSE_CHANNELS</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:29</div></div>
+<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a4397ae46afca0a2d92e5de6e81a52a0b"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">kazoo::PulseAudio::PULSE_AUDIO_SAMPLE_FORMAT</a></div><div class="ttdeci">constexpr pa_sample_format_t PULSE_AUDIO_SAMPLE_FORMAT</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:28</div></div>
 <div class="ttc" id="anamespacekazoo_html_a8fd125aa236885e37d9585dcbb2413ac"><div class="ttname"><a href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">kazoo::AUDIO_SAMPLE_RATE</a></div><div class="ttdeci">static constexpr uint32_t AUDIO_SAMPLE_RATE</div><div class="ttdef"><b>Definition:</b> audio_constants.hpp:12</div></div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#a917622484728d27d991e123750add6a6">kazoo::PulseAudio::Reader::Reader()</a>, and <a class="el" href="classkazoo_1_1PulseAudio_1_1Player.html#abc17fbc9d400e16618a0ae1bab833e4b">kazoo::PulseAudio::Player::play()</a>.</p>
@@ -284,7 +286,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
 <div class="line">    <a class="code hl_variable" href="namespacekazoo_1_1PulseAudio.html#a630de43d5791a9ae23ad785449071ef2">PULSE_AUDIO_READ_BUFFER_SIZE</a> * 1000 / <a class="code hl_variable" href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">AUDIO_SAMPLE_RATE</a></div>
-<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a630de43d5791a9ae23ad785449071ef2"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a630de43d5791a9ae23ad785449071ef2">kazoo::PulseAudio::PULSE_AUDIO_READ_BUFFER_SIZE</a></div><div class="ttdeci">constexpr size_t PULSE_AUDIO_READ_BUFFER_SIZE</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:31</div></div>
+<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a630de43d5791a9ae23ad785449071ef2"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a630de43d5791a9ae23ad785449071ef2">kazoo::PulseAudio::PULSE_AUDIO_READ_BUFFER_SIZE</a></div><div class="ttdeci">constexpr size_t PULSE_AUDIO_READ_BUFFER_SIZE</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:34</div></div>
 </div><!-- fragment -->
 <p class="reference">Referenced by <a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#ade7369b90f0db3541500c96a6642d520">kazoo::PulseAudio::Reader::process()</a>.</p>
 

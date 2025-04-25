@@ -255,8 +255,9 @@ template&lt;typename Token_t &gt; </div>
 <p>Pops symbols from the front of the symbol stream and encodes them into the audio buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">symbol_stream</td><td>- The symbol stream to pop symbols off of. </td></tr>
-    <tr><td class="paramname">pre_post_padding</td><td>- If true, the encoder will add padding before and after the symbols to help with synchronization. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">symbol_stream</td><td>- The symbol stream to pop symbols off of. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">audio_channel</td><td>- The audio channel to populate </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">pre_post_padding</td><td>- If true, the encoder will add padding before and after the symbols to help with synchronization. </td></tr>
   </table>
   </dd>
 </dl>

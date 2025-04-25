@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('classkazoo_1_1Fft.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 
-<p><b>[https://stackoverflow.com/a/22059819]</b>  
+<p>A simple FFTW-3 C++ wrapper.  
  <a href="classkazoo_1_1Fft.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="fft_8hpp_source.html">fft.hpp</a>&gt;</code></p>
@@ -139,7 +139,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a2484bcb9d7acd4bf1d759813b3721b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p ><b>[https://stackoverflow.com/a/22059819]</b> </p>
+<div class="textblock"><p >A simple FFTW-3 C++ wrapper. </p>
+<p >Application example source: <a href="https://stackoverflow.com/a/22059819">https://stackoverflow.com/a/22059819</a> </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af4dd5c08927cf075dc9b152b2fb75159" name="af4dd5c08927cf075dc9b152b2fb75159"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4dd5c08927cf075dc9b152b2fb75159">&#9670;&nbsp;</a></span>Fft()</h2>
@@ -222,6 +223,10 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">input</td><td>- A span in PCM format. (16-bit signed integers, AUDIO_SAMPLE_RATE) </td></tr>
+    <tr><td class="paramname">results</td><td>- The results of the FFT. </td></tr>
+    <tr><td class="paramname">fixed_fft_bins</td><td>- The number of FFT bins to use. If 0, the number of bins will be the same as the number of samples in the input. </td></tr>
+    <tr><td class="paramname">min_fft_freq</td><td>- The minimum frequency to calculate. </td></tr>
+    <tr><td class="paramname">max_fft_freq</td><td>- The maximum frequency to calculate. </td></tr>
   </table>
   </dd>
 </dl>

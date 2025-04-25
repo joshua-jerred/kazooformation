@@ -153,7 +153,7 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a1bfba4b888bfc03b6176048376341835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44bb86b5d618cbb7a3197fb521cc926d"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#a44bb86b5d618cbb7a3197fb521cc926d">rms_</a> = 0</td></tr>
 <tr class="separator:a44bb86b5d618cbb7a3197fb521cc926d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43ceadc513950d61bd34669ef3206d1e"><td class="memItemLeft" align="right" valign="top">pa_sample_spec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#a43ceadc513950d61bd34669ef3206d1e">ss_</a></td></tr>
+<tr class="memitem:a43ceadc513950d61bd34669ef3206d1e"><td class="memItemLeft" align="right" valign="top">pa_sample_spec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#a43ceadc513950d61bd34669ef3206d1e">ss_</a> = {<a class="el" href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">PULSE_AUDIO_SAMPLE_FORMAT</a>, <a class="el" href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">AUDIO_SAMPLE_RATE</a>, <a class="el" href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">NUM_PULSE_CHANNELS</a>}</td></tr>
 <tr class="separator:a43ceadc513950d61bd34669ef3206d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07fdd7a2730cdd3dc3f94a1136590e58"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classkazoo_1_1PulseAudio_1_1Reader.html#a07fdd7a2730cdd3dc3f94a1136590e58">volume_</a> = 0</td></tr>
 <tr class="separator:a07fdd7a2730cdd3dc3f94a1136590e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -547,7 +547,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">pa_sample_spec kazoo::PulseAudio::Reader::ss_</td>
+          <td class="memname">pa_sample_spec kazoo::PulseAudio::Reader::ss_ = {<a class="el" href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">PULSE_AUDIO_SAMPLE_FORMAT</a>, <a class="el" href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">AUDIO_SAMPLE_RATE</a>, <a class="el" href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">NUM_PULSE_CHANNELS</a>}</td>
         </tr>
       </table>
   </td>
@@ -556,12 +556,7 @@ Here is the caller graph for this function:</div>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {<a class="code hl_variable" href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">PULSE_AUDIO_SAMPLE_FORMAT</a>, <a class="code hl_variable" href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">AUDIO_SAMPLE_RATE</a>,</div>
-<div class="line">                        <a class="code hl_variable" href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">NUM_PULSE_CHANNELS</a>}</div>
-<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a254971071a606329a8ca875f2a99cd00"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a254971071a606329a8ca875f2a99cd00">kazoo::PulseAudio::NUM_PULSE_CHANNELS</a></div><div class="ttdeci">constexpr uint8_t NUM_PULSE_CHANNELS</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:26</div></div>
-<div class="ttc" id="anamespacekazoo_1_1PulseAudio_html_a4397ae46afca0a2d92e5de6e81a52a0b"><div class="ttname"><a href="namespacekazoo_1_1PulseAudio.html#a4397ae46afca0a2d92e5de6e81a52a0b">kazoo::PulseAudio::PULSE_AUDIO_SAMPLE_FORMAT</a></div><div class="ttdeci">constexpr pa_sample_format_t PULSE_AUDIO_SAMPLE_FORMAT</div><div class="ttdef"><b>Definition:</b> pulse_audio.hpp:25</div></div>
-<div class="ttc" id="anamespacekazoo_html_a8fd125aa236885e37d9585dcbb2413ac"><div class="ttname"><a href="namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac">kazoo::AUDIO_SAMPLE_RATE</a></div><div class="ttdeci">static constexpr uint32_t AUDIO_SAMPLE_RATE</div><div class="ttdef"><b>Definition:</b> audio_constants.hpp:12</div></div>
-</div><!-- fragment -->
+
 </div>
 </div>
 <a id="a1bfba4b888bfc03b6176048376341835" name="a1bfba4b888bfc03b6176048376341835"></a>
