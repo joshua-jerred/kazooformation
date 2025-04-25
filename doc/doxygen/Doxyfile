@@ -118,7 +118,7 @@ SHOW_FILES             = YES
 
 SHOW_NAMESPACES        = YES
 
-LAYOUT_FILE            = docs/doxygen_layout.xml
+# LAYOUT_FILE            = docs/doxygen_layout.xml
 
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
@@ -172,18 +172,18 @@ FULL_SIDEBAR = NO
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_HEADER            = project/doxygen/theme/header.html
+HTML_HEADER            = doc/doxygen/theme/header.html
 HTML_FOOTER            =
 HTML_STYLESHEET        =
 
-HTML_EXTRA_STYLESHEET  = project/doxygen/theme/doxygen-awesome.css \
-                         project/doxygen/theme/doxygen-awesome-sidebar-only.css \
-                         project/doxygen/theme/doxygen-awesome-sidebar-only-darkmode-toggle.css \
-                         project/doxygen/theme/custom.css
+HTML_EXTRA_STYLESHEET  = doc/doxygen/theme/doxygen-awesome.css \
+                         doc/doxygen/theme/doxygen-awesome-sidebar-only.css \
+                         doc/doxygen/theme/doxygen-awesome-sidebar-only-darkmode-toggle.css \
+                         doc/doxygen/theme/custom.css
 
-HTML_EXTRA_FILES      += project/doxygen/theme/doxygen-awesome-darkmode-toggle.js
-HTML_EXTRA_FILES       = project/doxygen/theme/doxygen-awesome-fragment-copy-button.js
-HTML_EXTRA_FILES      += project/doxygen/theme/doxygen-awesome-paragraph-link.js
+HTML_EXTRA_FILES      += doc/doxygen/theme/doxygen-awesome-darkmode-toggle.js
+HTML_EXTRA_FILES       = doc/doxygen/theme/doxygen-awesome-fragment-copy-button.js
+HTML_EXTRA_FILES      += doc/doxygen/theme/doxygen-awesome-paragraph-link.js
 
 # HTML_COLORSTYLE        = LIGHT # Tag does nothing
 HTML_COLORSTYLE_HUE    = 209
