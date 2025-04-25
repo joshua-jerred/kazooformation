@@ -23,7 +23,12 @@ The primary component of this project is the Kazoo Translation Layer (KTL), whic
 
 Here is an example of how data is translated *into* kazoo sounds using one of the basic binary models:
 
+
 ![ASCII 'H' visualized as kazoo sounds](doc/images/kazoo_signal.png)
+
+And this is what that sounds like:
+
+https://github.com/user-attachments/assets/2616b039-56e6-47bb-b4c9-5c690887d0fb
 
 
 
