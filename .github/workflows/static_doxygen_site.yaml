@@ -37,15 +37,16 @@ jobs:
   doxygen:
     name: Doxygen Static Site
     runs-on: ubuntu-latest
-    # container:
-      # image: joshuajerred/signaleasel
+    container:
+      # This container happens to have doxygen installed
+      image: joshuajerred/signaleasel
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
-      - name: Install Doxygen
+      - name: Create Build Directory
         run: mkdir build && mkdir build/dox
       # - name: Generate Structurizr PlantUML SVGs
-        # run: bash project/generate_uml.sh
+      # run: bash project/generate_uml.sh
       - name: Build Doxygen
         run: doxygen doc/doxygen/Doxyfile
       - name: Deploy to GitHub Pages (Main Branch Only)
