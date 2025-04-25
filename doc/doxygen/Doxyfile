@@ -118,7 +118,7 @@ SHOW_FILES             = YES
 
 SHOW_NAMESPACES        = YES
 
-# LAYOUT_FILE            = docs/doxygen_layout.xml
+LAYOUT_FILE            = doc/doxygen/layout.xml
 
 #---------------------------------------------------------------------------
 # Configuration options related to warning and progress messages
