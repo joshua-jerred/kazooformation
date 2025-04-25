@@ -137,7 +137,7 @@ Variables</h2></td></tr>
 <tr class="separator:adfcab4233b298128b59886201d669dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03961c577303d5597cbdab6322f27c40"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2main_8cpp.html#a03961c577303d5597cbdab6322f27c40">s_run_flag</a> {true}</td></tr>
 <tr class="separator:a03961c577303d5597cbdab6322f27c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02c9b21ad1a1c622d351c5420989f1ef"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2main_8cpp.html#a02c9b21ad1a1c622d351c5420989f1ef">s_rx_during_tx_mode</a> = false</td></tr>
+<tr class="memitem:a02c9b21ad1a1c622d351c5420989f1ef"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2main_8cpp.html#a02c9b21ad1a1c622d351c5420989f1ef">s_rx_during_tx_mode</a> = true</td></tr>
 <tr class="memdesc:a02c9b21ad1a1c622d351c5420989f1ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">when <code>true</code> we keep rxing when txing, nice for testing as you only need one client on the loopback. Toggle with "rx" command  <a href="src_2main_8cpp.html#a02c9b21ad1a1c622d351c5420989f1ef">More...</a><br /></td></tr>
 <tr class="separator:a02c9b21ad1a1c622d351c5420989f1ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fbcea3ba094d0bf8862cafe2a0cee29"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2main_8cpp.html#a5fbcea3ba094d0bf8862cafe2a0cee29">s_user_input</a> = &quot;&quot;</td></tr>
@@ -322,7 +322,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::atomic&lt;bool&gt; s_rx_during_tx_mode = false</td>
+          <td class="memname">std::atomic&lt;bool&gt; s_rx_during_tx_mode = true</td>
         </tr>
       </table>
   </td>

@@ -104,40 +104,32 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Kazooformation </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a> </p><div class="image">
-<img src="kazooformation.png" alt=""/>
-<div class="caption">
-Image of kazoo with text ka-zoo-for-ma-tion / kazoo information</div></div>
-    <p >An abstract data storage, modulation, and demodulation library using kazoo sounds.</p>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a></p>
+<p  align="center"></p>
+<p ><img src="doc/images/kazooformation_banner.png" alt="" height="250" class="inline"/> <img src="doc/images/osi_model_kazoo.png" alt="" height="250" class="inline"/> </p>
+<p >An abstract data storage, modulation, and demodulation library using kazoo sounds.</p>
 <p >This is an engaging teaching tool for the lowest layer of the OSI model.</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Build &amp; Run</h1>
 <p >Simple CMake/GCC build system</p>
 <p >Build Essential, Lib FFTW-3, and Pulse Audio must be installed.</p>
-<div class="fragment"><div class="line"># Optional: install prerequisite packages</div>
-<div class="line"># @todo the FFTW-3 lib links to KTL but it cannot find the header</div>
-<div class="line">sudo apt install libgtest-dev libpulse-dev libfftw3-dev pulseaudio</div>
+<div class="fragment"><div class="line">git clone git@github.com:joshua-jerred/kazooformation.git</div>
+<div class="line">cd kazooformation</div>
 <div class="line"> </div>
-<div class="line"># Create build dir</div>
-<div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line"># Run the build script and follow the prompts. The executables will be placed in the root of the project.</div>
+<div class="line">bash build_all.sh</div>
 <div class="line"> </div>
-<div class="line"># CMake Configure</div>
-<div class="line">cmake ..</div>
-<div class="line"> </div>
-<div class="line"># Build</div>
-<div class="line">make</div>
-<div class="line"> </div>
-<div class="line"># Set Pulse Audio Defaults</div>
-<div class="line">pactl list sinks  </div>
-<div class="line">pactl set-default-sink 1 # Use the device from the list command instead of `1`</div>
-<div class="line"> </div>
+<div class="line"># Set the default audio sink and source for pulse audio.</div>
+<div class="line"># On linux hosts this step is often not needed.</div>
+<div class="line">pactl list sinks</div>
+<div class="line">pactl set-default-sink &lt;SINK_NUMBER&gt;</div>
 <div class="line">pactl list sources</div>
-<div class="line">pactl set-default-source 1 # Use the device from the list command instead of `1`</div>
+<div class="line">pactl set-default-source &lt;SOURCE_NUMBER&gt;</div>
 <div class="line"> </div>
 <div class="line"># Launch Terminal Client</div>
 <div class="line">./kazoo_connect</div>
 <div class="line"> </div>
-<div class="line"># Or Launch The Web Server</div>
+<div class="line"># Or Launch The Web Server (For the web client)</div>
 <div class="line">./kazoo_connect_server</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
 Run With Optional Web Server</h1>
