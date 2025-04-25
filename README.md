@@ -33,10 +33,7 @@ Kazoo Connect is an application example of the KTL library. It's a bare bones ch
 - **Kazoo Connect:** A terminal chat client that uses the KTL to send and receive data over a network using kazoo sounds.
 - **Kazoo Connect Server/Web Client:** A TCP socket HTTP server version of Kazoo Connect that can be used with a web client. (there is a bare bones react app as well)
 
-![The Kazoo Connect chat client](doc/images/kazoo_connect.png)
-
-
-
+![The Kazoo Connect chat client](doc/images/web_client.png)
 
 ## Build & Run
 
