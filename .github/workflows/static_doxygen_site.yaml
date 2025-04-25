@@ -1,0 +1,58 @@
+name: SignalEasel CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # unit_tests:
+  #   name: Unit Tests
+  #   runs-on: ubuntu-latest
+  #   container:
+  #     image: joshuajerred/signaleasel
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       submodules: true
+  #   - name: Configure CMake
+  #     run: |
+  #       mkdir build
+  #       cd build
+  #       cmake -DSIGNALEASEL_UNIT_TESTS=ON ..
+  #   - name: Build the SignalEasel library
+  #     run: |
+  #       cd build
+  #       make SignalEasel -j 4
+  #   - name: Build Tests
+  #     run: |
+  #       cd build
+  #       make signal_easel_unit_tests
+  #   - name: Run Tests
+  #     run: |
+  #       cd build/tests
+  #       ./signal_easel_unit_tests
+
+  doxygen:
+    name: Doxygen Static Site
+    runs-on: ubuntu-latest
+    # container:
+      # image: joshuajerred/signaleasel
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Doxygen
+        run: mkdir build && mkdir build/dox
+      # - name: Generate Structurizr PlantUML SVGs
+        # run: bash project/generate_uml.sh
+      - name: Build Doxygen
+        run: doxygen doc/doxygen/Doxyfile
+      - name: Deploy to GitHub Pages (Main Branch Only)
+        # Only deploy on the main branch
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/dox/html
+          cname: kazooformation.joshuajer.red
