@@ -1,8 +1,14 @@
 # Kazooformation
 
-![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/images/kazooformation.png)
+<!-- ![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/images/kazooformation_banner.png) -->
 
-An abstract data storage, modulation, and demodulation library using kazoo sounds.
+<p align="center">
+  <img height="250" src="doc/images/kazooformation_banner.png">
+  <img height="250" src="doc/images/osi_model_kazoo.png">
+</p>
+
+An abstract data storage, modulation, and demodulation library using kazoo sounds. 
+
 
 This is an engaging teaching tool for the lowest layer of the OSI model.
 
@@ -13,30 +19,23 @@ Simple CMake/GCC build system
 Build Essential, Lib FFTW-3, and Pulse Audio must be installed.
 
 ```bash
-# Optional: install prerequisite packages
-# @todo the FFTW-3 lib links to KTL but it cannot find the header
-sudo apt install libgtest-dev libpulse-dev libfftw3-dev pulseaudio
+git clone git@github.com:joshua-jerred/kazooformation.git
+cd kazooformation
 
-# Create build dir
-mkdir build && cd build
+# Run the build script and follow the prompts. The executables will be placed in the root of the project.
+bash build_all.sh
 
-# CMake Configure
-cmake ..
-
-# Build
-make
-
-# Set Pulse Audio Defaults
-pactl list sinks  
-pactl set-default-sink 1 # Use the device from the list command instead of `1`
-
+# Set the default audio sink and source for pulse audio.
+# On linux hosts this step is often not needed.
+pactl list sinks
+pactl set-default-sink <SINK_NUMBER>
 pactl list sources
-pactl set-default-source 1 # Use the device from the list command instead of `1`
+pactl set-default-source <SOURCE_NUMBER>
 
 # Launch Terminal Client
 ./kazoo_connect
 
-# Or Launch The Web Server
+# Or Launch The Web Server (For the web client)
 ./kazoo_connect_server
 ```
 

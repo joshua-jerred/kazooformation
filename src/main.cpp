@@ -20,7 +20,7 @@ static std::string s_user_input = "";
 
 /// @brief when \c true we keep rxing when txing, nice for testing as you only need one
 /// client on the loopback. Toggle with "rx" command
-static std::atomic<bool> s_rx_during_tx_mode = false;
+static std::atomic<bool> s_rx_during_tx_mode = true;
 
 // non-continuous = use frames
 // continuous = continuous byte stream in the output
@@ -67,7 +67,8 @@ void getUserInput() {
 }
 
 int main() {
-  std::cout << "kazoo connect" << std::endl;
+  std::cout << "kazoo connect - enter the text that you would like to send and hit return"
+            << std::endl;
 
   std::thread user_input_thread(getUserInput);
 
