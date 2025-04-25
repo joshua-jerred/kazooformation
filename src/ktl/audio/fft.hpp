@@ -20,7 +20,8 @@
 
 namespace kazoo {
 
-/// @cite https://stackoverflow.com/a/22059819
+/// @brief A simple FFTW-3 C++ wrapper.
+/// @details Application example source: https://stackoverflow.com/a/22059819
 class Fft {
  public:
   Fft() = default;
@@ -101,6 +102,11 @@ class Fft {
   /// @todo FFT without floating point?
   /// @param input - A span in PCM format. (16-bit signed integers,
   /// AUDIO_SAMPLE_RATE)
+  /// @param results - The results of the FFT.
+  /// @param fixed_fft_bins - The number of FFT bins to use. If 0, the number of
+  /// bins will be the same as the number of samples in the input.
+  /// @param min_fft_freq - The minimum frequency to calculate.
+  /// @param max_fft_freq - The maximum frequency to calculate.
   static void performFftFrequency(const std::span<const int16_t> input,
                                   FftResults& results, uint32_t fixed_fft_bins = 0,
                                   double min_fft_freq = 0.0,

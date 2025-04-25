@@ -1,10 +1,12 @@
-# kazoo-file-system
+# Theory
+
+@warning Deprecated documentation!
 
 KFS [kazoo file system] is a file system that stores your data as a series of discrete kazoo signals
 
 How it works:
 
-KFS utilizes a single `.wav` file to store all of your data. Each byte of data
+KTL utilizes a single `.wav` file to store all of your data. Each byte of data
 is stored as a series of kazoo signals. This `.wav` file is interpreted by `kfs`
 to extract the data. The `.wav` file data contains all information about the
 files within a kazoo encoded header.
@@ -18,4 +20,5 @@ signals are inherently noisy and can be difficult to distinguish.
 `theory.ipynb` contains an FFT analysis of two kazoo signals, ultimately they
 are very similar.
 
-@todo list the unique features of a kazoo signal
+<!-- @todo list the unique features of a kazoo signal -->
+

@@ -4,7 +4,7 @@
 /// @date 2025-04-11
 /// @details This is a needless stretch goal of the project, I ripped off my own
 /// implementation from a previous project, which uses another reference.
-/// @cite https://github.com/joshua-jerred/Giraffe/blob/main/src/common/socket.hpp
+/// https://github.com/joshua-jerred/Giraffe/blob/main/src/common/socket.hpp
 
 #ifndef SOCKET_HPP_
 #define SOCKET_HPP_

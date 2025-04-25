@@ -19,7 +19,8 @@
 namespace kazoo {
 
 /// @brief A class for reading and writing WAV files.
-/// @cite https://github.com/joshua-jerred/WavGen
+/// @details The initial code was pulled from my previous work here:
+/// https://github.com/joshua-jerred/WavGen
 class WavFile : public IAudioChannel {
  public:
   WavFile() = default;
@@ -36,7 +37,9 @@ class WavFile : public IAudioChannel {
     }
   }
 
-  void addSample(int16_t sample) override { samples_.push_back(sample); }
+  void addSample(int16_t sample) override {
+    samples_.push_back(sample);
+  }
 
   /// @brief Read a WAV file from disk. Clears the current audio sample buffer.
   /// @param file_path - The path to the WAV file.
@@ -64,8 +67,7 @@ class WavFile : public IAudioChannel {
 
       // Read the file size
       file.read(input_buffer.data(), 4);
-      const uint32_t file_size =
-          *reinterpret_cast<uint32_t*>(input_buffer.data());
+      const uint32_t file_size = *reinterpret_cast<uint32_t*>(input_buffer.data());
 
       // Read the WAVE header
       file.read(input_buffer.data(), WavHeader::WAVE.size());
@@ -167,29 +169,17 @@ class WavFile : public IAudioChannel {
     file.write(reinterpret_cast<const char*>(&wav_header_.file_size), 4);
     file.write(WavHeader::WAVE.data(), WavHeader::WAVE.size());
     file.write(FormatChunk::FMT.data(), FormatChunk::FMT.size());
-    file.write(reinterpret_cast<const char*>(
-                   &wav_header_.format_chunk.format_chunk_size),
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.format_chunk_size),
                4);
-    file.write(
-        reinterpret_cast<const char*>(&wav_header_.format_chunk.format_code),
-        2);
-    file.write(
-        reinterpret_cast<const char*>(&wav_header_.format_chunk.num_channels),
-        2);
-    file.write(
-        reinterpret_cast<const char*>(&wav_header_.format_chunk.sample_rate),
-        4);
-    file.write(
-        reinterpret_cast<const char*>(&wav_header_.format_chunk.byte_rate), 4);
-    file.write(
-        reinterpret_cast<const char*>(&wav_header_.format_chunk.block_align),
-        2);
-    file.write(reinterpret_cast<const char*>(
-                   &wav_header_.format_chunk.bits_per_sample),
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.format_code), 2);
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.num_channels), 2);
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.sample_rate), 4);
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.byte_rate), 4);
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.block_align), 2);
+    file.write(reinterpret_cast<const char*>(&wav_header_.format_chunk.bits_per_sample),
                2);
     file.write(WavHeader::DATA.data(), WavHeader::DATA.size());
-    file.write(reinterpret_cast<const char*>(&wav_header_.data_chunk.data_size),
-               4);
+    file.write(reinterpret_cast<const char*>(&wav_header_.data_chunk.data_size), 4);
 
     wav_header_.data_chunk.data_start_position = file.tellp();
 
@@ -267,33 +257,33 @@ class WavFile : public IAudioChannel {
 
     void print() const {
       std::cout << "File size: " << file_size << std::endl;
-      std::cout << "Format chunk size: " << format_chunk.format_chunk_size
-                << std::endl;
+      std::cout << "Format chunk size: " << format_chunk.format_chunk_size << std::endl;
       std::cout << "Format code: " << format_chunk.format_code << std::endl;
-      std::cout << "Number of channels: " << format_chunk.num_channels
-                << std::endl;
+      std::cout << "Number of channels: " << format_chunk.num_channels << std::endl;
       std::cout << "Sample rate: " << format_chunk.sample_rate << std::endl;
       std::cout << "Byte rate: " << format_chunk.byte_rate << std::endl;
       std::cout << "Block align: " << format_chunk.block_align << std::endl;
-      std::cout << "Bits per sample: " << format_chunk.bits_per_sample
-                << std::endl;
+      std::cout << "Bits per sample: " << format_chunk.bits_per_sample << std::endl;
       std::cout << "Data size: " << data_chunk.data_size << std::endl;
-      std::cout << "Audio data start position: "
-                << data_chunk.data_start_position << std::endl;
+      std::cout << "Audio data start position: " << data_chunk.data_start_position
+                << std::endl;
 
-      std::cout << "- Calculated Number of Samples: "
-                << data_chunk.data_size / 2 << std::endl;
+      std::cout << "- Calculated Number of Samples: " << data_chunk.data_size / 2
+                << std::endl;
       std::cout << "- Calculated Audio Length: "
-                << static_cast<double>(data_chunk.data_size) /
-                       format_chunk.byte_rate
+                << static_cast<double>(data_chunk.data_size) / format_chunk.byte_rate
                 << " seconds" << std::endl;
     }
   };
 
   /// @brief Get a reference to the header object.
-  const WavHeader& getHeader() const { return wav_header_; }
+  const WavHeader& getHeader() const {
+    return wav_header_;
+  }
 
-  size_t getNumSamples() const { return samples_.size(); }
+  size_t getNumSamples() const {
+    return samples_.size();
+  }
 
   double getDurationSeconds() const {
     return static_cast<double>(wav_header_.data_chunk.data_size) /
@@ -327,7 +317,9 @@ class WavFile : public IAudioChannel {
     return {samples_.data(), samples_.size()};
   }
 
-  void clear() override { samples_.clear(); }
+  void clear() override {
+    samples_.clear();
+  }
 
  private:
   WavHeader wav_header_{};

@@ -1,7 +1,5 @@
-# K2 Model
+# K3 Model
 
-- 4x symbol FSK
-- Data Alignment
-
-Each symbol must be consistent across time to allow for detection of symbol
-boundaries.
+- 2x symbol FSK
+- Robust Symbol Level Alignment
+- Carfully selected kazoo audio samples (cleaner and more consistent)

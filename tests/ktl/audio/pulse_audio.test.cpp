@@ -1,6 +1,6 @@
 /// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
-/// @file pulse_audio_test.cpp
+/// @file pulse_audio.test.cpp
 /// @date 2025-02-16
 
 #include <testing.hpp>

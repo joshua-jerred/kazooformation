@@ -39,6 +39,7 @@ class Encoder : public IEncoder {
   /// @brief Pops symbols from the front of the symbol stream and encodes them
   /// into the audio buffer.
   /// @param symbol_stream - The symbol stream to pop symbols off of.
+  /// @param[out] audio_channel - The audio channel to populate
   /// @param pre_post_padding - If true, the encoder will add padding before
   /// and after the symbols to help with synchronization.
   /// @return The number of symbols that were added.

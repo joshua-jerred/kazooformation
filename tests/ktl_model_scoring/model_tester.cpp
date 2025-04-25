@@ -1,6 +1,6 @@
 /// @author Joshua Jerred
 /// @copyright Copyright (c) 2025
-/// @file score.hpp
+/// @file model_tester.hpp
 /// @date 2025-03-14
 
 #include "model_tester.hpp"

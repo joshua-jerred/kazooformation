@@ -72,7 +72,7 @@ class BinaryStream {
 
     bool output = stream_data_.front() & 1U;  // Check the LSB
     stream_data_.front() >>= 1;               // Shift the byte to the right
-    num_bits_used_in_output_buffer_++;  // Increment the number of bits used
+    num_bits_used_in_output_buffer_++;        // Increment the number of bits used
 
     // std::cout << "our bit: " << static_cast<int>(output)
     //           << ", num_bits_used_in_output_buffer_: "
@@ -127,7 +127,7 @@ class BinaryStream {
 
   /// @brief Add bytes to the stream. If the stream is not byte aligned when
   /// this function is called, an exception will be thrown.
-  /// @param input_bits - The bits to be added to the stream,
+  /// @param input_bytes - The bits to be added to the stream,
   void addBytes(std::span<const uint8_t> input_bytes) {
     if (!isByteAligned()) {
       throw std::runtime_error("Stream is not byte aligned");
@@ -154,13 +154,14 @@ class BinaryStream {
   /// bits that do not align to a byte, the number of bytes will be rounded up
   /// to the nearest byte.
   /// @return The number of bytes in the stream.
-  size_t getNumBytes() const { return stream_data_.size(); }
+  size_t getNumBytes() const {
+    return stream_data_.size();
+  }
 
   /// @brief Get the byte alignment status of the stream.
   /// @return \c true if the stream is byte aligned, \c false otherwise.
   bool isByteAligned() const {
-    return num_bits_in_input_buffer_ == 0 &&
-           num_bits_used_in_output_buffer_ == 0;
+    return num_bits_in_input_buffer_ == 0 && num_bits_used_in_output_buffer_ == 0;
   }
 
   /// @brief If adding bits, this will return the number of bits that can be
@@ -185,13 +186,14 @@ class BinaryStream {
   /// @param num_bytes - The number of bytes to get
   /// @return A vector copy of the next num_bytes bytes from the stream.
   std::vector<uint8_t> getBytes(size_t num_bytes) {
-    return std::vector<uint8_t>(stream_data_.begin(),
-                                stream_data_.begin() + num_bytes);
+    return std::vector<uint8_t>(stream_data_.begin(), stream_data_.begin() + num_bytes);
   }
 
   /// @brief Get a const reference to the underlying stream data.
   /// @return A const reference to the underlying stream data.
-  const std::deque<uint8_t> &getStreamDataConst() const { return stream_data_; }
+  const std::deque<uint8_t> &getStreamDataConst() const {
+    return stream_data_;
+  }
 
   /// @brief If the last element is being used as a bit buffer, this will fill
   /// the remaining bits until the stream is byte aligned.
@@ -228,5 +230,4 @@ class BinaryStream {
 
 }  // namespace kazoo
 
-std::ostream &operator<<(std::ostream &os,
-                         const kazoo::BinaryStream &binary_stream);
+std::ostream &operator<<(std::ostream &os, const kazoo::BinaryStream &binary_stream);

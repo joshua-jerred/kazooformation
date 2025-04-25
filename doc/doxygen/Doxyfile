@@ -19,18 +19,24 @@ INPUT  = src
 INPUT += tests
 INPUT += ./
 EXCLUDE_PATTERNS = */lib/*
+EXCLUDE_PATTERNS += */node_modules/*
+EXCLUDE_PATTERNS += */build/*
+EXCLUDE_PATTERNS += */project/*
+EXCLUDE_PATTERNS += */deprecated/*
+
+
 IMAGE_PATH             = doc/images
 RECURSIVE              = YES
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.cpp \
                          *.hpp \
-                         *.md \
                          *.dox \
                          *.puml \
+                         *.md \
 
 ALIASES += "license=@par License: "
 
-USE_MDFILE_AS_MAINPAGE = README.md
+USE_MDFILE_AS_MAINPAGE = ./README.md
 # CITE_BIB_FILES = docs/references.bib
 
 # ---------------------------------------------------------------------------- #
@@ -129,7 +135,7 @@ WARNINGS               = YES
 WARN_IF_UNDOCUMENTED   = NO
 WARN_IF_DOC_ERROR      = YES
 WARN_NO_PARAMDOC       = NO
-WARN_AS_ERROR          = NO
+WARN_AS_ERROR          = YES
 WARN_FORMAT            = "$file:$line: $text"
 
 #---------------------------------------------------------------------------

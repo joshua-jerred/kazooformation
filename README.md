@@ -1,8 +1,10 @@
 # Kazooformation
 
-![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/kazooformation.png)
+![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/images/kazooformation.png)
 
 An abstract data storage, modulation, and demodulation library using kazoo sounds.
+
+This is an engaging teaching tool for the lowest layer of the OSI model.
 
 ## Build & Run
 
