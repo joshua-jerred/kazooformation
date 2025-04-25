@@ -106,9 +106,15 @@ This project is dependent on the Kazoo Translation Layer, everything else is bui
   \item \textbf{Baud Rate or Symbol Rate}: The rate at which symbols are transmitted and received. Baud and symbol rate are used interchangeably. This is \textit{not} the same as bit rate as multiple bits can be represented by a single symbol.
   \item \textbf{Bit Rate}: The rate at which bits are transmitted and received. This is defined as $\text{Baud Rate} \times \text{Number of Bits per Symbol}$.
   \item \textbf{Symbol Level Alignment}: The process of detecting the start and end of a symbol in a stream of audio data. Required for decoding the symbols from unaligned audio data. This isn't a problem when using a WAV file as it can be assumed that the audio data is aligned.
+  \item \textbf{FFT}: Fast Fourier Transform, an algorithm that converts a singnal from the time domain to the frequency domain. See the image below.
   \item \textbf{Frequency Peak}: If an FFT is taken across audio samples, the peak frequencies can be detected. These are the audio frequencies that are most present in the audio samples.
 \end{itemize}
 
+\begin{center}
+  \includegraphics[width=0.7\linewidth]{images/fft.png}
+
+  \textit{An FFT of a kazoo sound, with the peak frequency marked by a red line.}
+\end{center}
 
 \subsection{The Kazoo Translation Layer}
 
@@ -179,9 +185,9 @@ The web client is a simple React app that is derived from the create-react-app t
 
 \subsection{Using KTL in Other Projects}
 
-Thanks to CMake, KTL can easily be used in other projects.
+Thanks to CMake, KTL can easily be used in other projects. Here are two simple examples that demonstrate KTL integration into other applications:
 
-\miniheader{Example: Creating an application that uses the KTL}
+\miniheader{Example: Creating a CMake target that uses the KTL}
 \begin{verbatim}
   # An application that uses the Kazoo Translation Layer
   add_executable(kazoo_connect src/main.cpp)
@@ -230,6 +236,8 @@ Kazoo sounds are awfully noisy and inconsistent, FFT visualizations were critica
   
   \item \textbf{Dr. Tom Murphy VII} - Without the paper "Harder Drive: Hard drives we didn't want or need", I would have never considered a 'needless' approach to developing learning tools.
 
+  \item \texttt{https://www.youtube.com/watch?v=h7apO7q16V0} - This video was a great refresher on FFTs and how they work, needed for FFTW-3 usage.
+
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -240,7 +248,7 @@ Kazoo sounds are awfully noisy and inconsistent, FFT visualizations were critica
 Kazooformation is a functional system, but there is certainly a lot of room for improvement within the KTL.
 
 \begin{itemize}
-  \item The various models can be parameterized to allow for different symbol rates and bit rates. There is clearly an opportunity for a machine learning model here. The machine learning model could select the best symbols to use, focusing on the differentiation between symbols or simply the bit error rate.
+  \item The various models can be parameterized to allow for different symbol rates and bit rates. There is clearly an opportunity for a machine learning model here. A machine learning model could select the best symbols to use, focusing on the differentiation between symbols by scoring with the bit error rate as gaussian noise is added to a signal.
 
   \item The demodulation algorithm should be improved. The current algorithm uses a naive approach to peak detection and it is not very reliable. An approach that properly applies various filters to the signal should be used.
 
