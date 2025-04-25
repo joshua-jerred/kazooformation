@@ -17,11 +17,18 @@
   \textit{An engaging teaching tool for the lowest layer of the OSI model} \par
   \vspace{1.5cm}
   \textbf{Joshua Jerred} \par
-  \vspace{1cm}
+
+  % QR Code
+  \vspace{4cm}
+  \includegraphics[width=0.2\linewidth]{images/qr.png} \par
+  \textit{https://kazooformation.joshuajer.red}
+
+  \vfill % Fill the remaining vspace
+
   \text{Utah Tech University} \par
   \text{CS-4600 Senior Project} \par
-  \vfill % Fill the remaining vertical space
   \textbf{24 April 2025}
+
   \end{center}
 \end{titlepage}
 
@@ -34,8 +41,7 @@
 Computer Science students are familiar with the OSI model, but often the details of the lowest layer, the physical layer, are glossed over. This is normally left to the electrical or computer engineering students. In the modern world we are seeing a shift towards software defined networking, where the physical layer can be controlled by flexible software instead of rigid hardware\cite{ibmWhatSoftwareDefined}. An example of this is the Joint Tactical Radio System (JTRS), which is a software defined radio program that was started by the US Department of Defense in the 1990s and is still being developed today\cite{Cox_2001}. It's clear that there is a need for a better understanding of the physical layer as software solutions are becoming more common.
 
 
-Unfortunately, the broad fields of Digital Signal Processing (DSP) and Information Theory are a trigonometry and acronym riddled landscape that can be difficult to learn. This results in a painful path towards developing the base intuition that is required to learn advanced DSP topics. Thankfully, Moore's law
-has allowed for more flexibility with DSP teaching tools.
+Unfortunately, the broad fields of Digital Signal Processing (DSP) and Information Theory are riddled with trigonometry and dense with acronyms that can be difficult to learn. This results in a challenging path towards developing the base intuition that is required to learn advanced DSP topics.
 
 Generally, the more engaging a teaching tool is, the more value it can provide as it's easier for early learners to connect with the topic. Therefore, an engaging physical layer teaching tool can be created based on the following assumptions:
 
@@ -63,26 +69,30 @@ data being transmitted, making it possible to see the physical layer in action.
 \begin{center}
   \includegraphics[width=0.7\linewidth]{images/kazoo_signal.png}
 
-  \textit{The ASCII letter "H" encoded as a kazoo signal using a binary model.}
+  \textit{Figure 1: The ASCII letter "H" encoded as a kazoo signal using a binary model.}
 \end{center}
 
+Ultimately, Kazooformation is based on Audio Frequency Shift Keying modulation, which means that the concepts directly map to real world modulation applications.
 
 \subsection{Kazoo Translation Layer (KTL)}
 
-\CenterImage{images/org_diagram}[0.4\textwidth]
+\begin{center}
+  \includegraphics[width=0.4\textwidth]{images/org_diagram.png}
 
-KTL is a software library that is the core of the Kazooformation system. It is responsible for converting between serialized data and kazoo signals. Because
-it is an abstract layer, it can be used in a limitless number of applications; if you have a byte stream, it can be converted to kazoo signals and back.
+  \textit{Figure 2: The Kazooformation system architecture.}
+\end{center}
 
-The most important detail of the KTL is the model system which is leveraged to use different symbols to represent different bits depending on the application. This allows for a flexible symbol set, symbol/baud rate, and bit rate depending on the limits of the underlying communication channel (e.g. a kazoo signal over a Discord call vs. across a room).
+KTL is a software library that is the core of the Kazooformation system. It is responsible for converting between serialized data and kazoo signals. As an abstract layer, it can be applied to a wide range of applications; if you have a byte stream, it can be converted to kazoo signals and back.
+
+The most important detail of the KTL is the model system which is leveraged to use different symbols to represent different bits depending on the application. This enables flexibility in choosing symbol sets, symbol rates (baud), and bit rates, depending on channel limitations (e.g., audio cable vs. open air playback).
 
 Although the focus was on the physical layer, the KTL offers a simple frame/packet structure that can be used as a simple data link layer.
 
 \subsection{Kazoo Connect (Chat Client)}
 
-Kazoo Connect is a simple terminal and/or web based chat client that uses the KTL to send and receive text messages using kazoo sounds. It's purpose is to demonstrate the KTL in a real world application. It uses the users default audio input and output devices as the communication channel.
+Kazoo Connect is a simple terminal and/or web based chat client that uses the KTL to send and receive text messages using kazoo sounds. Its purpose is to demonstrate the KTL in a real world application. It uses the user's default audio input and output devices as the communication channel.
 
-There is also a basic HTTP server that keeps track of received messages, allowing for a simple web interface to be used. The web client is a bare bones react app that provides a friendly interface for non-technical users.
+There is also a basic HTTP server that keeps track of received messages, allowing for a simple web interface to be used. The web client is a minimal React-based web client that provides a friendly interface for non-technical users.
 
 \subsection{The Code and How to Build It}
 Kazooformation repo: \url{https://github.com/joshua-jerred/kazooformation}
@@ -97,7 +107,7 @@ All build and use instructions can be found in the file README.md, located in th
 
 % Provide information on environments, languages, and algorithms used for this project.
 
-This project is dependent on the Kazoo Translation Layer, everything else is built on top of it. It builds and works on both Linux and MacOS, but the development was done on Linux. The CMakeLists.txt file in the root of the repository is the best place to look to understand file structure.
+This project is dependent on the Kazoo Translation Layer, all applications are built on top of it. It builds and works on both Linux and MacOS, but the development was done on Linux. The CMakeLists.txt file in the root of the repository is the best place to look to understand file structure.
 
 \miniheader{Term Definitions}
 \begin{itemize}
@@ -105,15 +115,15 @@ This project is dependent on the Kazoo Translation Layer, everything else is bui
   \item \textbf{Model}: A model contains a unique set of symbols, their corresponding bit values, and the modulation scheme used to encode the symbols.
   \item \textbf{Baud Rate or Symbol Rate}: The rate at which symbols are transmitted and received. Baud and symbol rate are used interchangeably. This is \textit{not} the same as bit rate as multiple bits can be represented by a single symbol.
   \item \textbf{Bit Rate}: The rate at which bits are transmitted and received. This is defined as $\text{Baud Rate} \times \text{Number of Bits per Symbol}$.
-  \item \textbf{Symbol Level Alignment}: The process of detecting the start and end of a symbol in a stream of audio data. Required for decoding the symbols from unaligned audio data. This isn't a problem when using a WAV file as it can be assumed that the audio data is aligned.
-  \item \textbf{FFT}: Fast Fourier Transform, an algorithm that converts a singnal from the time domain to the frequency domain. See the image below.
+  \item \textbf{Symbol Level Alignment}: The process of detecting the start and end of a symbol in a stream of audio data. Required for decoding the symbols from unaligned audio data. WAV files are assumed to have symbol-aligned data, so alignment issues are minimal in that context.
+  \item \textbf{FFT}: Fast Fourier Transform, an algorithm that converts a signal from the time domain to the frequency domain. See the image below.
   \item \textbf{Frequency Peak}: If an FFT is taken across audio samples, the peak frequencies can be detected. These are the audio frequencies that are most present in the audio samples.
 \end{itemize}
 
 \begin{center}
   \includegraphics[width=0.7\linewidth]{images/fft.png}
 
-  \textit{An FFT of a kazoo sound, with the peak frequency marked by a red line.}
+  \textit{Figure 3: An FFT of a kazoo sound, with the peak frequency marked by a red line.}
 \end{center}
 
 \subsection{The Kazoo Translation Layer}
@@ -129,7 +139,11 @@ The KTL was created as a C++ library using the CMake build system. Being a CMake
 \end{itemize}
 
 \miniheader{Key Software Components}
-\CenterImage{images/ktl_flow}[0.8\textwidth]
+\begin{center}
+  \includegraphics[width=0.8\linewidth]{images/ktl_flow.png}
+
+  \textit{Figure 4: The data flow of the Kazoo Translation Layer.}
+\end{center}
 
 \begin{itemize}
   \item \textbf{AudioChannel}: A generic interface for continuous 16-bit PCM audio samples. This is used to allow for easy integration of different audio input/output software. It is used for both WAV files and PulseAudio. The audio channel interface is used by the model to encode and decode audio samples to/from the \textbf{SymbolStream}.
@@ -146,7 +160,7 @@ The KTL was created as a C++ library using the CMake build system. Being a CMake
 
 \miniheader{Test Driven Development}
 
-As KTL is primarily an abstract library, test driven development is nessesary. The majority of the KTL is unit tested using GTest and GMock.
+As KTL is primarily an abstract library, test driven development is necessary. The majority of the KTL is unit tested using GTest and GMock.
 
 \miniheader{The Models \& Modulation Schemes}
 
@@ -154,18 +168,18 @@ A few models have been created inside of the KTL. They can be found in the \text
 
 When it comes to encoding, the kazoo models take the provided BinaryStream and convert it to a symbol stream. The symbol stream is then processed in order; each symbol is mapped to PCM audio samples that are used to populate the generic audio channel.
 
-All models operate at a fixed symbol rate of 10 symbols per second, this was done to ensure that the signal is audible and can be understood by observers. This is somewhat arbitrary choice, individual models can use different symbol rates at the cost of reliability.
+All models operate at a fixed symbol rate of 10 symbols per second; this rate ensures the resulting signal remains audibly distinguishable and pedagogically effective. This is a somewhat arbitrary choice, individual models can use different symbol rates at the cost of reliability.
 
 \begin{itemize}
   \item \textbf{TestingModel}: A non-kazoo binary model (two symbols, representing 0 and 1) that is used for unit testing. It does not provide symbol level alignment. It encodes data as simple sine waves.
 
-  \item \textbf{K1 Model}: The first kazoo model to use actual kazoo sounds. It is a binary model without symbol level alignment. It simply checks if the peak frequency of the signal is above or below a center frequency. This model can be used for kazoo .wav files.
+  \item \textbf{K1 Model}: The first kazoo model to use actual kazoo sounds. It is a binary model without symbol level alignment. It simply checks if the peak frequency of the signal is above or below a center frequency. This model is best suited for pre-recorded kazoo signal .wav files.
 
   \item \textbf{K2 Peak Model}: A 4-symbol kazoo model that uses a basic frequency peak detection algorithm to differentiate between the symbols. This model provides basic symbol level alignment. This is the most efficient model when using WAV files. Although it has symbol alignment, it is not very reliable due to the nature of kazoo sounds and the audio samples chosen for the symbols. This means that PulseAudio works, but the underlying audio channel must be near perfect (e.g. no open air communication).
 
   \item \textbf{K3 Reasonable Model}: A binary kazoo model that focuses on functionality over performance, allowing for open air communication between devices. Although the software is similar to the K2 model, the symbol audio samples were carefully recorded and chosen to be more distinct and consistent. This model has better symbol level alignment than the K2 model; across the length of a single symbol, multiple FFTs are taken to determine where one symbol ends and the next begins. This model has the most robust test coverage as well.
 
-  The same peak detection algorithm is used in this model as even with carefully chosen audio samples, different peak frequencies can be detected in the same symbol. There is a good oppertunity for improvement here.
+  The same peak detection algorithm is used in this model as even with carefully chosen audio samples, different peak frequencies can be detected in the same symbol. There is a good opportunity for improvement here.
 \end{itemize}
 
 \subsection{Kazoo Connect}
@@ -178,7 +192,7 @@ Kazoo Connect Terminal is a simple terminal client with a thread for KTL and a t
 
 \miniheader{Kazoo Connect Server}
 
-Kazoo Connect Web is similar to the terminal client but it provides a simple HTTP server for use with a web client. The server uses TCP sockets and does bare-minimum parsing of the HTTP protocol. The server has paths for getting all received messages and status, sending a message, and clearing the list of received messages. The server can be built and run using the target \texttt{kazoo\_connect\_server}.
+Kazoo Connect Web is similar to the terminal client but it provides a simple HTTP server for use with a web client. The server uses basic TCP socket handling with minimal parsing of the HTTP protocol. The server has paths for getting all received messages and status, sending a message, and clearing the list of received messages. The server can be built and run using the target \texttt{kazoo\_connect\_server}.
 
 The web client is a simple React app that is derived from the create-react-app template with a basic form to send messages and a list of received messages. It can be run like any other node js application from the \texttt{src/kazoo\_connect\_server/web\_client} directory. API requests are proxied to the backend.
 
@@ -224,7 +238,7 @@ Kazoo sounds are awfully noisy and inconsistent, FFT visualizations were critica
 
   \item \textbf{Meeting with Bart Stander} - After mentioning my project to Bart, he provided me with the mathematical background for understanding music notes within an octave. This was helpful for getting unstuck in the early signal analysis phase and it helped with planning signal differentiation.
 
-  \item \textbf{Wikipedia Modulation Pages} - Wikipedia is seemingly the best place to read about information theory and DSP concepts. The signal modulation page maps out a large number of high level concepts.
+  \item \textbf{Wikipedia (Modulation Pages)} - Wikipedia is seemingly the best place to read about information theory and DSP concepts. The signal modulation page maps out a large number of high level concepts. It helped me connect the necessary dots between the various concepts.
 
   \item \textbf{StackOverflow} - StackOverflow was most used for figuring out how to use the FFTW-3 library. It of course was a constant companion and deserves a mention.
 
@@ -238,6 +252,8 @@ Kazoo sounds are awfully noisy and inconsistent, FFT visualizations were critica
 
   \item \texttt{https://www.youtube.com/watch?v=h7apO7q16V0} - This video was a great refresher on FFTs and how they work, needed for FFTW-3 usage.
 
+  \item \textbf{Monoprice} - Like all other networking equipment, Monoprice sells kazoos, they're decent quality and cheaper than Amazon.
+
 \end{itemize}
 
 % ------------------------------------------------------------------------------
@@ -248,11 +264,11 @@ Kazoo sounds are awfully noisy and inconsistent, FFT visualizations were critica
 Kazooformation is a functional system, but there is certainly a lot of room for improvement within the KTL.
 
 \begin{itemize}
-  \item The various models can be parameterized to allow for different symbol rates and bit rates. There is clearly an opportunity for a machine learning model here. A machine learning model could select the best symbols to use, focusing on the differentiation between symbols by scoring with the bit error rate as gaussian noise is added to a signal.
+  \item The various models can be parameterized to allow for different symbol rates and bit rates. There is clearly an opportunity for a machine learning model here. For example, a model could be trained to maximize symbol separation in the frequency domain under various noise conditions.
 
-  \item The demodulation algorithm should be improved. The current algorithm uses a naive approach to peak detection and it is not very reliable. An approach that properly applies various filters to the signal should be used.
+  \item The demodulation algorithm should be improved. The current algorithm relies on a naive approach to peak detection and it is not very reliable. An approach that properly applies various filters to the signal should be used.
 
-  \item An 8-symbol or 16-symbol model should be created with new audio samples to improve bit rate.
+  \item An 8-symbol or 16-symbol model could be designed with new audio samples to improve bit rate.
 \end{itemize}
 
 
