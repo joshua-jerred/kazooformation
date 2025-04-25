@@ -1,0 +1,12 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="node1" title=" " alt="" coords="5,195,60,222"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#a9fa928af862a740fe6f000c5937a2e9d" title="Add individual bits to the stream." alt="" coords="108,8,265,49"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1BinaryStream.html#a5bcef3247636f3ffd53309244c9e6a10" title="Add bytes to the stream. If the stream is not byte aligned when this function is called,..." alt="" coords="340,71,497,112"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="572,129,729,171"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1BinaryStream.html#a1967b889fe140b13e9989cb425a4e37d" title="Get the next num_bytes bytes from the stream. Does not remove the bytes from the stream." alt="" coords="108,188,265,229"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="329,243,509,284"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1BinaryStream.html#a3a614f83199d9abd627964db2fef5f7b" title="Get the number of bits in the stream." alt="" coords="108,305,265,347"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1BinaryStream.html#af26ef358b4ddbd2f0a7f9d94d1b64357" title="Get the number of bytes in the stream. If the stream has spare bits that do not align to a byte,..." alt="" coords="108,371,265,412"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#ad6187750dbcd6ae38948b5c267740bf6" title=" " alt="" coords="340,5,497,47"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="313,308,524,349"/>
+</map>

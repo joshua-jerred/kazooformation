@@ -1,0 +1,12 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="node1" title=" " alt="" coords="5,147,60,174"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#a9fa928af862a740fe6f000c5937a2e9d" title="Add individual bits to the stream." alt="" coords="124,5,281,47"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1BinaryStream.html#a3a614f83199d9abd627964db2fef5f7b" title="Get the number of bits in the stream." alt="" coords="345,185,503,227"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="809,115,967,156"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1BinaryStream.html#a8d303f53784202d1d75b360075093ffb" title="If the last element is being used as a bit buffer, this will fill the remaining bits until the stream..." alt="" coords="108,71,297,98"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1BinaryStream.html#a82de69510e248576ea64a328979a9f48" title=" " alt="" coords="345,261,503,303"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1BinaryStream.html#a745b2acb522d69e283dd5df14500016b" title="Pop bits off the front, effectively the inverse of addBits." alt="" coords="124,224,281,265"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#ad6187750dbcd6ae38948b5c267740bf6" title=" " alt="" coords="345,5,503,47"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="566,173,746,215"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="551,239,761,280"/>
+</map>

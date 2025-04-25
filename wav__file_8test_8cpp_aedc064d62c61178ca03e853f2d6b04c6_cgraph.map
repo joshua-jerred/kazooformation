@@ -1,0 +1,7 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="node1" title=" " alt="" coords="5,46,60,73"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1WaveTools.html#a3d2c465dabac546fb5858133e3c79bd1" title="Add a sine wave to the audio channel." alt="" coords="108,8,311,49"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1WavFile.html#aae13ca7fd69fb99ff4b52d441854f9d8" title=" " alt="" coords="129,75,289,102"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1IAudioChannel.html#a1a8b4d9d92793a83ea4cf27dd968450d" title=" " alt="" coords="379,5,541,47"/>
+<area shape="rect" id="node5" href="$structkazoo_1_1WavFile_1_1WavHeader.html#a4ca9ab42866565a03850e82cfe19ef2c" title=" " alt="" coords="359,71,561,112"/>
+</map>

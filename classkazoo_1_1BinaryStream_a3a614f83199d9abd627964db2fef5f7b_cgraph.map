@@ -1,0 +1,6 @@
+<map id="kazoo::BinaryStream::getNumBits" name="kazoo::BinaryStream::getNumBits">
+<area shape="rect" id="node1" title="Get the number of bits in the stream." alt="" coords="5,39,163,80"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="226,5,406,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="211,71,421,112"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="469,71,627,112"/>
+</map>

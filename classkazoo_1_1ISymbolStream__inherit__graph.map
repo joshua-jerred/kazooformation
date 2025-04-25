@@ -1,0 +1,5 @@
+<map id="kazoo::ISymbolStream" name="kazoo::ISymbolStream">
+<area shape="rect" id="node1" title="An interface for a symbol stream." alt="" coords="5,5,199,171"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1SymbolStream.html" title=" " alt="" coords="11,536,204,789"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1SymbolStream.html" title="A simple Symbol Stream structure. Interfaces with the transcoder and binary stream." alt="" coords="124,220,317,473"/>
+</map>

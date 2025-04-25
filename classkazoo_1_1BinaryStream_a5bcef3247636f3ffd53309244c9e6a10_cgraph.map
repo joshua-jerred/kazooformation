@@ -1,0 +1,4 @@
+<map id="kazoo::BinaryStream::addBytes" name="kazoo::BinaryStream::addBytes">
+<area shape="rect" id="node1" title="Add bytes to the stream. If the stream is not byte aligned when this function is called,..." alt="" coords="5,5,163,47"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="211,5,368,47"/>
+</map>

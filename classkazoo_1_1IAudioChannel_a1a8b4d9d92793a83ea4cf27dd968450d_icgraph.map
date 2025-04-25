@@ -1,0 +1,14 @@
+<map id="kazoo::IAudioChannel::addSample" name="kazoo::IAudioChannel::addSample">
+<area shape="rect" id="node1" title=" " alt="" coords="507,187,669,229"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1WaveTools.html#a65418462caffb3dea70277e332a8a388" title=" " alt="" coords="229,23,458,65"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1model_1_1K1Model_1_1Model.html#a48bbea64f88ce7c897761b5f45af1496" title=" " alt="" coords="256,89,431,130"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1model_1_1K2PeakModel_1_1Model.html#acd47e2405db17423328f2a8efce1c131" title=" " alt="" coords="240,154,447,195"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1model_1_1K3ReasonableModel_1_1K3Model.html#a9daa359b10d51c7759629b07c9b56133" title=" " alt="" coords="228,219,459,261"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1WaveTools.html#a3d2c465dabac546fb5858133e3c79bd1" title="Add a sine wave to the audio channel." alt="" coords="242,285,445,326"/>
+<area shape="rect" id="node11" href="$classkazoo_1_1WavFile.html#a74fbd1c97919038da5f87bbd830ced41" title=" " alt="" coords="251,350,435,391"/>
+<area shape="rect" id="node3" href="$fft_8test_8cpp.html#a392676b8963e072b9d50a9110aa93a8f" title=" " alt="" coords="65,5,120,32"/>
+<area shape="rect" id="node4" href="$k1__model_8test_8cpp.html#aa4c14d585265c7963b351d63fd8aad14" title=" " alt="" coords="58,56,127,83"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1model_1_1Testing_1_1Model.html#af0a74648149323c1ef118057e4a5ac83" title=" " alt="" coords="5,229,180,270"/>
+<area shape="rect" id="node10" href="$fft_8test_8cpp.html#a1e216dd3d226a8a6f3ff9f29876b37d3" title=" " alt="" coords="65,295,120,321"/>
+<area shape="rect" id="node12" href="$classkazoo_1_1TranslationLayer.html#a76f09d5f7213679a6656aa9473f8f2ab" title=" " alt="" coords="5,350,180,391"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="kazoo::BinaryStream::getBytes" name="kazoo::BinaryStream::getBytes">
+<area shape="rect" id="node1" title="Get the next num_bytes bytes from the stream. Does not remove the bytes from the stream." alt="" coords="228,35,385,76"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1TranslationLayer.html#a76f09d5f7213679a6656aa9473f8f2ab" title=" " alt="" coords="5,5,180,47"/>
+<area shape="rect" id="node3" href="$binary__stream_8test_8cpp.html#a0ea90f1ff04ac7d2c91a322c493df41b" title=" " alt="" coords="65,71,120,98"/>
+</map>

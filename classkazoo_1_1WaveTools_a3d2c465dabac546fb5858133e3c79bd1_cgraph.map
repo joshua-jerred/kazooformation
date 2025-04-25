@@ -1,0 +1,4 @@
+<map id="kazoo::WaveTools::generateSinWaveSamples" name="kazoo::WaveTools::generateSinWaveSamples">
+<area shape="rect" id="node1" title="Add a sine wave to the audio channel." alt="" coords="5,5,208,47"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1IAudioChannel.html#a1a8b4d9d92793a83ea4cf27dd968450d" title=" " alt="" coords="256,5,419,47"/>
+</map>

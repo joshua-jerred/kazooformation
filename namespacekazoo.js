@@ -1,0 +1,47 @@
+var namespacekazoo =
+[
+    [ "k2_pcm_data", "namespacekazoo_1_1k2__pcm__data.html", [
+      [ "K2_SYMBOL_SIZE", "namespacekazoo_1_1k2__pcm__data.html#a358290ba65c7cd4ecd4d911cd864aba8", null ],
+      [ "KAZOO_A_PCM", "namespacekazoo_1_1k2__pcm__data.html#ab7dea59d2e5633f03b3ad624e1a7d80e", null ],
+      [ "KAZOO_D_PCM", "namespacekazoo_1_1k2__pcm__data.html#a46a4c058adb13bedf48f9118088e1a9c", null ],
+      [ "KAZOO_E_PCM", "namespacekazoo_1_1k2__pcm__data.html#a6b9ea18d31a1f0ab00f26d85337df0aa", null ],
+      [ "KAZOO_G_PCM", "namespacekazoo_1_1k2__pcm__data.html#a85d13cde619dbc646a881797061592b3", null ]
+    ] ],
+    [ "model", "namespacekazoo_1_1model.html", "namespacekazoo_1_1model" ],
+    [ "pcm_data", "namespacekazoo_1_1pcm__data.html", [
+      [ "DOOT1_PCM", "namespacekazoo_1_1pcm__data.html#a5b9999d14e7b4d476acd71c9adc77a05", null ],
+      [ "DOOT2_PCM", "namespacekazoo_1_1pcm__data.html#a539c47f0bb05f50acd89ad30760794c4", null ],
+      [ "DOOT3_PCM", "namespacekazoo_1_1pcm__data.html#a41c66f5ec1f32de050894db9da01eefb", null ],
+      [ "DOOT4_PCM", "namespacekazoo_1_1pcm__data.html#ade37ba5ad89b568eb9c4f72a12926388", null ],
+      [ "SYMBOL_SIZE", "namespacekazoo_1_1pcm__data.html#ae9fef71e79bc1687fd4ca876c4018c21", null ],
+      [ "K3_DOOT_LOW", "namespacekazoo_1_1pcm__data.html#a70e619a7498453f6e45e227e524ea10b", null ],
+      [ "K3_DOOT_HIGH", "namespacekazoo_1_1pcm__data.html#ab1f406d90b240caffb12a9e4c8fb5967", null ]
+    ] ],
+    [ "PulseAudio", "namespacekazoo_1_1PulseAudio.html", "namespacekazoo_1_1PulseAudio" ],
+    [ "AudioChannel", "classkazoo_1_1AudioChannel.html", "classkazoo_1_1AudioChannel" ],
+    [ "BinaryStream", "classkazoo_1_1BinaryStream.html", "classkazoo_1_1BinaryStream" ],
+    [ "Deframer", "classkazoo_1_1Deframer.html", "classkazoo_1_1Deframer" ],
+    [ "Encoder", "classkazoo_1_1Encoder.html", "classkazoo_1_1Encoder" ],
+    [ "EncoderContext", "namespacekazoo.html#structkazoo_1_1EncoderContext", "namespacekazoo_structkazoo_1_1EncoderContext_dup" ],
+    [ "Fft", "classkazoo_1_1Fft.html", "classkazoo_1_1Fft" ],
+    [ "IAudioChannel", "classkazoo_1_1IAudioChannel.html", "classkazoo_1_1IAudioChannel" ],
+    [ "IEncoder", "classkazoo_1_1IEncoder.html", "classkazoo_1_1IEncoder" ],
+    [ "ISymbolModel", "classkazoo_1_1ISymbolModel.html", "classkazoo_1_1ISymbolModel" ],
+    [ "ISymbolStream", "classkazoo_1_1ISymbolStream.html", "classkazoo_1_1ISymbolStream" ],
+    [ "KtlFrame", "classkazoo_1_1KtlFrame.html", "classkazoo_1_1KtlFrame" ],
+    [ "Logger", "classkazoo_1_1Logger.html", "classkazoo_1_1Logger" ],
+    [ "ModelTester", "classkazoo_1_1ModelTester.html", "classkazoo_1_1ModelTester" ],
+    [ "Symbol", "namespacekazoo.html#structkazoo_1_1Symbol", "namespacekazoo_structkazoo_1_1Symbol_dup" ],
+    [ "SymbolModel", "classkazoo_1_1SymbolModel.html", "classkazoo_1_1SymbolModel" ],
+    [ "SymbolStream", "classkazoo_1_1SymbolStream.html", "classkazoo_1_1SymbolStream" ],
+    [ "TranslationLayer", "classkazoo_1_1TranslationLayer.html", "classkazoo_1_1TranslationLayer" ],
+    [ "WaveTools", "classkazoo_1_1WaveTools.html", "classkazoo_1_1WaveTools" ],
+    [ "WavFile", "classkazoo_1_1WavFile.html", "classkazoo_1_1WavFile" ],
+    [ "AUDIO_SAMPLE_RATE", "namespacekazoo.html#a8fd125aa236885e37d9585dcbb2413ac", null ],
+    [ "MAX_SAMPLE_AMPLITUDE", "namespacekazoo.html#af030c166915c529fb72f638fe2156c10", null ],
+    [ "TEST_MODEL", "namespacekazoo.html#a8e2cd094675807994f84f912878d068b", null ],
+    [ "BIN_MODEL", "namespacekazoo.html#aebb00ef8119fbdc8c2b109a0a5b0e117", null ],
+    [ "K1_MODEL", "namespacekazoo.html#a7a80525a7752d3888a8aa0934df2a30b", null ],
+    [ "K2_PEAK_MODEL", "namespacekazoo.html#aaf41549dd85a2ca238728f760b1a24ac", null ],
+    [ "K3_MODEL", "namespacekazoo.html#a43f8d3f6ecdfdf7346d35cab2546af6c", null ]
+];

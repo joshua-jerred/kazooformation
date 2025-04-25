@@ -1,0 +1,14 @@
+<map id="kazoo::BinaryStream::addBit" name="kazoo::BinaryStream::addBit">
+<area shape="rect" id="node1" title=" " alt="" coords="792,119,949,160"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#a9fa928af862a740fe6f000c5937a2e9d" title="Add individual bits to the stream." alt="" coords="571,64,728,105"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1BinaryStream.html#a8d303f53784202d1d75b360075093ffb" title="If the last element is being used as a bit buffer, this will fill the remaining bits until the stream..." alt="" coords="555,155,744,182"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1SymbolStream.html#a6d4fe37e7f9c05587d95de99c84be743" title=" " alt="" coords="331,5,507,47"/>
+<area shape="rect" id="node6" href="$binary__stream_8test_8cpp.html#a0ea90f1ff04ac7d2c91a322c493df41b" title=" " alt="" coords="391,71,446,98"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1TranslationLayer.html#a76f09d5f7213679a6656aa9473f8f2ab" title=" " alt="" coords="108,85,283,127"/>
+<area shape="rect" id="node5" href="$symbol__stream_8test_8cpp.html#a6649846ac517122a5ce6489b52046605" title=" " alt="" coords="168,13,223,39"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1TranslationLayer.html#aa2783a8a2e4fb8fafa580e3cda27203e" title=" " alt="" coords="331,173,506,215"/>
+<area shape="rect" id="node12" href="$binary__stream_8test_8cpp.html#a4adfd3c5c4d57fd921cc878fe8b146a5" title=" " alt="" coords="391,239,446,266"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1TranslationLayer.html#add62ed51f54492faf5a8ef388f1f0f58" title="Starts listening for audio input on the default audio device." alt="" coords="108,173,283,215"/>
+<area shape="rect" id="node10" href="$src_2kazoo__connect__server_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,155,60,182"/>
+<area shape="rect" id="node11" href="$translation__layer_8test_8cpp.html#a557311196b9a309f0d8377ef5af0c62c" title=" " alt="" coords="5,206,60,233"/>
+</map>

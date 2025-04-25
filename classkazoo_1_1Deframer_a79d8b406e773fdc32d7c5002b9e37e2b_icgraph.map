@@ -1,0 +1,5 @@
+<map id="kazoo::Deframer::findFrameSize" name="kazoo::Deframer::findFrameSize">
+<area shape="rect" id="node1" title=" " alt="" coords="492,42,723,69"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Deframer.html#a7dc1caffad1ffe4925a3e13d8d125024" title=" " alt="" coords="241,5,444,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1Deframer.html#a742de19b3ca490d3faabfcbb64785998" title="Process the input binary stream in a stateful manner to extract frames from sequential stream inputs." alt="" coords="5,35,193,76"/>
+</map>

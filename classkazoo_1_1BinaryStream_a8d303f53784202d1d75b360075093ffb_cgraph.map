@@ -1,0 +1,5 @@
+<map id="kazoo::BinaryStream::pad" name="kazoo::BinaryStream::pad">
+<area shape="rect" id="node1" title="If the last element is being used as a bit buffer, this will fill the remaining bits until the stream..." alt="" coords="5,46,195,73"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#ad6187750dbcd6ae38948b5c267740bf6" title=" " alt="" coords="243,5,400,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="243,71,400,112"/>
+</map>

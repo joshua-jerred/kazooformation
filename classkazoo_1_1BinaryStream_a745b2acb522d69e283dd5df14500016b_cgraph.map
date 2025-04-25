@@ -1,0 +1,8 @@
+<map id="kazoo::BinaryStream::popBits" name="kazoo::BinaryStream::popBits">
+<area shape="rect" id="node1" title="Pop bits off the front, effectively the inverse of addBits." alt="" coords="5,71,163,112"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#a3a614f83199d9abd627964db2fef5f7b" title="Get the number of bits in the stream." alt="" coords="211,37,368,79"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1BinaryStream.html#a82de69510e248576ea64a328979a9f48" title=" " alt="" coords="211,103,368,144"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="431,5,611,47"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="416,71,627,112"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="675,71,832,112"/>
+</map>

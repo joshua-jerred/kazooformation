@@ -1,0 +1,25 @@
+var classkazoo_1_1ModelTester =
+[
+    [ "ModelTester", "classkazoo_1_1ModelTester.html#a2f4049eb9b0dd678e9582aa7078c3d2d", null ],
+    [ "runAllTests", "classkazoo_1_1ModelTester.html#a7e596cfc6087c50c134a30707a33d6dc", null ],
+    [ "getScore", "classkazoo_1_1ModelTester.html#a25757ff07115e6ecba4ad4da7446ea65", null ],
+    [ "resetState", "classkazoo_1_1ModelTester.html#a702e366157b9a545b104494ae0924054", null ],
+    [ "getRandomDouble", "classkazoo_1_1ModelTester.html#a0efeae66058019794185110c784a00fd", null ],
+    [ "getRandomTestString", "classkazoo_1_1ModelTester.html#a7fb957b1363edf86aef2d5dd839b2749", null ],
+    [ "expectTrue", "classkazoo_1_1ModelTester.html#a972ca91e756c8f5975e8d69204260f13", null ],
+    [ "helper_encodeStringToAudioChannel", "classkazoo_1_1ModelTester.html#ae3b12528cffc8ff611b85d82c63d84c5", null ],
+    [ "helper_decodeAudioChannelToString", "classkazoo_1_1ModelTester.html#a2d86a19402c92c173a6ffa8838835935", null ],
+    [ "test_basicEncodeDecode", "classkazoo_1_1ModelTester.html#ae04082b16f30df3b2200f4d090b0337b", null ],
+    [ "test_gaussianNoiseTolerance", "classkazoo_1_1ModelTester.html#a43e738d358a87f9f01cc8ad13c6964fe", null ],
+    [ "logWarning", "classkazoo_1_1ModelTester.html#abf9128a4d7497a620ca5f08f7fb05147", null ],
+    [ "logError", "classkazoo_1_1ModelTester.html#add67bfbca917a0cb6c9b4424c79eefeb", null ],
+    [ "logInfo", "classkazoo_1_1ModelTester.html#a12af5e025dac6b76f007b1e145d1d22f", null ],
+    [ "logDebug", "classkazoo_1_1ModelTester.html#ab6e4c2a261f2b6b8481ab1d606f50177", null ],
+    [ "log", "classkazoo_1_1ModelTester.html#ab69883e34a35febd7597c646022ca0cb", null ],
+    [ "test_strings_", "classkazoo_1_1ModelTester.html#a2f806e398b75c4472437e073040edb48", null ],
+    [ "score_", "classkazoo_1_1ModelTester.html#ac5c7a85169e0668a180e4207a3464880", null ],
+    [ "symbol_model_", "classkazoo_1_1ModelTester.html#a26fe436e0e430d40b83ede5bdd91068c", null ],
+    [ "symbol_stream_", "classkazoo_1_1ModelTester.html#a0cbfa03dee819e8de1604b3abc443f19", null ],
+    [ "encoder_", "classkazoo_1_1ModelTester.html#acfd82e43b651187a00b873a645e614ac", null ],
+    [ "logger_name_", "classkazoo_1_1ModelTester.html#a52a5a5eb057818d3979158503c883088", null ]
+];

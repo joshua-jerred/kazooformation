@@ -1,0 +1,9 @@
+<map id="kazoo::model::K3ReasonableModel::K3Model::decodeAudioToSymbols" name="kazoo::model::K3ReasonableModel::K3Model::decodeAudioToSymbols">
+<area shape="rect" id="node1" title=" " alt="" coords="5,116,295,157"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1ISymbolStream.html#a84d57e49235049ea033140d351aeb2cb" title=" " alt="" coords="388,5,556,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1model_1_1K3ReasonableModel_1_1K3Model.html#a5a805349ff160bed87a2552b7d1ed908" title=" " alt="" coords="343,71,601,127"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1IAudioChannel.html#a4cb9127060966e0e53bd6782b9f3413d" title=" " alt="" coords="391,152,553,193"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1Fft.html#a8163205fa6b54e9c6e24022c5180baae" title=" " alt="" coords="357,218,587,245"/>
+<area shape="rect" id="node4" href="$structkazoo_1_1Fft_1_1FftResults.html#a1e06d9b6ae6b3a6f6c717bd7268eb4f3" title=" " alt="" coords="649,79,815,120"/>
+<area shape="rect" id="node7" href="$structkazoo_1_1Fft_1_1FftResults.html#a3af2ef110332f3a5f0b38b8cd4e16019" title=" " alt="" coords="653,211,811,252"/>
+</map>

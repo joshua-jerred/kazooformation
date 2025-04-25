@@ -1,0 +1,14 @@
+<map id="kazoo::Deframer::findFrameEnd" name="kazoo::Deframer::findFrameEnd">
+<area shape="rect" id="node1" title=" " alt="" coords="5,97,232,124"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Deframer.html#ad48e61e42665c2d7f03685452b23c571" title=" " alt="" coords="291,5,509,32"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1BinaryStream.html#af26ef358b4ddbd2f0a7f9d94d1b64357" title="Get the number of bytes in the stream. If the stream has spare bits that do not align to a byte,..." alt="" coords="321,57,479,98"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1BinaryStream.html#ae77e9324dbd09dd4a02d3504a83ae866" title=" " alt="" coords="321,122,479,163"/>
+<area shape="rect" id="node11" href="$classkazoo_1_1Deframer.html#a919b00cfd64865233361bf4779674b6a" title=" " alt="" coords="280,189,520,216"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1BinaryStream.html#a745b2acb522d69e283dd5df14500016b" title="Pop bits off the front, effectively the inverse of addBits." alt="" coords="573,119,730,161"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1BinaryStream.html#a3a614f83199d9abd627964db2fef5f7b" title="Get the number of bits in the stream." alt="" coords="783,86,940,127"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1BinaryStream.html#a82de69510e248576ea64a328979a9f48" title=" " alt="" coords="783,151,940,193"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="1003,54,1183,95"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="988,119,1199,161"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="1247,119,1404,161"/>
+<area shape="rect" id="node12" href="$classkazoo_1_1BinaryStream.html#a9cf1c3eb54ace654061894c7278b6d32" title="Get a const reference to the underlying stream data." alt="" coords="568,185,735,226"/>
+</map>

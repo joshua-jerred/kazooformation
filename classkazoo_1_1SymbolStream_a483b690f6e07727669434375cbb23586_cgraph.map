@@ -1,0 +1,12 @@
+<map id="kazoo::SymbolStream::processBinaryStream" name="kazoo::SymbolStream::processBinaryStream">
+<area shape="rect" id="node1" title="Process a binary stream and convert it to symbols, removing the bits from the binary stream." alt="" coords="5,136,175,177"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1BinaryStream.html#af26ef358b4ddbd2f0a7f9d94d1b64357" title="Get the number of bytes in the stream. If the stream has spare bits that do not align to a byte,..." alt="" coords="225,5,382,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1ISymbolModel.html#a08668909fe1a7f901fe26ad30f9a1e30" title=" " alt="" coords="223,71,384,112"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1ISymbolModel.html#acc7c190376b422d6a6f8a28a2a7445f0" title=" " alt="" coords="223,136,384,177"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1BinaryStream.html#a32b6f202b2627b75ace2e6c9c07726aa" title="Get the byte alignment status of the stream." alt="" coords="896,257,1053,299"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1BinaryStream.html#a745b2acb522d69e283dd5df14500016b" title="Pop bits off the front, effectively the inverse of addBits." alt="" coords="225,253,382,295"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1BinaryStream.html#a3a614f83199d9abd627964db2fef5f7b" title="Get the number of bits in the stream." alt="" coords="432,253,589,295"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1BinaryStream.html#a82de69510e248576ea64a328979a9f48" title=" " alt="" coords="432,319,589,360"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1BinaryStream.html#aada16bde376a41419737c7177612a521" title="If adding bits, this will return the number of bits that can be added to the stream before the stream..." alt="" coords="653,253,833,295"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1BinaryStream.html#a12a1666a4c0b0ddfdc512a50f09f5975" title=" " alt="" coords="637,319,848,360"/>
+</map>

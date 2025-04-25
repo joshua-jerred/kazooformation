@@ -1,0 +1,12 @@
+<map id="kazoo::TranslationLayer::encode" name="kazoo::TranslationLayer::encode">
+<area shape="rect" id="node1" title=" " alt="" coords="5,210,180,251"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Encoder.html#a377a241e22091d991edd5376e0d0be10" title="Pops symbols from the front of the symbol stream and encodes them into the audio buffer." alt="" coords="228,115,463,157"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1SymbolStream.html#a5eb190a46e077143f1abcaf2211a0ad0" title=" " alt="" coords="263,210,427,251"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1AudioChannel.html#a97d2202c18916b93bb72b4c540ba75ed" title=" " alt="" coords="266,275,425,317"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1Encoder.html#ab775a959f5c94f1ca28e38cebacaf4c5" title="Adds a preamble to the audio channel to help with synchronization." alt="" coords="511,5,748,32"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1ISymbolModel.html#a093bf25697e9c33e5f0fb1373e602594" title=" " alt="" coords="549,57,710,98"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1Encoder.html#a365c15beddddcda0de58e96087997e1f" title=" " alt="" coords="531,123,728,149"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1ISymbolStream.html#a88dbb4b56018e8238e3fe8b1c599c8a4" title=" " alt="" coords="545,174,713,215"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1SymbolStream.html#a1276660b16a23ea24bd024fd8ba72b57" title=" " alt="" coords="547,239,711,281"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1ISymbolModel.html#a08668909fe1a7f901fe26ad30f9a1e30" title=" " alt="" coords="796,239,957,281"/>
+</map>

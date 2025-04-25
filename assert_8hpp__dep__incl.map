@@ -1,0 +1,42 @@
+<map id="assert.hpp" name="assert.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="1469,5,1559,32"/>
+<area shape="rect" id="node2" href="$assert_8cpp.html" title=" " alt="" coords="5,80,95,107"/>
+<area shape="rect" id="node3" href="$audio__channel_8hpp.html" title=" " alt="" coords="922,80,1066,107"/>
+<area shape="rect" id="node12" href="$k1__model_8hpp.html" title=" " alt="" coords="1949,379,2063,405"/>
+<area shape="rect" id="node16" href="$k2__model_8hpp.html" title=" " alt="" coords="1053,379,1167,405"/>
+<area shape="rect" id="node18" href="$k3__model_8hpp.html" title=" " alt="" coords="1642,379,1757,405"/>
+<area shape="rect" id="node22" href="$testing__model_8hpp.html" title=" " alt="" coords="1781,379,1924,405"/>
+<area shape="rect" id="node24" href="$fft_8hpp.html" title=" " alt="" coords="1242,304,1306,331"/>
+<area shape="rect" id="node27" href="$pulse__audio_8hpp.html" title=" " alt="" coords="1938,155,2066,181"/>
+<area shape="rect" id="node29" href="$symbol__model_8hpp.html" title=" " alt="" coords="1526,155,1673,181"/>
+<area shape="rect" id="node32" href="$wav__file_8hpp.html" title=" " alt="" coords="346,304,450,331"/>
+<area shape="rect" id="node35" href="$binary__stream_8hpp.html" title=" " alt="" coords="2369,155,2513,181"/>
+<area shape="rect" id="node40" href="$ktl__frame_8hpp.html" title=" " alt="" coords="2879,155,2992,181"/>
+<area shape="rect" id="node4" href="$encoder_8hpp.html" title=" " alt="" coords="1330,304,1431,331"/>
+<area shape="rect" id="node14" href="$k1__model_8test_8cpp.html" title=" " alt="" coords="1088,453,1231,480"/>
+<area shape="rect" id="node17" href="$k2__peak__model_8test_8cpp.html" title=" " alt="" coords="519,453,701,480"/>
+<area shape="rect" id="node19" href="$k3__model_8test_8cpp.html" title=" " alt="" coords="725,453,868,480"/>
+<area shape="rect" id="node23" href="$testing__model_8test_8cpp.html" title=" " alt="" coords="893,453,1063,480"/>
+<area shape="rect" id="node28" href="$pulse__audio_8test_8cpp.html" title=" " alt="" coords="1987,229,2143,256"/>
+<area shape="rect" id="node34" href="$wave__tools_8hpp.html" title=" " alt="" coords="937,304,1061,331"/>
+<area shape="rect" id="node5" href="$binary__model_8hpp.html" title=" " alt="" coords="2087,379,2226,405"/>
+<area shape="rect" id="node20" href="$model__tester_8hpp.html" title=" " alt="" coords="1483,379,1617,405"/>
+<area shape="rect" id="node6" href="$binary__model_8test_8cpp.html" title=" " alt="" coords="2229,453,2396,480"/>
+<area shape="rect" id="node7" href="$translation__layer_8cpp.html" title=" " alt="" coords="1811,528,1969,555"/>
+<area shape="rect" id="node8" href="$translation__layer_8hpp.html" title=" " alt="" coords="2047,453,2205,480"/>
+<area shape="rect" id="node9" href="$src_2kazoo__connect__server_2main_8cpp.html" title=" " alt="" coords="2311,528,2394,555"/>
+<area shape="rect" id="node10" href="$src_2main_8cpp.html" title=" " alt="" coords="1994,528,2077,555"/>
+<area shape="rect" id="node11" href="$translation__layer_8test_8cpp.html" title=" " alt="" coords="2101,528,2287,555"/>
+<area shape="rect" id="node13" href="$k1__model_8cpp.html" title=" " alt="" coords="1807,453,1920,480"/>
+<area shape="rect" id="node15" href="$tests_2ktl__model__scoring_2main_8cpp.html" title=" " alt="" coords="1405,453,1487,480"/>
+<area shape="rect" id="node21" href="$model__tester_8cpp.html" title=" " alt="" coords="1512,453,1647,480"/>
+<area shape="rect" id="node25" href="$fft_8cpp.html" title=" " alt="" coords="1192,379,1255,405"/>
+<area shape="rect" id="node26" href="$fft_8test_8cpp.html" title=" " alt="" coords="885,379,977,405"/>
+<area shape="rect" id="node30" href="$symbol__stream_8hpp.html" title=" " alt="" coords="1709,229,1860,256"/>
+<area shape="rect" id="node31" href="$symbol__stream_8test_8cpp.html" title=" " alt="" coords="1965,304,2143,331"/>
+<area shape="rect" id="node33" href="$wav__file_8test_8cpp.html" title=" " alt="" coords="576,379,708,405"/>
+<area shape="rect" id="node36" href="$binary__stream_8cpp.html" title=" " alt="" coords="2421,229,2564,256"/>
+<area shape="rect" id="node37" href="$binary__stream_8test_8cpp.html" title=" " alt="" coords="2588,229,2760,256"/>
+<area shape="rect" id="node38" href="$deframer_8hpp.html" title=" " alt="" coords="2835,229,2945,256"/>
+<area shape="rect" id="node39" href="$deframer_8test_8cpp.html" title=" " alt="" coords="2840,304,2977,331"/>
+</map>

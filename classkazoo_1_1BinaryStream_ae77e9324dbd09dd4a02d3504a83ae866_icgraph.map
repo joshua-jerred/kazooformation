@@ -1,0 +1,8 @@
+<map id="kazoo::BinaryStream::popByte" name="kazoo::BinaryStream::popByte">
+<area shape="rect" id="node1" title=" " alt="" coords="1328,115,1485,156"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Deframer.html#ad544e3c1a1301cc5ab77389eab411b03" title=" " alt="" coords="771,122,1005,149"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1Deframer.html#a79d8b406e773fdc32d7c5002b9e37e2b" title=" " alt="" coords="492,71,723,98"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1Deframer.html#ae4c8d8b5f7e2bc50183fc1b758fc21a8" title=" " alt="" coords="1053,173,1280,199"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1Deframer.html#a742de19b3ca490d3faabfcbb64785998" title="Process the input binary stream in a stateful manner to extract frames from sequential stream inputs." alt="" coords="5,89,193,131"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1Deframer.html#a7dc1caffad1ffe4925a3e13d8d125024" title=" " alt="" coords="241,5,444,47"/>
+</map>

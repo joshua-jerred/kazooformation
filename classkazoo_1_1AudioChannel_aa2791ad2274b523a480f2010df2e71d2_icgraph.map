@@ -1,0 +1,7 @@
+<map id="kazoo::AudioChannel::addSamples" name="kazoo::AudioChannel::addSamples">
+<area shape="rect" id="node1" title=" " alt="" coords="553,23,712,65"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1TranslationLayer.html#aa2783a8a2e4fb8fafa580e3cda27203e" title=" " alt="" coords="331,23,505,65"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1TranslationLayer.html#add62ed51f54492faf5a8ef388f1f0f58" title="Starts listening for audio input on the default audio device." alt="" coords="108,23,283,65"/>
+<area shape="rect" id="node4" href="$src_2kazoo__connect__server_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node5" href="$translation__layer_8test_8cpp.html#a557311196b9a309f0d8377ef5af0c62c" title=" " alt="" coords="5,56,60,83"/>
+</map>

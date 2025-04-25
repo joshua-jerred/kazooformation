@@ -1,0 +1,7 @@
+<map id="kazoo::Encoder::encodeAvailableSymbols" name="kazoo::Encoder::encodeAvailableSymbols">
+<area shape="rect" id="node1" title="Pops symbols from the front of the symbol stream and encodes them into the audio buffer." alt="" coords="5,86,240,127"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Encoder.html#ab775a959f5c94f1ca28e38cebacaf4c5" title="Adds a preamble to the audio channel to help with synchronization." alt="" coords="288,5,525,32"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1ISymbolModel.html#a093bf25697e9c33e5f0fb1373e602594" title=" " alt="" coords="326,57,487,98"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1Encoder.html#a365c15beddddcda0de58e96087997e1f" title=" " alt="" coords="308,123,505,149"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1ISymbolStream.html#a88dbb4b56018e8238e3fe8b1c599c8a4" title=" " alt="" coords="323,174,491,215"/>
+</map>

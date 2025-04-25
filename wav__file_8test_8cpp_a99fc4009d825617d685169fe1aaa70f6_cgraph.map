@@ -1,0 +1,7 @@
+<map id="TEST" name="TEST">
+<area shape="rect" id="node1" title=" " alt="" coords="5,97,60,123"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1WavFile.html#a7f895eeb010bb773aa034b343cb13f0e" title=" " alt="" coords="123,5,327,47"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1WavFile.html#ac447c44e54039f4445732b292a6aff9b" title=" " alt="" coords="391,35,595,76"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1WavFile.html#a6c55970e09af55bf41da6c7aec545af0" title=" " alt="" coords="108,122,343,149"/>
+<area shape="rect" id="node5" href="$classkazoo_1_1WavFile.html#a94cafc70d8ec435b1e045431939ff6d3" title="Read a WAV file from disk. Clears the current audio sample buffer." alt="" coords="147,173,303,199"/>
+</map>

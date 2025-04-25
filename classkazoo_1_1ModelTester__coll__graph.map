@@ -1,0 +1,10 @@
+<map id="kazoo::ModelTester" name="kazoo::ModelTester">
+<area shape="rect" id="node1" title=" " alt="" coords="311,388,542,641"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1Logger.html" title=" " alt="" coords="5,160,125,311"/>
+<area shape="rect" id="node3" title=" " alt="" coords="36,5,95,83"/>
+<area shape="rect" id="node4" title=" " alt="" coords="149,189,285,281"/>
+<area shape="rect" id="node5" title=" " alt="" coords="309,197,376,274"/>
+<area shape="rect" id="node6" href="$classkazoo_1_1ISymbolModel.html" title=" " alt="" coords="399,145,625,325"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1ISymbolStream.html" title="An interface for a symbol stream." alt="" coords="649,153,842,318"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1IEncoder.html" title=" " alt="" coords="867,182,1077,289"/>
+</map>

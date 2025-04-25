@@ -1,0 +1,16 @@
+<map id="kazoo::AudioChannel::getNumSamples" name="kazoo::AudioChannel::getNumSamples">
+<area shape="rect" id="node1" title=" " alt="" coords="729,221,888,263"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1TranslationLayer.html#ae6af635a406681696216d31a11dd64f9" title=" " alt="" coords="487,129,661,171"/>
+<area shape="rect" id="node7" href="$classkazoo_1_1ModelTester.html#ae3b12528cffc8ff611b85d82c63d84c5" title=" " alt="" coords="467,246,681,302"/>
+<area shape="rect" id="node10" href="$classkazoo_1_1TranslationLayer.html#aa2783a8a2e4fb8fafa580e3cda27203e" title=" " alt="" coords="487,35,661,76"/>
+<area shape="rect" id="node12" href="$testing__model_8test_8cpp.html#a5f7f706da071e9c79176674931fb0dd9" title=" " alt="" coords="547,326,601,353"/>
+<area shape="rect" id="node13" href="$classkazoo_1_1ModelTester.html#ae04082b16f30df3b2200f4d090b0337b" title=" " alt="" coords="213,188,405,229"/>
+<area shape="rect" id="node14" href="$k1__model_8test_8cpp.html#a7afde82f3b7a3b8a1d5c2175d4d2b323" title=" " alt="" coords="539,377,609,403"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1TranslationLayer.html#a85b59418d9b63eaf80dd1b3623a96b96" title=" " alt="" coords="222,71,397,112"/>
+<area shape="rect" id="node6" href="$translation__layer_8test_8cpp.html#a5981aa5142cca1c44a01f7506cf94a8e" title=" " alt="" coords="282,137,337,163"/>
+<area shape="rect" id="node4" href="$src_2kazoo__connect__server_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="51,74,106,101"/>
+<area shape="rect" id="node5" href="$translation__layer_8test_8cpp.html#a557311196b9a309f0d8377ef5af0c62c" title=" " alt="" coords="51,17,106,43"/>
+<area shape="rect" id="node8" href="$classkazoo_1_1ModelTester.html#a43e738d358a87f9f01cc8ad13c6964fe" title=" " alt="" coords="200,253,419,295"/>
+<area shape="rect" id="node9" href="$classkazoo_1_1ModelTester.html#a7e596cfc6087c50c134a30707a33d6dc" title=" " alt="" coords="5,220,152,261"/>
+<area shape="rect" id="node11" href="$classkazoo_1_1TranslationLayer.html#add62ed51f54492faf5a8ef388f1f0f58" title="Starts listening for audio input on the default audio device." alt="" coords="222,5,397,47"/>
+</map>

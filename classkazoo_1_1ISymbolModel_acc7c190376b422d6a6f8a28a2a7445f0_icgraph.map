@@ -1,0 +1,10 @@
+<map id="kazoo::ISymbolModel::getSymbolId" name="kazoo::ISymbolModel::getSymbolId">
+<area shape="rect" id="node1" title=" " alt="" coords="771,82,932,123"/>
+<area shape="rect" id="node2" href="$classkazoo_1_1SymbolStream.html#a483b690f6e07727669434375cbb23586" title="Process a binary stream and convert it to symbols, removing the bits from the binary stream." alt="" coords="553,82,723,123"/>
+<area shape="rect" id="node3" href="$classkazoo_1_1TranslationLayer.html#a6b80b010d94b9f1373fea308d1c6d435" title="Takes input data and processes it through the symbol stream." alt="" coords="331,53,505,94"/>
+<area shape="rect" id="node8" href="$symbol__stream_8test_8cpp.html#ae06de649963b46341ca9f338594aa8cd" title=" " alt="" coords="391,119,445,145"/>
+<area shape="rect" id="node4" href="$classkazoo_1_1TranslationLayer.html#a85b59418d9b63eaf80dd1b3623a96b96" title=" " alt="" coords="108,23,283,65"/>
+<area shape="rect" id="node7" href="$translation__layer_8test_8cpp.html#a5981aa5142cca1c44a01f7506cf94a8e" title=" " alt="" coords="168,89,223,116"/>
+<area shape="rect" id="node5" href="$src_2kazoo__connect__server_2main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,5,60,32"/>
+<area shape="rect" id="node6" href="$translation__layer_8test_8cpp.html#a557311196b9a309f0d8377ef5af0c62c" title=" " alt="" coords="5,56,60,83"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="kazoo::WavFile::WavHeader" name="kazoo::WavFile::WavHeader">
+<area shape="rect" id="node1" title=" " alt="" coords="284,329,487,421"/>
+<area shape="rect" id="node2" title=" " alt="" coords="57,189,117,267"/>
+<area shape="rect" id="node3" title=" " alt="" coords="288,5,419,83"/>
+<area shape="rect" id="node5" href="$structkazoo_1_1WavFile_1_1FormatChunk.html" title=" " alt="" coords="509,189,723,267"/>
+<area shape="rect" id="node7" href="$structkazoo_1_1WavFile_1_1DataChunk.html" title=" " alt="" coords="286,189,485,267"/>
+<area shape="rect" id="node4" title=" " alt="" coords="579,5,653,83"/>
+<area shape="rect" id="node6" title=" " alt="" coords="779,5,853,83"/>
+<area shape="rect" id="node8" title=" " alt="" coords="5,5,96,83"/>
+</map>
