@@ -104,12 +104,27 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Kazooformation </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_README"></a></p>
-<p  align="center"></p>
-<p ><img src="doc/images/kazooformation_banner.png" alt="" height="250" class="inline"/> <img src="doc/images/osi_model_kazoo.png" alt="" height="250" class="inline"/> </p>
-<p >An abstract data storage, modulation, and demodulation library using kazoo sounds.</p>
-<p >This is an engaging teaching tool for the lowest layer of the OSI model.</p>
+<div class="textblock"><p ><a class="anchor" id="md_README"></a> </p><div class="image">
+<img src="banner.png" alt=""/>
+<div class="caption">
+Left: Kazoo with text Kazooformation Right: OSI Model with physical layer replaced with a picture of a kazoo</div></div>
+    <p >An engaging teaching tool for the lowest layer of the OSI model. Send and receive data via sound using kazoo noises!</p>
 <h1><a class="anchor" id="autotoc_md12"></a>
+Features</h1>
+<div class="image">
+<img src="org_diagram.png" alt=""/>
+<div class="caption">
+Project organization UML diagram</div></div>
+    <ul>
+<li><b>Kazoo Translation Layer (KTL):</b> A C++ library that converts any serialized data to and from kazoo sounds using various modulation techniques.</li>
+<li><b>Kazoo Connect:</b> A terminal chat client that uses the KTL to send and receive data over a network using kazoo sounds.</li>
+<li><b>Kazoo Connect Server:</b> A TCP socket HTTP server version of Kazoo Connect that can be used with a web client. (there is a bare bones react app as well)</li>
+</ul>
+<div class="image">
+<img src="kazoo_signal.png" alt=""/>
+<div class="caption">
+ASCII 'H' visualized as kazoo sounds</div></div>
+    <h1><a class="anchor" id="autotoc_md13"></a>
 Build &amp; Run</h1>
 <p >Simple CMake/GCC build system</p>
 <p >Build Essential, Lib FFTW-3, and Pulse Audio must be installed.</p>
@@ -126,20 +141,20 @@ Build &amp; Run</h1>
 <div class="line">pactl list sources</div>
 <div class="line">pactl set-default-source &lt;SOURCE_NUMBER&gt;</div>
 <div class="line"> </div>
-<div class="line"># Launch Terminal Client</div>
+<div class="line"># Launch Terminal Chat Client</div>
 <div class="line">./kazoo_connect</div>
 <div class="line"> </div>
 <div class="line"># Or Launch The Web Server (For the web client)</div>
 <div class="line">./kazoo_connect_server</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
 Run With Optional Web Server</h1>
 <p >The executable <code>kazoo_connect_server</code> runs a <em>very basic</em> http server that can be used alongside a react app found in <code>./src/kazoo_connect_server/web_client</code>. This can be run like any other NPM project.</p>
 <div class="fragment"><div class="line">npm install</div>
 <div class="line">npm run start</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md15"></a>
 Licensing</h1>
 <p >This project does not have a license yet, please contact me if you want to use this or need a license applied.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Attribution</h1>
 <p ><code>src/web_client/public/soundwave.svg</code> is from <code><a href="https://composeicons.com/icons/bootstrap/soundwave">https://composeicons.com/icons/bootstrap/soundwave</a></code>, it falls under the MIT license. </p>
 </div></div><!-- PageDoc -->

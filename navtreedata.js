@@ -25,10 +25,11 @@
 var NAVTREE =
 [
   [ "Kazooformation", "index.html", [
-    [ "Build & Run", "index.html#autotoc_md12", null ],
-    [ "Run With Optional Web Server", "index.html#autotoc_md13", null ],
-    [ "Licensing", "index.html#autotoc_md14", null ],
-    [ "Attribution", "index.html#autotoc_md15", null ],
+    [ "Features", "index.html#autotoc_md12", null ],
+    [ "Build & Run", "index.html#autotoc_md13", null ],
+    [ "Run With Optional Web Server", "index.html#autotoc_md14", null ],
+    [ "Licensing", "index.html#autotoc_md15", null ],
+    [ "Attribution", "index.html#autotoc_md16", null ],
     [ "K2 Model", "md_doc_k2_model_readme.html", null ],
     [ "K3 Model", "md_doc_k3_model_readme.html", null ],
     [ "Kazoo Translation Layer (KTL)", "md_doc_ktl.html", [
@@ -86,7 +87,7 @@ var NAVTREEINDEX =
 "classkazoo_1_1TranslationLayer.html#acbbc8b2837b51ff8e02495068aea6760",
 "classkazoo_1_1model_1_1K2PeakModel_1_1Model.html#ad8897faa8ec9fe7ef28367d77da05dd9",
 "functions_v.html",
-"symbol__stream_8test_8cpp.html#af2191303e2c65b66678a8be2ba56f3dc"
+"symbol__stream_8test_8cpp.html#ae06de649963b46341ca9f338594aa8cd"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
