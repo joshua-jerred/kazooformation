@@ -12,15 +12,28 @@ An engaging teaching tool for the lowest layer of the OSI model. Send and receiv
   <!-- <img src="doc/images/org_diagram.png" alt="Kazooformation Logo" width="200"/> -->
 <!-- </p> -->
 
-## Features
+## Project Features
+<p align="center">
+  <img src="doc/images/org_diagram.png" alt="Project organization UML diagram" width="400"/>
+</p>
 
-![Project organization UML diagram](doc/images/org_diagram.png)
+### Kazoo Translation Layer (KTL)
 
-- **Kazoo Translation Layer (KTL):** A C++ library that converts any serialized data to and from kazoo sounds using various modulation techniques.
-- **Kazoo Connect:** A terminal chat client that uses the KTL to send and receive data over a network using kazoo sounds.
-- **Kazoo Connect Server:** A TCP socket HTTP server version of Kazoo Connect that can be used with a web client. (there is a bare bones react app as well)
+The primary component of this project is the Kazoo Translation Layer (KTL), which is a C++ library that converts any serialized data to and from kazoo sounds using various modulation techniques.
+
+Here is an example of how data is translated *into* kazoo sounds using one of the basic binary models:
 
 ![ASCII 'H' visualized as kazoo sounds](doc/images/kazoo_signal.png)
+
+
+
+### Kazoo Connect
+
+Kazoo Connect is an application example of the KTL library. It's a bare bones chat client that can be used to communicate between two computers using only audio peripherals.
+- **Kazoo Connect:** A terminal chat client that uses the KTL to send and receive data over a network using kazoo sounds.
+- **Kazoo Connect Server/Web Client:** A TCP socket HTTP server version of Kazoo Connect that can be used with a web client. (there is a bare bones react app as well)
+
+![The Kazoo Connect chat client](doc/images/kazoo_connect.png)
 
 
 
