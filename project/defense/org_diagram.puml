@@ -1,0 +1,28 @@
+@startuml
+
+node Kazooformation {
+  component "Kazoo Connect" as kc
+  component "Kazoo File System" as kfs
+  component "Kazoo Compiler" as kazoo_compiler
+
+  component "Kazoo Translation Layer" as ktl #LimeGreen
+
+  component "Pulse Audio" as pa
+  component "wav file" as wav
+}
+
+component "Audio Peripherals" as ap
+component "User Storage" as us
+
+
+kc <--> ktl
+kfs <--> ktl
+kazoo_compiler <--> ktl
+
+ktl <--> pa
+ktl <--> wav
+
+pa <--> ap
+wav <--> us
+
+@enduml

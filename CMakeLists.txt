@@ -13,6 +13,15 @@ target_sources(kazoo_common INTERFACE
         src/common/assert.cpp
 )
 
+### Pulse Audio
+find_path(PULSEAUDIO_INCLUDE_DIR
+        NAMES pulse/pulseaudio.h
+)
+find_library(PULSEAUDIO_LIBRARY
+        NAMES pulse
+)
+include_directories(${PULSEAUDIO_INCLUDE_DIRS})
+
 ### KTL Library
 add_library(kazoo_translation_layer INTERFACE)
 target_sources(kazoo_translation_layer INTERFACE
@@ -36,26 +45,23 @@ target_sources(kazoo_translation_layer INTERFACE
 target_include_directories(kazoo_translation_layer INTERFACE src)
 
 add_subdirectory(lib/fftw-3.3.10 EXCLUDE_FROM_ALL)
-target_link_libraries(kazoo_translation_layer INTERFACE kazoo_common fftw3 fftw3f)
+target_link_libraries(kazoo_translation_layer INTERFACE 
+        kazoo_common 
+        fftw3
+        fftw3f
+        pulse-simple
+        pulse
+)
 
-### Pulse Audio
-find_path(PULSEAUDIO_INCLUDE_DIR
-        NAMES pulse/pulseaudio.h
-)
-find_library(PULSEAUDIO_LIBRARY
-        NAMES pulse
-)
-include_directories(${PULSEAUDIO_INCLUDE_DIRS})
+
 # target_link_libraries(SignalEasel PRIVATE pulse-simple pulse)
 # target_compile_definitions(SignalEasel PRIVATE PULSE_AUDIO_ENABLED)
 
 # ============================= #
 # == Executables ============== #
 # ============================= #
-add_executable(kazoo_connect
-        src/main.cpp
-)
-target_link_libraries(kazoo_connect kazoo_translation_layer kazoo_common pulse-simple pulse)
+add_executable(kazoo_connect src/main.cpp)
+target_link_libraries(kazoo_connect kazoo_translation_layer)
 
 add_executable(kazoo_connect_server
         src/http_server/main.cpp
