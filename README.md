@@ -1,16 +1,29 @@
 # Kazooformation
 
-<!-- ![Image of kazoo with text ka-zoo-for-ma-tion / kazoo information](doc/images/kazooformation_banner.png) -->
+![Left: Kazoo with text Kazooformation Right: OSI Model with physical layer replaced with a picture of a kazoo](doc/images/banner.png)
 
-<p align="center">
-  <img height="250" src="doc/images/kazooformation_banner.png">
-  <img height="250" src="doc/images/osi_model_kazoo.png">
-</p>
+An engaging teaching tool for the lowest layer of the OSI model. Send and receive data via sound using kazoo noises!
 
-An abstract data storage, modulation, and demodulation library using kazoo sounds. 
+<!-- An abstract data storage, modulation, and demodulation library using kazoo sounds. -->
+
+<!-- This is an engaging teaching tool for the lowest layer of the OSI model. -->
+
+<!-- <p align="center"> -->
+  <!-- <img src="doc/images/org_diagram.png" alt="Kazooformation Logo" width="200"/> -->
+<!-- </p> -->
+
+## Features
+
+![Project organization UML diagram](doc/images/org_diagram.png)
+
+- **Kazoo Translation Layer (KTL):** A C++ library that converts any serialized data to and from kazoo sounds using various modulation techniques.
+- **Kazoo Connect:** A terminal chat client that uses the KTL to send and receive data over a network using kazoo sounds.
+- **Kazoo Connect Server:** A TCP socket HTTP server version of Kazoo Connect that can be used with a web client. (there is a bare bones react app as well)
+
+![ASCII 'H' visualized as kazoo sounds](doc/images/kazoo_signal.png)
 
 
-This is an engaging teaching tool for the lowest layer of the OSI model.
+
 
 ## Build & Run
 
@@ -32,7 +45,7 @@ pactl set-default-sink <SINK_NUMBER>
 pactl list sources
 pactl set-default-source <SOURCE_NUMBER>
 
-# Launch Terminal Client
+# Launch Terminal Chat Client
 ./kazoo_connect
 
 # Or Launch The Web Server (For the web client)
