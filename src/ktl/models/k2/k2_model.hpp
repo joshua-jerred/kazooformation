@@ -193,6 +193,7 @@ class K2PeakModel {
     }
 
    private:
+    /// @todo Refactor this
     Token detectSymbolFromFftResults(const Fft::FftResults& results) const {
       std::vector<Fft::FftResults::FreqAmp> sorted_peaks = results.getNormalizedPeaks(
           NUM_PEAK_FREQS_TO_CHECK, MIN_AMPLITUDE_CUT_OFF_PARAMETER, MIN_FREQ_CUT_OFF,

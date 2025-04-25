@@ -24,7 +24,7 @@ static std::atomic<bool> s_rx_during_tx_mode = false;
 
 // non-continuous = use frames
 // continuous = continuous byte stream in the output
-static std::atomic<bool> s_continuous_mode = false;
+// static std::atomic<bool> s_continuous_mode = false;
 
 kazoo::TranslationLayer tl{kazoo::TranslationLayer::ModelType::K3_REASONABLE_MODEL};
 
@@ -34,10 +34,13 @@ void getUserInput() {
   std::getline(std::cin, s_user_input);
   s_have_user_input = true;
 
+  // quit action to exit the app
   if (s_user_input == "q") {
     s_run_flag = false;
-    // break;
   }
+
+  // Turn off rx mode. If in an audio loop-back configuration this is convenient
+  // for running a KC client that only transmits.
   if (s_user_input == "rx") {
     if (s_rx_during_tx_mode) {
       s_rx_during_tx_mode = false;
@@ -48,16 +51,18 @@ void getUserInput() {
       std::cout << "rx during tx mode on" << std::endl;
     }
   }
-  if (s_user_input == "frame") {
-    s_continuous_mode = !s_continuous_mode;
-    if (s_continuous_mode) {
-      std::cout << "Continuous mode on" << std::endl;
-      tl.setContinuousMode(true);
-    } else {
-      std::cout << "Continuous mode off" << std::endl;
-      tl.setContinuousMode(false);
-    }
-  }
+
+  /// @todo There may no longer be a need for this.
+  // if (s_user_input == "frame") {
+  //   s_continuous_mode = !s_continuous_mode;
+  //   if (s_continuous_mode) {
+  //     std::cout << "Continuous mode on" << std::endl;
+  //     tl.setContinuousMode(true);
+  //   } else {
+  //     std::cout << "Continuous mode off" << std::endl;
+  //     tl.setContinuousMode(false);
+  //   }
+  // }
   // }
 }
 
@@ -125,7 +130,7 @@ int main() {
     // }
 
     // this is one of those awful 'are we processing pulse audio quick enough' sequencing
-    // bits, wow this needs to be fixed
+    // details, this could be problematic
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
 

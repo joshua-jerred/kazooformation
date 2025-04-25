@@ -41,7 +41,7 @@ pactl set-default-source 1 # Use the device from the list command instead of `1`
 ## Run With Optional Web Server
 
 The executable `kazoo_connect_server` runs a *very basic* http server that can
-be used alongside a react app found in `./src/web_client`. This can be run
+be used alongside a react app found in `./src/kazoo_connect_server/web_client`. This can be run
 like any other NPM project.
 
 ```bash

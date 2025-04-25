@@ -53,25 +53,21 @@ target_link_libraries(kazoo_translation_layer INTERFACE
         pulse
 )
 
-
-# target_link_libraries(SignalEasel PRIVATE pulse-simple pulse)
-# target_compile_definitions(SignalEasel PRIVATE PULSE_AUDIO_ENABLED)
-
 # ============================= #
 # == Executables ============== #
 # ============================= #
+# Kazoo Connect Terminal
 add_executable(kazoo_connect src/main.cpp)
 target_link_libraries(kazoo_connect kazoo_translation_layer)
 
-add_executable(kazoo_connect_server
-        src/http_server/main.cpp
-)
-target_link_libraries(kazoo_connect_server kazoo_translation_layer kazoo_common pulse-simple pulse)
-target_include_directories(kazoo_connect_server
-        PRIVATE
-        src/http_server
+# Kazoo Connect Web
+add_executable(kazoo_connect_server src/kazoo_connect_server/main.cpp)
+target_link_libraries(kazoo_connect_server kazoo_translation_layer)
+target_include_directories(kazoo_connect_server PRIVATE
+        src/kazoo_connect_server
 )
 
+# Model Scoring for future ML KTL models
 add_executable(model_score
         "tests/ktl_model_scoring/main.cpp"
         "tests/ktl_model_scoring/model_tester.cpp"
@@ -91,10 +87,13 @@ set(kazoo_translation_layer_test_sources
         "tests/ktl/audio/fft.test.cpp"
         "tests/ktl/audio/pulse_audio.test.cpp"
         "tests/ktl/audio/wav_file.test.cpp"
+
         "tests/ktl/model/binary_model.test.cpp"
         "tests/ktl/model/k1_model.test.cpp"
         "tests/ktl/model/k2_peak_model.test.cpp"
         "tests/ktl/model/k3_model.test.cpp"
+        "tests/ktl/model/testing_model.test.cpp"
+
         "tests/ktl/binary_stream.test.cpp"
         "tests/ktl/deframer.test.cpp"
         "tests/ktl/translation_layer.test.cpp"
