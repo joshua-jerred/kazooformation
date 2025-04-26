@@ -13,16 +13,16 @@ An engaging teaching tool for the lowest layer of the OSI model. Send and receiv
 <!-- </p> -->
 
 ## Project Features
-<p align="center">
+<!-- <p align="center">
   <img src="doc/images/org_diagram.png" alt="Project organization UML diagram" width="400"/>
-</p>
+</p> -->
+![Kazooformation Logo](doc/images/org_diagram.png)
 
 ### Kazoo Translation Layer (KTL)
 
 The primary component of this project is the Kazoo Translation Layer (KTL), which is a C++ library that converts any serialized data to and from kazoo sounds using various modulation techniques.
 
 Here is an example of how data is translated *into* kazoo sounds using one of the basic binary models:
-
 
 ![ASCII 'H' visualized as kazoo sounds](doc/images/kazoo_signal.png)
 

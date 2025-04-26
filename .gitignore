@@ -2,3 +2,5 @@ out
 build
 .idea
 kazoo_connect*
+doc/theory/output/**.wav
+__pycache__

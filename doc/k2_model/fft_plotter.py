@@ -105,7 +105,7 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
         peak_freq = positive_freqs[peak_index]
         plot_vertical_line(f"{i}", axis, peak_freq, color="r", width=1)
         i += 1
-        
+
     # Detect fundamental frequency (first peak)
     peak_index = np.argmax(positive_magnitudes)
     # print(
@@ -244,6 +244,7 @@ def plot_files(base_dir, output_dir, input_files, fft_params):
             column_index += 1
         plot_number += 1
 
+    # figure.set_size_inches(column_index * 10, 5 * len(input_files))
     figure.set_size_inches(column_index * 10, 5 * len(input_files))
 
-    plt.savefig(output_dir + "fft_results.png", pad_inches=0.0)
+    plt.savefig(output_dir + "fft_results.png", bbox_inches='tight')

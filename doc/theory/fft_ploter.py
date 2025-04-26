@@ -5,15 +5,18 @@ from scipy.io import wavfile
 
 import dsp
 
-def plot_vertical_line(label, axis, x, color="black", linestyle="-", width=3, offset=0):
+def plot_vertical_line(label, axis, x, color="black", linestyle="-", width=3, offset=0, float_precision=2):
     axis.axvline(x, color=color, linestyle=linestyle, linewidth=width)
     axis.text(
         x,
-        80,
-        f"{label}: {x:.0f} Hz",
-        verticalalignment="top",
-        horizontalalignment="center",
-        color="black",
+        0.1,
+        f"{label}: {x:.{float_precision}f}",
+        # verticalalignment="top",
+        # horizontalalignment="center",
+        color=color,
+        rotation=60,
+        fontsize=10,
+        fontweight="bold",
     )
 
 def do_fft(base_dir, filename, fft_params, apply_filters):
@@ -70,6 +73,10 @@ def do_fft(base_dir, filename, fft_params, apply_filters):
 
 
 def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
+    axis.set_title(f"normalized fft")
+    axis.set_xlabel("Frequency (Hz)")
+    axis.set_ylabel("Magnitude")
+
     positive_freqs, positive_magnitudes = do_fft(
         base_dir, filename, fft_params, apply_notch_filter
     )
@@ -102,16 +109,16 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
     i = 1
     for peak_index in peak_indices:
         peak_freq = positive_freqs[peak_index]
-        plot_vertical_line(f"Peak {i}", axis, peak_freq, color="r", width=1)
+        plot_vertical_line(f"ff{i}", axis, peak_freq, color="r", width=1, float_precision=0)
         i += 1
-        
+
     # Detect fundamental frequency (first peak)
-    peak_index = np.argmax(positive_magnitudes)
+    # peak_index = np.argmax(positive_magnitudes)
     # print(
     # f"Peak index: {peak_index}, Peak frequency: {positive_freqs[peak_index]:.2f} Hz"
     # )
-    fundamental_freq = positive_freqs[peak_index]
-    print(f"Fundamental frequency: {fundamental_freq:.2f} Hz")
+    # fundamental_freq = positive_freqs[peak_index]
+    # print(f"Fundamental frequency: {fundamental_freq:.2f} Hz")
 
     # Annotate detected fundamental frequency
     # axis.axvline(
@@ -137,8 +144,10 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
     #         axis.text(harmonic_freq, max(positive_magnitudes) * (0.7 - i * 0.05),
     #                  f"{harmonic_freq:.2f} Hz", color='green')
 
+    plt.xlabel("Frequency (Hz)")
+    plt.ylabel("Magnitude")
     axis.plot(positive_freqs, positive_magnitudes)
-    
+
     # ylim = max(positive_magnitudes) * 1.1
     # if apply_notch_filter:
         # ylim = 1
@@ -147,12 +156,11 @@ def plot_fft(base_dir, filename, axis, fft_params: dict, apply_notch_filter):
     # plot_vertical_line("Mean", axis, mean_outside_carrier_freq, color='g')
     # plot_vertical_line("Peak", axis, peak_freq, color='r')
 
-    plt.xlabel("Frequency (Hz)")
-    plt.ylabel("Magnitude")
+
     plt.grid()
 
 
-def __plot_amplitude_distribution(
+def plot_amplitude_distribution(
     base_dir, filename, axis, fft_params: dict, normalize, apply_notch_filter=False
 ):
     positive_freqs, positive_magnitudes = do_fft(
@@ -160,6 +168,12 @@ def __plot_amplitude_distribution(
     )
 
     normalized_magnitudes = positive_magnitudes / np.max(positive_magnitudes)
+    variance = np.var(normalized_magnitudes)
+    std_dev = np.std(normalized_magnitudes)
+    mean = np.mean(normalized_magnitudes)
+    median = np.median(normalized_magnitudes)
+    # print(f"Dist Variance: {variance:.4f}, Std Dev: {std_dev:.4f}, Mean: {mean:.4f}, Median: {median:.4f}")
+
     axis.hist(
         normalized_magnitudes,
         bins=fft_params["FFT_DISTRIBUTION_BINS"],
@@ -167,9 +181,15 @@ def __plot_amplitude_distribution(
         alpha=0.7,
         range=(0, fft_params["FFT_DISTRIBUTION_MAX_NORMALIZED"]),
     )
-    
-    noise_floor = fft_params["NOISE_FLOOR_VALUE"]
-    axis.axvline(noise_floor, color="r", linestyle="--", label="Noise Floor")
+    # plt.xscale("log")
+    # noise_floor = fft_params["NOISE_FLOOR_VALUE"]
+    # axis.axvline(noise_floor, color="r", linestyle="--", label="Noise Floor")
+    # axis.axvline(mean, color="g", linestyle="--", label="Mean")
+    # axis.axvline(median, color="b", linestyle="--", label="Median")
+    # plot_vertical_line("Noise Floor", axis, noise_floor, color='r', linestyle='solid')
+    plot_vertical_line("Mean", axis, mean, color='g', linestyle='--')
+    plot_vertical_line("Median", axis, median, color='b', linestyle='--')
+    plot_vertical_line("Std Dev", axis, mean + std_dev, color='orange', linestyle='--')
 
     plt.xlabel("Amplitude")
     plt.ylabel("Count")
@@ -178,61 +198,75 @@ def __plot_amplitude_distribution(
 
 
 def plot_wav_waveform(base_dir, filename, axis, fft_params: dict):
+    axis.set_title(f"waveform")
+    axis.set_xlabel("Sample Number")
+    axis.set_ylabel("Sample Amplitude")
+
     sample_rate, data = wavfile.read(base_dir + filename)
     # print(f"Data: {data}, sample rate: {sample_rate}")
     # Require 16-bit PCM data
     if data.dtype != np.int16:
         raise RuntimeError("not 16-bit PCM")
     axis.plot(data)
-    axis.set_title(f"Waveform of {filename}")
-    plt.xlabel("Sample")
-    plt.ylabel("Amplitude")
+    # plt.xlabel("Sample")
+    # plt.ylabel("Amplitude")
     plt.grid()
 
 
-def plot_files(base_dir, output_dir, input_files, fft_params):
+def plot_files(input_dir, output_dir, label, input_files, fft_params):
     WAV_PLOT = True
-    NORM_FFT_PLOT = False
-    DIST_NORM_PLOT = False
-    
+    FILTERED_FFT = False
+    DIST_NORM_PLOT = True
+
     num_plots = 1
     num_plots += 1 if WAV_PLOT else 0
-    num_plots += 1 if NORM_FFT_PLOT else 0
+    num_plots += 1 if FILTERED_FFT else 0
     num_plots += 1 if DIST_NORM_PLOT else 0
-    
-    figure, axis = plt.subplots(len(input_files), num_plots)
 
-    plot_number = 0
+    figure = plt.figure(constrained_layout=True)
+    figure.suptitle(f"Signal Analysis: {label}", fontsize=32, color="Black", fontweight="bold")
+    subfigs = figure.subfigures(len(input_files), 1)
+
+    row_number = 0
     column_index = 0
-    for filename in input_files:
+    for row, subfig in enumerate(subfigs):
+        filename = input_files[row]
+        print(f"  >> Plotting {filename} - {row_number + 1}/{len(input_files)} ... ", end="")
+
+        axis = subfig.subplots(1, num_plots)
+
+        subfig.suptitle(f"{filename}", fontsize=24, color="orange", fontweight="bold")
+
+
         column_index = 0
 
         if WAV_PLOT:
-            wav_axis = axis[plot_number, column_index]
-            wav_axis.set_title(f"Waveform of {filename}")
-            plot_wav_waveform(base_dir, filename, wav_axis, fft_params)
+            wav_axis = axis[column_index]
+            plot_wav_waveform(input_dir, filename, wav_axis, fft_params)
             column_index += 1
 
-        fft_axis = axis[plot_number, column_index]
-        fft_axis.set_title(f"Max Value Normalized FFT of {filename}")
-        plot_fft(base_dir, filename, fft_axis, fft_params, False)
+        fft_axis = axis[column_index]
+        plot_fft(input_dir, filename, fft_axis, fft_params, False)
         column_index += 1
 
-        if NORM_FFT_PLOT:
-            fft_notch_axis = axis[plot_number, column_index]
+        if FILTERED_FFT:
+            fft_notch_axis = axis[column_index]
             fft_notch_axis.set_title(f"FFT with Notch & Band Pass Filters of {filename}")
-            plot_fft(base_dir, filename, fft_notch_axis, fft_params, True)
+            plot_fft(input_dir, filename, fft_notch_axis, fft_params, True)
             column_index += 1
 
         if DIST_NORM_PLOT:
-            norm_hist_axis = axis[plot_number, column_index]
-            norm_hist_axis.set_title(f"Amplitude Distribution of {filename}")
-            __plot_amplitude_distribution(
-                base_dir, filename, norm_hist_axis, fft_params, True
+            norm_hist_axis = axis[column_index]
+            norm_hist_axis.set_title(f"amplitude distribution of fft")
+            plot_amplitude_distribution(
+                input_dir, filename, norm_hist_axis, fft_params, True
             )
             column_index += 1
-        plot_number += 1
+        row_number += 1
+        print("done")
 
-    figure.set_size_inches(column_index * 10, 4 * len(input_files))
+    # figure.set_size_inches(column_index * 10, 5 * len(input_files))
+    figure.set_size_inches(column_index * 10, 5 * len(input_files))
 
-    plt.savefig(output_dir + "fft_results.png", pad_inches=0.0)
+    filename = label.lower().replace(" ", "_")
+    plt.savefig(output_dir + f"{filename}.png", bbox_inches='tight')
